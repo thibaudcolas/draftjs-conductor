@@ -1,0 +1,31 @@
+language: node_js
+cache:
+  directories:
+  - node_modules
+install:
+- npm install
+- npm install -g coveralls @commitlint/travis-cli
+script:
+- npm run test:ci
+- commitlint-travis
+- npm run release -- --dry-run
+- npm run danger
+after_success:
+- mv coverage/lcov-report build || true
+- cat ./coverage/lcov.info | coveralls
+branches:
+  except:
+  - gh-pages
+deploy:
+  provider: pages
+  skip_cleanup: true
+  local_dir: build
+  github_token: "$GITHUB_TOKEN"
+  on:
+    branch: master
+notifications:
+  email: false
+env:
+  global:
+  - secure: WYTvUbI1J9U4rMTHm4GMhAJ+TGonREmdqItkZ9VDWYuAwfvqJVAUX1GYU9eCF/QnaFabu9ph+YUkawM4EyAn2M3Q3qGMe4parjiWLJhFEBROBxpoeBSD00qQr5bh8yRTYRf6aJE8BH+d6vFQWZmR+DED65jt9exFwYntaIyuaAgL4DJbdNAgfy9AkFDGRlr9Lf7j0ESgQFiInJdDsR5Kk5+6hF5BcdusPZ1l1JOYsInyPJg+F/T8grDXekH2iwxbwdFcNY1w1ztL6PW2uvdz3uVyIVw+kGtY1KPDiGFgucdSLgdznnWzBfi38WtX8oFt64U+JVyMpoT+ZVzc8RFy7HDyqledadUOOTFPy6nAxBAL4+3mTu3/a7KcXeYS1zQfofeQBOV0aHKYgO/NTAZulOWYfp5DnW+1SsnfkgabIt7IcKfC0aFaKS305x6Glyw0a0aCnP5TwPa/YG2Cp6PE1gbray1KZQpa8Ldlptg6hXfUHGvGzcIHBAAcbC46d1qJbEi2D+cKxXeW/DOI/zTD56O31X+m8ZHjgL6aFpZa3Vchg1s/dKr5hhiLc/YtD6B528hOm64ngBhgz3tM7U2Ebrxmd9Og5G849uylk1QXNTgvhJlMAcmTDAbOufgXGott5RFUV4OUtJrg+jVgJt7goovoyAmHHxhX3PCMWFcdMxI=
+  - secure: RBZ5zcvDhTFPyJleGbZgTuWv+NHYSfhsrO/yL1aVQRCeRxUnZI2I3mPJ+QCBOZlD6ocDdcYDtAy4oEXGnvuKFxV3g5LaRPsXEZhBoOL23DiUmOKPo9xHM8h50z+BzE83ygQciZvd7YgguTsL8Jhhj4ARChRl3wj7LAS0eSAbFi4eE/xn6AhqWruTtRgnsrrHQbfqF2GdNFSqm3opsDod063WNvDgzl+nwvrTPXdDTZXKppqd1VLYOEewHukxcizw6p/CIy/yYfgMU7fAWZ4iq+JHau1cslNesgyeR43T9KZjGEwZvBYHur9UKu4O7TyE/W8sKMqi3s2I2x+ZsywObPUmHuIp9cl3tfQC1qxEs6/NSJtcYlZgfNdaZrH+PuE4vUO5+tcuoR0juEQo4G+Pqh9pKHi99pVaidvYMNHw/O7lbl7FWHsuMXuTj0Id+XEg5v0rrVThxJbsrRTTvF0b6FrFE+57SgVAQCSp27t3aXE9ePYd1mNUw9kkwZQQc1xRp31yH5DBJOku+rAeclpwn7PrK8ZCa264AurNQynJmYtKyMJ9G7d2W6V5goQKZUTKow4nIrjj9K7MEH/eEbdla6NsImlQ1YmaOyw8e8DQbekQ+sa6YB6BCp8+tjICHJTI4M1qONUQzGYlk/dxe5BABu+woGt8zhATsEIiaSGY104=

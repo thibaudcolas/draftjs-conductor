@@ -1,0 +1,20 @@
+describe("demo", () => {
+  beforeEach(() => {
+    global.sessionStorage = {
+      getItem: jest.fn(),
+      setItem: jest.fn(),
+    };
+  });
+
+  it("mount", () => {
+    document.body.innerHTML = "<div id=root></div>";
+    require("./index");
+    expect(document.body.innerHTML).toContain("App");
+  });
+
+  it("no mount", () => {
+    document.body.innerHTML = "";
+    require("./index");
+    expect(document.body.innerHTML).toBe("");
+  });
+});

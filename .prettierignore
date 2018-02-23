@@ -1,0 +1,8 @@
+node_modules
+*.min.js
+coverage/
+dist/
+es/
+*.bundle.js
+*.json
+*.html
