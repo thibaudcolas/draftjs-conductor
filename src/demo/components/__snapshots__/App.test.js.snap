@@ -4,6 +4,8 @@ exports[`App renders 1`] = `
 <div
   className="App"
 >
-  Test
+  <DemoEditor
+    extended={false}
+  />
 </div>
 `;
