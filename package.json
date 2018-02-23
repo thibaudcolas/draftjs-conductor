@@ -78,7 +78,9 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "draft-js": "^0.10.5"
+    "draft-js": "^0.10.5",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
