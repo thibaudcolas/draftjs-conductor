@@ -58,5 +58,3 @@ Use `npm run release`, which uses [standard-version](https://github.com/conventi
 ## Credits
 
 View the full list of [contributors](https://github.com/thibaudcolas/draftjs-conductor/graphs/contributors). [MIT](LICENSE) licensed. Website content available as [CC0](https://creativecommons.org/publicdomain/zero/1.0/).
-
-Microsoft Word toolbars screenshot from _PCWorld – Microsoft Word Turns 25_ article.
