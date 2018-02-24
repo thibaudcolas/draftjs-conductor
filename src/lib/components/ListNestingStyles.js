@@ -25,22 +25,10 @@ export const generateListNestingStyles = (
     const margin = 1.5 * (depth + 1);
 
     styles += `
-    .${prefix}.public-DraftStyleDefault-listLTR {
-        margin-left: ${margin}em;
-    }
-
-    .${prefix}.public-DraftStyleDefault-listRTL {
-        margin-right: ${margin}em;
-    }
-
-    .${prefix}.public-DraftStyleDefault-orderedListItem::before {
-        content: counter(${counter}) '. ';
-        counter-increment: ${counter};
-    }
-
-    .${prefix}.public-DraftStyleDefault-reset {
-        counter-reset: ${counter};
-    }`.replace(/\s/g, "");
+.${prefix}.public-DraftStyleDefault-listLTR { margin-left: ${margin}em; }
+.${prefix}.public-DraftStyleDefault-listRTL { margin-right: ${margin}em; }
+.${prefix}.public-DraftStyleDefault-orderedListItem::before { content: counter(${counter}) '. '; counter-increment: ${counter}; }
+.${prefix}.public-DraftStyleDefault-reset { counter-reset: ${counter}; }`;
   }
 
   return styles;

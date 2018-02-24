@@ -2,7 +2,11 @@
 
 exports[`ListNestingStyles max > DRAFT_DEFAULT_MAX_DEPTH 1`] = `
 <style>
-  .public-DraftStyleDefault-depth5.public-DraftStyleDefault-listLTR{margin-left:9em;}.public-DraftStyleDefault-depth5.public-DraftStyleDefault-listRTL{margin-right:9em;}.public-DraftStyleDefault-depth5.public-DraftStyleDefault-orderedListItem::before{content:counter(ol5)'.';counter-increment:ol5;}.public-DraftStyleDefault-depth5.public-DraftStyleDefault-reset{counter-reset:ol5;}
+  
+  .public-DraftStyleDefault-depth5.public-DraftStyleDefault-listLTR { margin-left: 9em; }
+  .public-DraftStyleDefault-depth5.public-DraftStyleDefault-listRTL { margin-right: 9em; }
+  .public-DraftStyleDefault-depth5.public-DraftStyleDefault-orderedListItem::before { content: counter(ol5) '. '; counter-increment: ol5; }
+  .public-DraftStyleDefault-depth5.public-DraftStyleDefault-reset { counter-reset: ol5; }
 </style>
 `;
 
@@ -16,7 +20,7 @@ exports[`generateListNestingStyles works 1`] = `
   margin-right: 1.5em;
 }
 .TEST0.public-DraftStyleDefault-orderedListItem::before {
-  content: counter(ol0)\\".\\";
+  content: counter(ol0) \\". \\";
   counter-increment: ol0;
 }
 .TEST0.public-DraftStyleDefault-reset {
@@ -29,7 +33,7 @@ exports[`generateListNestingStyles works 1`] = `
   margin-right: 3em;
 }
 .TEST1.public-DraftStyleDefault-orderedListItem::before {
-  content: counter(ol1)\\".\\";
+  content: counter(ol1) \\". \\";
   counter-increment: ol1;
 }
 .TEST1.public-DraftStyleDefault-reset {
@@ -42,7 +46,7 @@ exports[`generateListNestingStyles works 1`] = `
   margin-right: 4.5em;
 }
 .TEST2.public-DraftStyleDefault-orderedListItem::before {
-  content: counter(ol2)\\".\\";
+  content: counter(ol2) \\". \\";
   counter-increment: ol2;
 }
 .TEST2.public-DraftStyleDefault-reset {

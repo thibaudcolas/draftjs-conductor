@@ -17,10 +17,6 @@ describe("generateListNestingStyles", () => {
     });
     expect(styles).toMatchSnapshot();
   });
-
-  it("strips whitespace", () => {
-    expect(generateListNestingStyles("TEST", 0, 2)).not.toContain("\n");
-  });
 });
 
 describe("ListNestingStyles", () => {
