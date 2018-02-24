@@ -13,6 +13,8 @@ import {
 import type { DraftBlockType } from "draft-js/lib/DraftBlockType.js.flow";
 import type { DraftEntityType } from "draft-js/lib/DraftEntityType.js.flow";
 
+import { ListNestingStyles, blockDepthStyleFn } from "../../lib/index";
+
 import SentryBoundary from "./SentryBoundary";
 import Highlight from "./Highlight";
 import Link, { linkStrategy } from "./Link";
@@ -23,9 +25,11 @@ import "./DemoEditor.css";
 const BLOCKS = {
   unstyled: "P",
   "unordered-list-item": "UL",
+  "ordered-list-item": "OL",
   "header-one": "H1",
   "header-two": "H2",
   "header-three": "H3",
+  "code-block": "{ }",
 };
 
 const BLOCKS_EXTENDED = {
@@ -74,9 +78,7 @@ const ENTITIES = [
   },
 ];
 
-const MAX_NESTING = 1;
-
-const MAX_NESTING_EXTENDED = 4;
+const MAX_LIST_NESTING = 15;
 
 type Props = {
   extended: boolean,
@@ -182,10 +184,8 @@ class DemoEditor extends Component<Props, State> {
   }
 
   onTab(event: SyntheticKeyboardEvent<>) {
-    const { extended } = this.props;
     const { editorState } = this.state;
-    const maxNesting = extended ? MAX_NESTING_EXTENDED : MAX_NESTING;
-    const newState = RichUtils.onTab(event, editorState, maxNesting);
+    const newState = RichUtils.onTab(event, editorState, MAX_LIST_NESTING);
 
     this.onChange(newState);
   }
@@ -230,9 +230,11 @@ class DemoEditor extends Component<Props, State> {
             onChange={this.onChange}
             stripPastedStyles={false}
             blockRendererFn={this.blockRenderer}
+            blockStyleFn={blockDepthStyleFn}
             onTab={this.onTab}
           />
         </SentryBoundary>
+        <ListNestingStyles max={MAX_LIST_NESTING} />
         <details>
           <summary>
             <span className="link">Debug</span>

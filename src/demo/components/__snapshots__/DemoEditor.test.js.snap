@@ -144,6 +144,12 @@ exports[`DemoEditor renders 1`] = `
     UL
   </button>
   <button
+    key="ordered-list-item"
+    onMouseDown={[Function]}
+  >
+    OL
+  </button>
+  <button
     key="header-one"
     onMouseDown={[Function]}
   >
@@ -160,6 +166,12 @@ exports[`DemoEditor renders 1`] = `
     onMouseDown={[Function]}
   >
     H3
+  </button>
+  <button
+    key="code-block"
+    onMouseDown={[Function]}
+  >
+    { }
   </button>
   <button
     key="LINK"
