@@ -4,7 +4,9 @@ import pkg from "./package.json";
 export default [
   {
     input: "src/lib/index.js",
-    external: ["draft-js"],
+    external: []
+      .concat(Object.keys(pkg.dependencies))
+      .concat(Object.keys(pkg.peerDependencies)),
     output: [
       { file: pkg.main, format: "cjs" },
       { file: pkg.module, format: "es" },
@@ -20,6 +22,7 @@ export default [
               modules: false,
             },
           ],
+          "react",
           "flow",
         ],
       }),
