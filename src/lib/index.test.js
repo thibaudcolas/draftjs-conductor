@@ -1,6 +1,10 @@
-// import {
-
-// } from "./index"
+import {
+  ListNestingStyles,
+  DRAFT_DEFAULT_MAX_DEPTH,
+  DRAFT_DEFAULT_DEPTH_CLASS,
+  generateListNestingStyles,
+  blockDepthStyleFn,
+} from "./index";
 
 const pkg = require("../../package.json");
 
@@ -8,5 +12,16 @@ const pkg = require("../../package.json");
  * Makes sure the API shape is validated against.
  */
 describe(pkg.name, () => {
-  it("exists", () => expect(true).toBe(true));
+  it("ListNestingStyles", () => expect(ListNestingStyles).toBeDefined());
+
+  it("DRAFT_DEFAULT_MAX_DEPTH", () =>
+    expect(DRAFT_DEFAULT_MAX_DEPTH).toBeDefined());
+
+  it("DRAFT_DEFAULT_DEPTH_CLASS", () =>
+    expect(DRAFT_DEFAULT_DEPTH_CLASS).toBeDefined());
+
+  it("generateListNestingStyles", () =>
+    expect(generateListNestingStyles).toBeDefined());
+
+  it("blockDepthStyleFn", () => expect(blockDepthStyleFn).toBeDefined());
 });
