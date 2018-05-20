@@ -10,6 +10,19 @@ const hasLibChanges =
   0;
 const hasREADMEChanges = danger.git.modified_files.includes("README.md");
 
+const hasLabels = danger.github.issue.labels.length !== 0;
+const isEnhancement =
+  danger.github.issue.labels.some((l) => l.name === "enhancement") ||
+  danger.github.pr.title.includes("feature");
+const isBug =
+  danger.github.issue.labels.some((l) => l.name === "bug") ||
+  danger.github.pr.title.includes("fix") ||
+  danger.github.pr.title.includes("bug");
+
+if (!hasLabels) {
+  message("What labels should we add to this PR?");
+}
+
 // Fails if the description is too short.
 if (!danger.github.pr.body || danger.github.pr.body.length < 10) {
   fail(":grey_question: This pull request needs a description.");
