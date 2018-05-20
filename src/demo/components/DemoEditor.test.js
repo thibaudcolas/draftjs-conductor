@@ -90,31 +90,110 @@ describe("DemoEditor", () => {
     expect(RichUtils.toggleBlockType).toHaveBeenCalled();
   });
 
-  it("toggleEntity - LINK", () => {
-    shallow(<DemoEditor extended={false} />)
-      .instance()
-      .toggleEntity("LINK");
-
-    expect(RichUtils.toggleLink).toHaveBeenCalled();
-  });
-
-  it("toggleEntity - IMAGE", () => {
-    shallow(<DemoEditor extended={false} />)
-      .instance()
-      .toggleEntity("IMAGE");
-
-    expect(AtomicBlockUtils.insertAtomicBlock).toHaveBeenCalled();
-  });
-
-  it("blockRenderer", () => {
-    expect(
+  describe("toggleEntity", () => {
+    it("LINK", () => {
       shallow(<DemoEditor extended={false} />)
+        .instance()
+        .toggleEntity("LINK");
+
+      expect(RichUtils.toggleLink).toHaveBeenCalled();
+    });
+
+    it("IMAGE", () => {
+      shallow(<DemoEditor extended={false} />)
+        .instance()
+        .toggleEntity("IMAGE");
+
+      expect(AtomicBlockUtils.insertAtomicBlock).toHaveBeenCalled();
+    });
+
+    it("HORIZONTAL_RULE", () => {
+      shallow(<DemoEditor extended={false} />)
+        .instance()
+        .toggleEntity("HORIZONTAL_RULE");
+
+      expect(AtomicBlockUtils.insertAtomicBlock).toHaveBeenCalled();
+    });
+  });
+
+  describe("blockRenderer", () => {
+    it("unstyled", () => {
+      expect(
+        shallow(<DemoEditor extended={false} />)
+          .instance()
+          .blockRenderer({
+            getType: () => "unstyled",
+          }),
+      ).toBe(null);
+    });
+
+    it("HORIZONTAL_RULE", () => {
+      window.sessionStorage.getItem = jest.fn(() =>
+        JSON.stringify({
+          entityMap: {
+            "3": {
+              type: "HORIZONTAL_RULE",
+              data: {},
+            },
+          },
+          blocks: [
+            {
+              type: "atomic",
+              text: " ",
+              entityRanges: [
+                {
+                  key: 3,
+                  offset: 0,
+                  length: 1,
+                },
+              ],
+            },
+          ],
+        }),
+      );
+      const Component = shallow(<DemoEditor extended={true} />)
         .instance()
         .blockRenderer({
           getType: () => "atomic",
+          getEntityAt: () => "3",
+        }).component;
+      expect(Component()).toEqual(<hr />);
+    });
+
+    it("IMAGE", () => {
+      window.sessionStorage.getItem = jest.fn(() =>
+        JSON.stringify({
+          entityMap: {
+            "1": {
+              type: "IMAGE",
+              data: {
+                src: "example.png",
+              },
+            },
+          },
+          blocks: [
+            {
+              type: "atomic",
+              text: " ",
+              entityRanges: [
+                {
+                  key: 1,
+                  offset: 0,
+                  length: 1,
+                },
+              ],
+            },
+          ],
         }),
-    ).toMatchObject({
-      editable: false,
+      );
+
+      const Component = shallow(<DemoEditor extended={true} />)
+        .instance()
+        .blockRenderer({
+          getType: () => "atomic",
+          getEntityAt: () => "1",
+        }).component;
+      expect(<Component />).toMatchSnapshot();
     });
   });
 

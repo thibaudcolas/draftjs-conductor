@@ -7,5 +7,8 @@ exports[`App renders 1`] = `
   <DemoEditor
     extended={false}
   />
+  <DemoEditor
+    extended={true}
+  />
 </div>
 `;

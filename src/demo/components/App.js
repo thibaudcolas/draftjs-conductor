@@ -9,6 +9,7 @@ class App extends Component<{}> {
     return (
       <div className="App">
         <DemoEditor extended={false} />
+        <DemoEditor extended={true} />
       </div>
     );
   }
