@@ -76,6 +76,12 @@ schedule(async () => {
       const deps = danger.utils.sentence(removed.map((d) => linkDep(d)));
       message(`:tada:, removing dependencies: ${deps}`);
     }
+
+    if (added.includes("draft-js")) {
+      warn(
+        ":scream: this PR updates Draft.js! Please make sure to review the Draft.js CHANGELOG.",
+      );
+    }
   }
 });
 
