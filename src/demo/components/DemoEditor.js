@@ -14,6 +14,11 @@ import type { DraftBlockType } from "draft-js/lib/DraftBlockType.js.flow";
 import type { DraftEntityType } from "draft-js/lib/DraftEntityType.js.flow";
 
 import { ListNestingStyles, blockDepthStyleFn } from "../../lib/index";
+import {
+  registerCopySource,
+  unregisterCopySource,
+  handleDraftEditorPastedText,
+} from "../../lib/copypaste";
 
 import SentryBoundary from "./SentryBoundary";
 import Highlight from "./Highlight";
@@ -98,6 +103,8 @@ type State = {
  * Demo editor.
  */
 class DemoEditor extends Component<Props, State> {
+  editorRef: ?Object;
+
   constructor(props: Props) {
     super(props);
     const { extended } = props;
@@ -130,6 +137,15 @@ class DemoEditor extends Component<Props, State> {
     (this: any).toggleBlock = this.toggleBlock.bind(this);
     (this: any).toggleEntity = this.toggleEntity.bind(this);
     (this: any).blockRenderer = this.blockRenderer.bind(this);
+    (this: any).handlePastedText = this.handlePastedText.bind(this);
+  }
+
+  componentDidMount() {
+    registerCopySource(this.editorRef);
+  }
+
+  componentWillUnmount() {
+    unregisterCopySource(this.editorRef);
   }
 
   onChange(nextState: EditorState) {
@@ -194,6 +210,13 @@ class DemoEditor extends Component<Props, State> {
     }
 
     const entityKey = block.getEntityAt(0);
+
+    if (!entityKey) {
+      return {
+        editable: false,
+      };
+    }
+
     const entity = content.getEntity(entityKey);
 
     if (entity.getType() === "HORIZONTAL_RULE") {
@@ -207,6 +230,22 @@ class DemoEditor extends Component<Props, State> {
       component: Image,
       editable: false,
     };
+  }
+
+  handlePastedText(text: string, html: ?string, editorState: EditorState) {
+    let newState = handleDraftEditorPastedText(
+      this.editorRef,
+      text,
+      html,
+      editorState,
+    );
+
+    if (newState) {
+      this.onChange(newState);
+      return true;
+    }
+
+    return false;
   }
 
   onTab(event: SyntheticKeyboardEvent<>) {
@@ -252,12 +291,16 @@ class DemoEditor extends Component<Props, State> {
             ))}
           </div>
           <Editor
+            ref={(ref) => {
+              this.editorRef = ref;
+            }}
             editorState={editorState}
             onChange={this.onChange}
             stripPastedStyles={false}
             blockRendererFn={this.blockRenderer}
             blockStyleFn={blockDepthStyleFn}
             onTab={this.onTab}
+            handlePastedText={this.handlePastedText}
           />
         </SentryBoundary>
         <ListNestingStyles max={MAX_LIST_NESTING} />
