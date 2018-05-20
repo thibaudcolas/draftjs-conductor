@@ -8,6 +8,9 @@ const libModifiedFiles = danger.git.modified_files.filter(
 const hasLibChanges =
   libModifiedFiles.filter((filepath) => !filepath.endsWith("test.js")).length >
   0;
+const hasLibTestChanges =
+  libModifiedFiles.filter((filepath) => filepath.endsWith("test.js")).length >
+  0;
 const hasREADMEChanges = danger.git.modified_files.includes("README.md");
 
 const hasLabels = danger.github.issue.labels.length !== 0;
@@ -26,6 +29,10 @@ if (!hasLabels) {
 // Fails if the description is too short.
 if (!danger.github.pr.body || danger.github.pr.body.length < 10) {
   fail(":grey_question: This pull request needs a description.");
+}
+
+if (hasLibChanges && !hasLibTestChanges && (isEnhancement || isBug)) {
+  message("This PR may require new test cases");
 }
 
 // Warns if the PR title contains [WIP]
