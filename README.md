@@ -6,6 +6,27 @@
 
 Check out the [online demo](https://thibaudcolas.github.io/draftjs-conductor)!
 
+## Features
+
+> This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html), and measures performance and [code coverage](https://coveralls.io/github/thibaudcolas/draftjs-conductor).
+>
+> This package ships as an ES module – if you use a recent module bundler (Webpack, Rollup, Parcel), it can be configured to only include the helpers you actually use in your code.
+
+### Infinite list nesting
+
+By default, Draft.js only provides support for [5 list levels](https://github.com/facebook/draft-js/blob/232791a4e92d94a52c869f853f9869367bdabdac/src/component/contents/DraftEditorContents-core.react.js#L58-L62) for bulleted and numbered lists. While this is often more than enough, some editors need to go further.
+
+Instead of manually writing and maintaining the list nesting styles, use this little helper:
+
+```js
+import { ListNestingStyles, blockDepthStyleFn } from 'draftjs-conductor';
+
+<Editor blockStyleFn={blockDepthStyleFn} />
+<ListNestingStyles max={6} />
+```
+
+`ListNestingStyles` will generate the necessary CSS for your editor’s lists. `blockDepthStyleFn` will then apply classes to blocks based on their depth, so the styles take effect. Voilà!
+
 ## Contributing
 
 See anything you like in here? Anything missing? We welcome all support, whether on bug reports, feature requests, code, design, reviews, tests, documentation, and more. Please have a look at our [contribution guidelines](.github/CONTRIBUTING.md).
