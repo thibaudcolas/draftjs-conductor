@@ -1,5 +1,5 @@
 import path from "path";
-import { danger, message, warn, fail, markdown, schedule } from "danger";
+import { danger, message, warn, fail, schedule } from "danger";
 import jest from "danger-plugin-jest";
 
 const libModifiedFiles = danger.git.modified_files.filter(
@@ -8,9 +8,6 @@ const libModifiedFiles = danger.git.modified_files.filter(
 const hasLibChanges =
   libModifiedFiles.filter((filepath) => !filepath.endsWith("test.js")).length >
   0;
-const pastingTestsChanges = danger.git.modified_files.filter((p) =>
-  p.startsWith("src/tests"),
-);
 const hasREADMEChanges = danger.git.modified_files.includes("README.md");
 
 // Fails if the description is too short.
@@ -29,12 +26,6 @@ if (isWIP) {
 
 if (hasLibChanges && !hasREADMEChanges) {
   warn("This pull request updates the library. Should the docs be updated?");
-}
-
-if (pastingTestsChanges.length > 0) {
-  if (pastingTestsChanges.filter((p) => p.endsWith("snap"))) {
-    warn("This PR may be introducing changes to the filtering");
-  }
 }
 
 const hasPackageChanges = danger.git.modified_files.includes("package.json");
