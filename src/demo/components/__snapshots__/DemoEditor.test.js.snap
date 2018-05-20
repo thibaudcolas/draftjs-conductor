@@ -112,8 +112,16 @@ exports[`DemoEditor #extended works 1`] = `
   >
     📷
   </button>
+  <button
+    key="HORIZONTAL_RULE"
+    onMouseDown={[Function]}
+  >
+    HR
+  </button>
 </div>
 `;
+
+exports[`DemoEditor blockRenderer IMAGE 1`] = `<Image />`;
 
 exports[`DemoEditor renders 1`] = `
 <div
@@ -184,6 +192,12 @@ exports[`DemoEditor renders 1`] = `
     onMouseDown={[Function]}
   >
     📷
+  </button>
+  <button
+    key="HORIZONTAL_RULE"
+    onMouseDown={[Function]}
+  >
+    HR
   </button>
 </div>
 `;

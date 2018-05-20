@@ -76,6 +76,12 @@ const ENTITIES = [
       src: "^http",
     },
   },
+  {
+    type: "HORIZONTAL_RULE",
+    label: "HR",
+    attributes: [],
+    whitelist: {},
+  },
 ];
 
 const MAX_LIST_NESTING = 15;
@@ -149,7 +155,7 @@ class DemoEditor extends Component<Props, State> {
     e.preventDefault();
   }
 
-  toggleEntity(type: DraftEntityType) {
+  toggleEntity(type: DraftEntityType | "HORIZONTAL_RULE") {
     const { editorState } = this.state;
     let content = editorState.getCurrentContent();
 
@@ -158,6 +164,13 @@ class DemoEditor extends Component<Props, State> {
         src:
           "https://thibaudcolas.github.io/draftjs-conductor/wysiwyg-magic-wand.png",
       });
+      const entityKey = content.getLastCreatedEntityKey();
+      this.onChange(
+        AtomicBlockUtils.insertAtomicBlock(editorState, entityKey, " "),
+      );
+    } else if (type === "HORIZONTAL_RULE") {
+      // $FlowFixMe
+      content = content.createEntity(type, "IMMUTABLE", {});
       const entityKey = content.getLastCreatedEntityKey();
       this.onChange(
         AtomicBlockUtils.insertAtomicBlock(editorState, entityKey, " "),
@@ -173,8 +186,21 @@ class DemoEditor extends Component<Props, State> {
   }
 
   blockRenderer(block: ContentBlock) {
+    const { editorState } = this.state;
+    const content = editorState.getCurrentContent();
+
     if (block.getType() !== "atomic") {
       return null;
+    }
+
+    const entityKey = block.getEntityAt(0);
+    const entity = content.getEntity(entityKey);
+
+    if (entity.getType() === "HORIZONTAL_RULE") {
+      return {
+        component: () => <hr />,
+        editable: false,
+      };
     }
 
     return {
