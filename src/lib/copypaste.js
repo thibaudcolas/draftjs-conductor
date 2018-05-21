@@ -10,35 +10,46 @@ import {
 } from "draft-js";
 import getFragmentFromSelection from "draft-js/lib/getFragmentFromSelection";
 
-const sourceEditors = {};
+const copyHandlersRegistry = {};
 
 export const registerCopySource = (ref: ElementRef<Editor>) => {
-  // TODO Do we want to keep this registry?
-  sourceEditors[ref.getEditorKey()] = ref;
-
   const editorContainer = ref.editorContainer.parentNode;
-  editorContainer.addEventListener("copy", (e) => {
-    // TODO Use internal clipboard directly instead of this?
+  const key = ref.getEditorKey();
+
+  const onCopy = (e) => {
+    // Get clipboard content like Draft.js would.
+    // https://github.com/facebook/draft-js/blob/37989027063ccc8279bfdc99a813b857549512a6/src/component/handlers/edit/editOnCopy.js#L34
     const fragment = getFragmentFromSelection(ref._latestEditorState);
 
     if (fragment) {
       const content = ContentState.createFromBlockArray(fragment.toArray());
-      // TODO Should clean this up from the DOM after the copy has been handled.
+      const serialisedContent = JSON.stringify(convertToRaw(content));
+
       e.target.setAttribute(
         "data-draftjs-conductor-fragment",
-        JSON.stringify(convertToRaw(content)),
+        serialisedContent,
       );
-    }
-  });
 
-  document.addEventListener("paste", (e) => {
-    console.log(e.clipboardData.getData("text/plain"));
-    console.log(e.clipboardData.getData("text/html"));
-  });
+      // TODO Is it necessary to clean this up from the DOM?
+      // TODO Look at React docs for HTML modifications to React-controlled elements.
+      // TODO Find a way to remove the attribute as soon as the browser handled the copy event.
+      window.setTimeout(() => {
+        e.target.removeAttribute("data-draftjs-conductor-fragment");
+      }, 100);
+    }
+  };
+
+  editorContainer.addEventListener("copy", onCopy);
+  copyHandlersRegistry[key] = onCopy;
 };
 
 export const unregisterCopySource = (ref: ElementRef<Editor>) => {
-  delete sourceEditors[ref.getEditorKey()];
+  const editorContainer = ref.editorContainer.parentNode;
+  const key = ref.getEditorKey();
+  const onCopy = copyHandlersRegistry[key];
+
+  editorContainer.removeEventListener("copy", onCopy);
+  delete copyHandlersRegistry[key];
 };
 
 export const handleDraftEditorPastedText = (
