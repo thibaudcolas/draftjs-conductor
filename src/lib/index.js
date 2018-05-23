@@ -14,3 +14,9 @@ export {
   generateListNestingStyles,
   blockDepthStyleFn,
 };
+
+export {
+  registerCopySource,
+  unregisterCopySource,
+  handleDraftEditorPastedText,
+} from "./api/copypaste";
