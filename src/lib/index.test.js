@@ -4,6 +4,9 @@ import {
   DRAFT_DEFAULT_DEPTH_CLASS,
   generateListNestingStyles,
   blockDepthStyleFn,
+  registerCopySource,
+  unregisterCopySource,
+  handleDraftEditorPastedText,
 } from "./index";
 
 const pkg = require("../../package.json");
@@ -24,4 +27,11 @@ describe(pkg.name, () => {
     expect(generateListNestingStyles).toBeDefined());
 
   it("blockDepthStyleFn", () => expect(blockDepthStyleFn).toBeDefined());
+
+  it("registerCopySource", () => expect(registerCopySource).toBeDefined());
+
+  it("unregisterCopySource", () => expect(unregisterCopySource).toBeDefined());
+
+  it("handleDraftEditorPastedText", () =>
+    expect(handleDraftEditorPastedText).toBeDefined());
 });

@@ -13,12 +13,13 @@ import {
 import type { DraftBlockType } from "draft-js/lib/DraftBlockType.js.flow";
 import type { DraftEntityType } from "draft-js/lib/DraftEntityType.js.flow";
 
-import { ListNestingStyles, blockDepthStyleFn } from "../../lib/index";
 import {
+  ListNestingStyles,
+  blockDepthStyleFn,
   registerCopySource,
   unregisterCopySource,
   handleDraftEditorPastedText,
-} from "../../lib/copypaste";
+} from "../../lib/index";
 
 import SentryBoundary from "./SentryBoundary";
 import Highlight from "./Highlight";
