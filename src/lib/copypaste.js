@@ -58,39 +58,36 @@ export const handleDraftEditorPastedText = (
   html: ?string,
   editorState: EditorState,
 ) => {
-  const isEditor =
-    html &&
-    html.includes("data-editor") &&
-    html.includes("data-draftjs-conductor-fragment");
-  const sourceKey = html && isEditor ? /data-editor="(\w+)"/.exec(html)[1] : "";
-  const editorKey = ref.getEditorKey();
+  // Plain-text pastes are better handled by Draft.js.
+  if (!html) {
+    return false;
+  }
 
-  console.log("handlePastedText");
-
-  // if (!sourceKey || sourceKey === editorKey || !sourceEditors[sourceKey]) {
-  //   return false;
-  // }
-
-  // TODO Is this regex safe? Can there be a safer one?
-  const fragment =
-    html && isEditor
-      ? /data-draftjs-conductor-fragment="([^"]+)"/.exec(html)[1]
-      : "";
-  console.log(fragment);
   const parser = new DOMParser();
-  const docFragment = parser.parseFromString(fragment, "text/html");
-  const json = docFragment.body.innerHTML;
-  console.log(JSON.parse(json));
-  const clipboard = convertFromRaw(JSON.parse(json)).getBlockMap();
+  const doc = parser.parseFromString(html, "text/html");
+  const editor = doc.querySelector("[data-editor]");
+  const sourceEditorKey = editor ? editor.getAttribute("data-editor") : "";
+  const targetEditorKey = ref.getEditorKey();
+  const serialisedContent = doc.querySelector(
+    "[data-draftjs-conductor-fragment]",
+  );
 
-  // TODO Potentially layer this separately.
-  if (clipboard) {
-    const newContent = Modifier.replaceWithFragment(
+  if (
+    sourceEditorKey &&
+    sourceEditorKey !== targetEditorKey &&
+    serialisedContent
+  ) {
+    const rawContent = JSON.parse(
+      serialisedContent.getAttribute("data-draftjs-conductor-fragment") || "",
+    );
+    const clipboard = convertFromRaw(rawContent).getBlockMap();
+
+    const content = Modifier.replaceWithFragment(
       editorState.getCurrentContent(),
       editorState.getSelection(),
       clipboard,
     );
-    return EditorState.push(editorState, newContent, "insert-fragment");
+    return EditorState.push(editorState, content, "insert-fragment");
   }
 
   return false;
