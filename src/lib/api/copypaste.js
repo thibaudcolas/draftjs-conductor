@@ -10,48 +10,43 @@ import {
 } from "draft-js";
 import getFragmentFromSelection from "draft-js/lib/getFragmentFromSelection";
 
-const copyHandlersRegistry = {};
-
 // Internal attribute added by Draft.js to identify blocks from a given editor.
 const EDITOR_ATTR = "data-editor";
 // Custom attribute to store Draft.js content in the HTML clipboard.
 const FRAGMENT_ATTR = "data-draftjs-conductor-fragment";
 
-export const registerCopySource = (ref: ElementRef<Editor>) => {
-  const editorContainer = ref.editorContainer.parentNode;
-  const key = ref.getEditorKey();
+const draftEditorCopyListener = (ref: ElementRef<Editor>, e) => {
+  // Get clipboard content like Draft.js would.
+  // https://github.com/facebook/draft-js/blob/37989027063ccc8279bfdc99a813b857549512a6/src/component/handlers/edit/editOnCopy.js#L34
+  const fragment = getFragmentFromSelection(ref._latestEditorState);
 
-  const onCopy = (e) => {
-    // Get clipboard content like Draft.js would.
-    // https://github.com/facebook/draft-js/blob/37989027063ccc8279bfdc99a813b857549512a6/src/component/handlers/edit/editOnCopy.js#L34
-    const fragment = getFragmentFromSelection(ref._latestEditorState);
+  if (fragment) {
+    const content = ContentState.createFromBlockArray(fragment.toArray());
+    const serialisedContent = JSON.stringify(convertToRaw(content));
 
-    if (fragment) {
-      const content = ContentState.createFromBlockArray(fragment.toArray());
-      const serialisedContent = JSON.stringify(convertToRaw(content));
+    e.target.setAttribute(FRAGMENT_ATTR, serialisedContent);
 
-      e.target.setAttribute(FRAGMENT_ATTR, serialisedContent);
-
-      // TODO Is it necessary to clean this up from the DOM?
-      // TODO Look at React docs for HTML modifications to React-controlled elements.
-      // TODO Find a way to remove the attribute as soon as the browser handled the copy event.
-      window.setTimeout(() => {
-        e.target.removeAttribute(FRAGMENT_ATTR);
-      }, 100);
-    }
-  };
-
-  editorContainer.addEventListener("copy", onCopy);
-  copyHandlersRegistry[key] = onCopy;
+    // TODO Is it necessary to clean this up from the DOM?
+    // TODO Look at React docs for HTML modifications to React-controlled elements.
+    // TODO Find a way to remove the attribute as soon as the browser handled the copy event.
+    window.setTimeout(() => {
+      e.target.removeAttribute(FRAGMENT_ATTR);
+    }, 100);
+  }
 };
 
-export const unregisterCopySource = (ref: ElementRef<Editor>) => {
+export const registerCopySource = (ref: ElementRef<Editor>) => {
+  // TODO CHeck on what element best to add the event handler.
   const editorContainer = ref.editorContainer.parentNode;
-  const key = ref.getEditorKey();
-  const onCopy = copyHandlersRegistry[key];
+  const onCopy = draftEditorCopyListener.bind(null, ref);
 
-  editorContainer.removeEventListener("copy", onCopy);
-  delete copyHandlersRegistry[key];
+  editorContainer.addEventListener("copy", onCopy);
+
+  return {
+    unregister() {
+      editorContainer.removeEventListener("copy", onCopy);
+    },
+  };
 };
 
 /**
@@ -61,7 +56,6 @@ export const unregisterCopySource = (ref: ElementRef<Editor>) => {
  */
 export const handleDraftEditorPastedText = (
   ref: ElementRef<Editor>,
-  text: string,
   html: ?string,
   editorState: EditorState,
 ) => {

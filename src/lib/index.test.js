@@ -5,7 +5,6 @@ import {
   generateListNestingStyles,
   blockDepthStyleFn,
   registerCopySource,
-  unregisterCopySource,
   handleDraftEditorPastedText,
 } from "./index";
 
@@ -29,8 +28,6 @@ describe(pkg.name, () => {
   it("blockDepthStyleFn", () => expect(blockDepthStyleFn).toBeDefined());
 
   it("registerCopySource", () => expect(registerCopySource).toBeDefined());
-
-  it("unregisterCopySource", () => expect(unregisterCopySource).toBeDefined());
 
   it("handleDraftEditorPastedText", () =>
     expect(handleDraftEditorPastedText).toBeDefined());

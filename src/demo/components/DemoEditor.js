@@ -17,7 +17,6 @@ import {
   ListNestingStyles,
   blockDepthStyleFn,
   registerCopySource,
-  unregisterCopySource,
   handleDraftEditorPastedText,
 } from "../../lib/index";
 
@@ -105,6 +104,7 @@ type State = {
  */
 class DemoEditor extends Component<Props, State> {
   editorRef: ?Object;
+  copySource: ?Object;
 
   constructor(props: Props) {
     super(props);
@@ -142,11 +142,13 @@ class DemoEditor extends Component<Props, State> {
   }
 
   componentDidMount() {
-    registerCopySource(this.editorRef);
+    this.copySource = registerCopySource(this.editorRef);
   }
 
   componentWillUnmount() {
-    unregisterCopySource(this.editorRef);
+    if (this.copySource) {
+      this.copySource.unregister();
+    }
   }
 
   onChange(nextState: EditorState) {
@@ -236,7 +238,6 @@ class DemoEditor extends Component<Props, State> {
   handlePastedText(text: string, html: ?string, editorState: EditorState) {
     let newState = handleDraftEditorPastedText(
       this.editorRef,
-      text,
       html,
       editorState,
     );
