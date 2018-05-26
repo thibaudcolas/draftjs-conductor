@@ -17,6 +17,5 @@ export {
 
 export {
   registerCopySource,
-  unregisterCopySource,
   handleDraftEditorPastedText,
 } from "./api/copypaste";
