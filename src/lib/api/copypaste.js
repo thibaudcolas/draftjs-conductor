@@ -21,30 +21,35 @@ const draftEditorCopyListener = (ref: ElementRef<Editor>, e) => {
   const fragment = getFragmentFromSelection(ref._latestEditorState);
 
   if (fragment) {
+    const editorElt = ref.editor;
     const content = ContentState.createFromBlockArray(fragment.toArray());
     const serialisedContent = JSON.stringify(convertToRaw(content));
 
+    const fragmentElts = [].slice.call(
+      editorElt.querySelectorAll(`[${FRAGMENT_ATTR}]`),
+    );
+
+    // Clean up existing fragment attrs. It's important that the paste content only contains one such attribute.
+    fragmentElts.forEach((elt) => elt.removeAttribute(FRAGMENT_ATTR));
+
     e.target.setAttribute(FRAGMENT_ATTR, serialisedContent);
 
-    // TODO Is it necessary to clean this up from the DOM?
-    // TODO Look at React docs for HTML modifications to React-controlled elements.
-    // TODO Find a way to remove the attribute as soon as the browser handled the copy event.
+    // Clean up our attribute from React's DOM after the copy has happened.
     window.setTimeout(() => {
       e.target.removeAttribute(FRAGMENT_ATTR);
-    }, 100);
+    }, 1000);
   }
 };
 
 export const registerCopySource = (ref: ElementRef<Editor>) => {
-  // TODO CHeck on what element best to add the event handler.
-  const editorContainer = ref.editorContainer.parentNode;
+  const editorElt = ref.editor;
   const onCopy = draftEditorCopyListener.bind(null, ref);
 
-  editorContainer.addEventListener("copy", onCopy);
+  editorElt.addEventListener("copy", onCopy);
 
   return {
     unregister() {
-      editorContainer.removeEventListener("copy", onCopy);
+      editorElt.removeEventListener("copy", onCopy);
     },
   };
 };
@@ -68,11 +73,21 @@ export const handleDraftEditorPastedText = (
   const editor = doc.querySelector(`[${EDITOR_ATTR}]`);
   const sourceEditorKey = editor ? editor.getAttribute(EDITOR_ATTR) : "";
   const targetEditorKey = ref.getEditorKey();
-  const raw = doc.querySelector(`[${FRAGMENT_ATTR}]`);
+  const fragmentElt = doc.querySelector(`[${FRAGMENT_ATTR}]`);
 
   // Handle the paste if it comes from Draft.js, but not the current editor, and serialised content is present.
-  if (sourceEditorKey && sourceEditorKey !== targetEditorKey && raw) {
-    const rawContent = JSON.parse(raw.getAttribute(FRAGMENT_ATTR) || "");
+  if (sourceEditorKey && sourceEditorKey !== targetEditorKey && fragmentElt) {
+    const fragmentAttr = fragmentElt.getAttribute(FRAGMENT_ATTR) || "";
+    let rawContent;
+
+    try {
+      // If JSON parsing fails, leave paste handling to Draft.js.
+      // There is no reason for this to happen, unless the clipboard was altered somehow.
+      rawContent = JSON.parse(fragmentAttr);
+    } catch (error) {
+      return false;
+    }
+
     const fragment = convertFromRaw(rawContent).getBlockMap();
 
     const content = Modifier.replaceWithFragment(
