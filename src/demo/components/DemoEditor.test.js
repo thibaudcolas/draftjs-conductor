@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { mount } from "enzyme";
 import { EditorState, RichUtils, AtomicBlockUtils } from "draft-js";
 
 import DemoEditor from "./DemoEditor";
@@ -26,14 +26,14 @@ describe("DemoEditor", () => {
   it("renders", () => {
     // Do not snapshot the Draft.js editor, as it contains unstable keys in the content.
     expect(
-      shallow(<DemoEditor extended={false} />).find(".EditorToolbar"),
+      mount(<DemoEditor extended={false} />).find(".EditorToolbar"),
     ).toMatchSnapshot();
   });
 
   describe("#extended", () => {
     it("works", () => {
       expect(
-        shallow(<DemoEditor extended />).find(".EditorToolbar"),
+        mount(<DemoEditor extended />).find(".EditorToolbar"),
       ).toMatchSnapshot();
     });
 
@@ -51,7 +51,7 @@ describe("DemoEditor", () => {
       );
 
       expect(
-        shallow(<DemoEditor extended />)
+        mount(<DemoEditor extended />)
           .state("editorState")
           .getCurrentContent()
           .getBlockMap()
@@ -66,7 +66,7 @@ describe("DemoEditor", () => {
   describe("onChange", () => {
     it("works", () => {
       const state = EditorState.createEmpty();
-      const wrapper = shallow(<DemoEditor extended={false} />);
+      const wrapper = mount(<DemoEditor extended={false} />);
 
       wrapper.instance().onChange(state);
 
@@ -75,7 +75,7 @@ describe("DemoEditor", () => {
   });
 
   it("toggleStyle", () => {
-    shallow(<DemoEditor extended={false} />)
+    mount(<DemoEditor extended={false} />)
       .instance()
       .toggleStyle("BOLD", new Event("mousedown"));
 
@@ -83,7 +83,7 @@ describe("DemoEditor", () => {
   });
 
   it("toggleBlock", () => {
-    shallow(<DemoEditor extended={false} />)
+    mount(<DemoEditor extended={false} />)
       .instance()
       .toggleBlock("header-two", new Event("mousedown"));
 
@@ -92,7 +92,7 @@ describe("DemoEditor", () => {
 
   describe("toggleEntity", () => {
     it("LINK", () => {
-      shallow(<DemoEditor extended={false} />)
+      mount(<DemoEditor extended={false} />)
         .instance()
         .toggleEntity("LINK");
 
@@ -100,7 +100,7 @@ describe("DemoEditor", () => {
     });
 
     it("IMAGE", () => {
-      shallow(<DemoEditor extended={false} />)
+      mount(<DemoEditor extended={false} />)
         .instance()
         .toggleEntity("IMAGE");
 
@@ -108,7 +108,7 @@ describe("DemoEditor", () => {
     });
 
     it("HORIZONTAL_RULE", () => {
-      shallow(<DemoEditor extended={false} />)
+      mount(<DemoEditor extended={false} />)
         .instance()
         .toggleEntity("HORIZONTAL_RULE");
 
@@ -119,7 +119,7 @@ describe("DemoEditor", () => {
   describe("blockRenderer", () => {
     it("unstyled", () => {
       expect(
-        shallow(<DemoEditor extended={false} />)
+        mount(<DemoEditor extended={false} />)
           .instance()
           .blockRenderer({
             getType: () => "unstyled",
@@ -151,7 +151,7 @@ describe("DemoEditor", () => {
           ],
         }),
       );
-      const Component = shallow(<DemoEditor extended={true} />)
+      const Component = mount(<DemoEditor extended={true} />)
         .instance()
         .blockRenderer({
           getType: () => "atomic",
@@ -187,7 +187,7 @@ describe("DemoEditor", () => {
         }),
       );
 
-      const Component = shallow(<DemoEditor extended={true} />)
+      const Component = mount(<DemoEditor extended={true} />)
         .instance()
         .blockRenderer({
           getType: () => "atomic",
@@ -199,7 +199,7 @@ describe("DemoEditor", () => {
 
   describe("onTab", () => {
     it("works", () => {
-      const wrapper = shallow(<DemoEditor extended={false} />);
+      const wrapper = mount(<DemoEditor extended={false} />);
 
       wrapper.instance().onChange = jest.fn();
       wrapper.instance().onTab({});
@@ -207,7 +207,7 @@ describe("DemoEditor", () => {
     });
 
     it("#extended", () => {
-      const wrapper = shallow(<DemoEditor extended />);
+      const wrapper = mount(<DemoEditor extended />);
 
       wrapper.instance().onChange = jest.fn();
       wrapper.instance().onTab({});
