@@ -3,6 +3,7 @@ import { mount } from "enzyme";
 import { EditorState, RichUtils, AtomicBlockUtils } from "draft-js";
 
 import DemoEditor from "./DemoEditor";
+import DraftUtils from "../utils/DraftUtils";
 
 describe("DemoEditor", () => {
   beforeEach(() => {
@@ -211,6 +212,28 @@ describe("DemoEditor", () => {
 
       wrapper.instance().onChange = jest.fn();
       wrapper.instance().onTab({});
+      expect(wrapper.instance().onChange).toHaveBeenCalled();
+    });
+  });
+
+  describe("addBR", () => {
+    let wrapper;
+
+    beforeEach(() => {
+      wrapper = mount(<DemoEditor extended={false} />);
+
+      jest.spyOn(DraftUtils, "addLineBreak");
+      jest.spyOn(wrapper.instance(), "onChange");
+    });
+
+    afterEach(() => {
+      DraftUtils.addLineBreak.mockRestore();
+    });
+
+    it("works", () => {
+      wrapper.instance().addBR();
+
+      expect(DraftUtils.addLineBreak).toHaveBeenCalled();
       expect(wrapper.instance().onChange).toHaveBeenCalled();
     });
   });

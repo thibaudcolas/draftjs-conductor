@@ -25,6 +25,8 @@ import Highlight from "./Highlight";
 import Link, { linkStrategy } from "./Link";
 import Image from "./Image";
 
+import DraftUtils from "../utils/DraftUtils";
+
 import "./DemoEditor.css";
 
 const BLOCKS = {
@@ -134,6 +136,7 @@ class DemoEditor extends Component<Props, State> {
     };
     (this: any).onChange = this.onChange.bind(this);
     (this: any).onTab = this.onTab.bind(this);
+    (this: any).addBR = this.addBR.bind(this);
     (this: any).toggleStyle = this.toggleStyle.bind(this);
     (this: any).toggleBlock = this.toggleBlock.bind(this);
     (this: any).toggleEntity = this.toggleEntity.bind(this);
@@ -257,6 +260,11 @@ class DemoEditor extends Component<Props, State> {
     this.onChange(newState);
   }
 
+  addBR() {
+    const { editorState } = this.state;
+    this.onChange(DraftUtils.addLineBreak(editorState));
+  }
+
   render() {
     const { extended } = this.props;
     const { editorState } = this.state;
@@ -291,6 +299,7 @@ class DemoEditor extends Component<Props, State> {
                 {type.label}
               </button>
             ))}
+            <button onMouseDown={this.addBR}>BR</button>
           </div>
           <Editor
             ref={(ref) => {
