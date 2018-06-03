@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`copypaste copy/cut listener works 1`] = `"<div data-draftjs-conductor-fragment=\\"{&quot;blocks&quot;:[{&quot;key&quot;:&quot;a&quot;,&quot;text&quot;:&quot;test&quot;,&quot;type&quot;:&quot;unstyled&quot;,&quot;depth&quot;:0,&quot;inlineStyleRanges&quot;:[],&quot;entityRanges&quot;:[],&quot;data&quot;:{}}],&quot;entityMap&quot;:{}}\\"><div></div></div>"`;
