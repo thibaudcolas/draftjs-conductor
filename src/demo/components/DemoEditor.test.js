@@ -231,7 +231,9 @@ describe("DemoEditor", () => {
     });
 
     it("works", () => {
-      wrapper.instance().addBR();
+      wrapper.instance().addBR({
+        preventDefault() {},
+      });
 
       expect(DraftUtils.addLineBreak).toHaveBeenCalled();
       expect(wrapper.instance().onChange).toHaveBeenCalled();

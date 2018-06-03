@@ -256,9 +256,11 @@ class DemoEditor extends Component<Props, State> {
     this.onChange(newState);
   }
 
-  addBR() {
+  addBR(e: Event) {
     const { editorState } = this.state;
     this.onChange(DraftUtils.addLineBreak(editorState));
+
+    e.preventDefault();
   }
 
   render() {
