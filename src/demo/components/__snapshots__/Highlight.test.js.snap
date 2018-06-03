@@ -2,7 +2,6 @@
 
 exports[`Highlight renders 1`] = `
 <pre
-  className="language-javascript"
   style={
     Object {
       "position": "relative",
@@ -20,12 +19,6 @@ exports[`Highlight renders 1`] = `
   >
     Copy
   </button>
-  <code
-    dangerouslySetInnerHTML={
-      Object {
-        "__html": "",
-      }
-    }
-  />
+  <code />
 </pre>
 `;
