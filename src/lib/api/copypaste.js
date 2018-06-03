@@ -78,12 +78,13 @@ export const handleDraftEditorPastedText = (
 
   // Handle the paste if it comes from draftjs-conductor.
   if (fragmentElt) {
-    const fragmentAttr = fragmentElt.getAttribute(FRAGMENT_ATTR) || "";
+    const fragmentAttr = fragmentElt.getAttribute(FRAGMENT_ATTR);
     let rawContent;
 
     try {
       // If JSON parsing fails, leave paste handling to Draft.js.
       // There is no reason for this to happen, unless the clipboard was altered somehow.
+      // $FlowFixMe
       rawContent = JSON.parse(fragmentAttr);
     } catch (error) {
       return false;
