@@ -31,6 +31,15 @@ describe("DemoEditor", () => {
     ).toMatchSnapshot();
   });
 
+  it("componentWillUnmount", () => {
+    const wrapper = mount(<DemoEditor extended={false} />);
+    const copySource = wrapper.instance().copySource;
+    jest.spyOn(copySource, "unregister");
+    expect(copySource).not.toBeNull();
+    wrapper.unmount();
+    expect(copySource.unregister).toHaveBeenCalled();
+  });
+
   describe("#extended", () => {
     it("works", () => {
       expect(
@@ -128,6 +137,28 @@ describe("DemoEditor", () => {
       ).toBe(null);
     });
 
+    it("no entity", () => {
+      window.sessionStorage.getItem = jest.fn(() =>
+        JSON.stringify({
+          entityMap: {},
+          blocks: [
+            {
+              type: "atomic",
+              text: " ",
+              entityRanges: [],
+            },
+          ],
+        }),
+      );
+      const editable = mount(<DemoEditor extended={true} />)
+        .instance()
+        .blockRenderer({
+          getType: () => "atomic",
+          getEntityAt: () => null,
+        }).editable;
+      expect(editable).toBe(false);
+    });
+
     it("HORIZONTAL_RULE", () => {
       window.sessionStorage.getItem = jest.fn(() =>
         JSON.stringify({
@@ -195,6 +226,53 @@ describe("DemoEditor", () => {
           getEntityAt: () => "1",
         }).component;
       expect(<Component />).toMatchSnapshot();
+    });
+  });
+
+  describe("handlePastedText", () => {
+    it("handled by handleDraftEditorPastedText", () => {
+      const wrapper = mount(<DemoEditor extended={false} />);
+      const content = {
+        blocks: [
+          {
+            data: {},
+            depth: 0,
+            entityRanges: [],
+            inlineStyleRanges: [],
+            key: "a",
+            text: "hello,\nworld!",
+            type: "unstyled",
+          },
+        ],
+        entityMap: {},
+      };
+      const html = `<div data-draftjs-conductor-fragment='${JSON.stringify(
+        content,
+      )}'><p>Hello, world!</p></div>`;
+
+      expect(
+        wrapper
+          .instance()
+          .handlePastedText(
+            "hello,\nworld!",
+            html,
+            wrapper.state("editorState"),
+          ),
+      ).toBe(true);
+    });
+
+    it("default handling", () => {
+      const wrapper = mount(<DemoEditor extended={false} />);
+
+      expect(
+        wrapper
+          .instance()
+          .handlePastedText(
+            "this is plain text paste",
+            "this is plain text paste",
+            wrapper.state("editorState"),
+          ),
+      ).toBe(false);
     });
   });
 
