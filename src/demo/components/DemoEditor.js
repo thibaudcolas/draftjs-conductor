@@ -106,7 +106,7 @@ type State = {
  */
 class DemoEditor extends Component<Props, State> {
   editorRef: ?Object;
-  copySource: ?Object;
+  copySource: Object;
 
   constructor(props: Props) {
     super(props);
@@ -149,9 +149,7 @@ class DemoEditor extends Component<Props, State> {
   }
 
   componentWillUnmount() {
-    if (this.copySource) {
-      this.copySource.unregister();
-    }
+    this.copySource.unregister();
   }
 
   onChange(nextState: EditorState) {
