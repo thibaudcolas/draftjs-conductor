@@ -48,10 +48,12 @@ export const registerCopySource = (ref: ElementRef<Editor>) => {
   const onCopy = draftEditorCopyListener.bind(null, ref);
 
   editorElt.addEventListener("copy", onCopy);
+  editorElt.addEventListener("cut", onCopy);
 
   return {
     unregister() {
       editorElt.removeEventListener("copy", onCopy);
+      editorElt.removeEventListener("cut", onCopy);
     },
   };
 };
