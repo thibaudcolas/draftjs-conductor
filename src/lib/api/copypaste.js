@@ -25,7 +25,8 @@ const draftEditorCopyListener = (ref: ElementRef<Editor>, e: Object) => {
   // https://github.com/facebook/draft-js/blob/37989027063ccc8279bfdc99a813b857549512a6/src/component/handlers/edit/editOnCopy.js#L34
   const fragment = getFragmentFromSelection(ref._latestEditorState);
 
-  if (selection.rangeCount > 0 && fragment) {
+  // Override the default behavior if there is a selection, and content, and clipboardData is supported (IE11 is out).
+  if (selection.rangeCount > 0 && fragment && e.clipboardData) {
     const content = ContentState.createFromBlockArray(fragment.toArray());
     const serialisedContent = JSON.stringify(convertToRaw(content));
 

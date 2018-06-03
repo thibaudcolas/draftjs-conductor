@@ -106,6 +106,8 @@ Relevant Draft.js issues:
 * [Copy/paste between editors strips soft returns – facebook/draft-js#1154](https://github.com/facebook/draft-js/issues/1154)
 * [Sequential unstyled blocks are merged into the same block on paste – facebook/draft-js#738](https://github.com/facebook/draft-js/issues/738)
 
+Note: IE11 isn’t supported, as it doesn't support storing HTML in the clipboard.
+
 ## Contributing
 
 See anything you like in here? Anything missing? We welcome all support, whether on bug reports, feature requests, code, design, reviews, tests, documentation, and more. Please have a look at our [contribution guidelines](.github/CONTRIBUTING.md).
