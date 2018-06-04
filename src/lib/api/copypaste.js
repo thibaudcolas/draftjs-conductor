@@ -36,6 +36,10 @@ const draftEditorCopyListener = (ref: ElementRef<Editor>, e: Object) => {
     // Modern browsers only support a single range.
     fragmentElt.appendChild(selection.getRangeAt(0).cloneContents());
     fragmentElt.setAttribute(FRAGMENT_ATTR, serialisedContent);
+    // We set the style property to replicate the browser's behavior of inline styles in rich text copy-paste.
+    // In Draft.js, this is important for line breaks to be interpreted correctly when pasted into another word processor.
+    // See https://github.com/facebook/draft-js/blob/a1f4593d8fa949954053e5d5840d33ce1d1082c6/src/component/base/DraftEditor.react.js#L328.
+    fragmentElt.setAttribute("style", "white-space: pre-wrap;");
 
     e.clipboardData.setData("text/plain", selection.toString());
     e.clipboardData.setData("text/html", fragmentElt.outerHTML);
