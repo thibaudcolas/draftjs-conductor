@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.1"></a>
+## [0.2.1](https://github.com/thibaudcolas/draftjs-conductor/compare/v0.2.0...v0.2.1) (2018-06-04)
+
+
+### Bug Fixes
+
+* **copy-paste:** preserve line breaks for pasting into word processors ([8a09efa](https://github.com/thibaudcolas/draftjs-conductor/commit/8a09efa))
+
+
+
 <a name="0.2.0"></a>
 
 # [0.2.0](https://github.com/thibaudcolas/draftjs-conductor/compare/v0.1.0...v0.2.0) (2018-06-03)
