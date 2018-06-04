@@ -9,8 +9,10 @@ const hasLibChanges =
   libModifiedFiles.filter((filepath) => !filepath.endsWith("test.js")).length >
   0;
 const hasLibTestChanges =
-  libModifiedFiles.filter((filepath) => filepath.endsWith("test.js")).length >
-  0;
+  libModifiedFiles.filter(
+    (filepath) =>
+      filepath.endsWith("test.js") || filepath.endsWith("test.js.snap"),
+  ).length > 0;
 const hasREADMEChanges = danger.git.modified_files.includes("README.md");
 
 const hasLabels = danger.github.issue.labels.length !== 0;
