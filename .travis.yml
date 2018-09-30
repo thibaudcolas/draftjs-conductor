@@ -2,22 +2,22 @@ sudo: false
 language: node_js
 cache:
   directories:
-  - node_modules
+    - node_modules
 install:
-- npm install
-- npm install -g coveralls @commitlint/travis-cli@^7.0.0
+  - npm install
+  - npm install -g coveralls @commitlint/travis-cli@^7.0.0
 script:
-- npm run test:ci
-- commitlint-travis
-- npm run release -- --dry-run
-- npm run danger
-- npm run report:package
+  - npm run test:ci
+  - commitlint-travis
+  - npm run release -- --dry-run
+  - npm run danger
+  - npm run report:package
 after_success:
-- mv coverage/lcov-report build || true
-- cat ./coverage/lcov.info | coveralls
+  - mv coverage/lcov-report build || true
+  - cat ./coverage/lcov.info | coveralls
 branches:
   except:
-  - gh-pages
+    - gh-pages
 deploy:
   provider: pages
   skip_cleanup: true
@@ -29,5 +29,5 @@ notifications:
   email: false
 env:
   global:
-  - secure: BWk0TExPUtvX7snFCF5MLlO2WkUXLQ/81g3MLDAMLXqgOHT6yjr9tt1hPXXQarOk5Y/dZp6sedoFOVSRinkfxFfQ/K/3z9itioPdcXtEPIqdw9JYoMC73OnLG1OvJx9iTbx5Y666y4QZNhlmcLSr9liC0qKUaeM3w8SZkBwTt1r5ujM0fc/YPTonAAXLHWeBgaFMI09YBQ6BPqBVYIjYnntXskurp6ViYHsfeRK8jdn+xZ2+pSj9i8xgvgDgQQW6Gf5uMJNGcoOa4naPbjZji31hzITTGo0WbsEc8CHSuBtHomJuvTPqgNxANL8UrGJs3snVwsFm7QtnBa4lObersEWLIQLvtZ+gSw0D0Qp7W1dA73ttiF6au3JdpH14TPQwdUmKsrOXnt3qlIoIFdZJDCuahsFHwtvqnUm0a/kYcEqvnkv1rzJ+3SxeATlU++HUzxgLw+C3nHT73/q1o0F0V0Zgb2XHwNhxG7k40uLA+bK4vAeQQ1Q8Hqoz/50l/tiafh5WdZNeNKUNGBeD0YlpuI7//5y1dWBY0dzdMJjfAZnItMhuLEYxgpjxJhPLjDaKiEXzOiGLyR5sG68wrk7sMwORIt9ugu3OP8zYA2q8vcafxgXDsCTPeh3di+JLvL+Hkg0d6ySLS9bJEZkr51Fex+Iy0Lum6XEiRs2t7P5uLuM=
-  - secure: MLJ0Fw2L8VB7WrdXmGaLkIOqCosqkOiukiD+tF/c8KnvKmemnsBG79d4iDZ2P3LU/ltjccoWPB0viZShZFzjH+z7Tv/6lWtzPklXBooCgdiunIpWQ/7iHHs+t3PKOfzt9mPlPM+bFqTrDEjJHfzJPJdXDzD20TM1k6/ePhUvaYiTR4XxD9vQZeVVXopkXyfp0Tvloma5/fYD8C+g/+vkEZjInbyhKse168MxeMl9t/8K3JeRhPExuge6fpeUASaz0kEHLTlxMLxiykfBoFSd7bHRV9l28S5pLbWTR0UlXYRT200TCRcJVjHQxiKBH8tBUJuSIsrAI3wd3qRSqc6i1AHyzTWCnx/mAmH0Je290HgMjdDpNIf7IyEEclmMzdfJcdDnqcYSbmY9CtexclwF67H63bG8xIAlzUIgglPraVtrARSxOAiN/6SAP5091WIdxMf8Imru3gKJBpvZNtyM9n1SJ2jZciBOM5w3QuA0qxBu0raqUr91pn0Z/JTy1ZytxRH8ekfoXLYlOVeYj9Poe43k8mGLIWX55EbsAt1tLHvQNPvOUxpMw0R4XsJySJ+jZaX8/UTBOEl2TJevEo+bX5rckQESAR5XnIKjcaZB6QiF/hNpFidg0BMtMmuUodRrGQ9GZGbN8Gs3UYJQ09NxYJ7OkgWQJGErP0OmcgszWbg=
+    - secure: BWk0TExPUtvX7snFCF5MLlO2WkUXLQ/81g3MLDAMLXqgOHT6yjr9tt1hPXXQarOk5Y/dZp6sedoFOVSRinkfxFfQ/K/3z9itioPdcXtEPIqdw9JYoMC73OnLG1OvJx9iTbx5Y666y4QZNhlmcLSr9liC0qKUaeM3w8SZkBwTt1r5ujM0fc/YPTonAAXLHWeBgaFMI09YBQ6BPqBVYIjYnntXskurp6ViYHsfeRK8jdn+xZ2+pSj9i8xgvgDgQQW6Gf5uMJNGcoOa4naPbjZji31hzITTGo0WbsEc8CHSuBtHomJuvTPqgNxANL8UrGJs3snVwsFm7QtnBa4lObersEWLIQLvtZ+gSw0D0Qp7W1dA73ttiF6au3JdpH14TPQwdUmKsrOXnt3qlIoIFdZJDCuahsFHwtvqnUm0a/kYcEqvnkv1rzJ+3SxeATlU++HUzxgLw+C3nHT73/q1o0F0V0Zgb2XHwNhxG7k40uLA+bK4vAeQQ1Q8Hqoz/50l/tiafh5WdZNeNKUNGBeD0YlpuI7//5y1dWBY0dzdMJjfAZnItMhuLEYxgpjxJhPLjDaKiEXzOiGLyR5sG68wrk7sMwORIt9ugu3OP8zYA2q8vcafxgXDsCTPeh3di+JLvL+Hkg0d6ySLS9bJEZkr51Fex+Iy0Lum6XEiRs2t7P5uLuM=
+    - secure: MLJ0Fw2L8VB7WrdXmGaLkIOqCosqkOiukiD+tF/c8KnvKmemnsBG79d4iDZ2P3LU/ltjccoWPB0viZShZFzjH+z7Tv/6lWtzPklXBooCgdiunIpWQ/7iHHs+t3PKOfzt9mPlPM+bFqTrDEjJHfzJPJdXDzD20TM1k6/ePhUvaYiTR4XxD9vQZeVVXopkXyfp0Tvloma5/fYD8C+g/+vkEZjInbyhKse168MxeMl9t/8K3JeRhPExuge6fpeUASaz0kEHLTlxMLxiykfBoFSd7bHRV9l28S5pLbWTR0UlXYRT200TCRcJVjHQxiKBH8tBUJuSIsrAI3wd3qRSqc6i1AHyzTWCnx/mAmH0Je290HgMjdDpNIf7IyEEclmMzdfJcdDnqcYSbmY9CtexclwF67H63bG8xIAlzUIgglPraVtrARSxOAiN/6SAP5091WIdxMf8Imru3gKJBpvZNtyM9n1SJ2jZciBOM5w3QuA0qxBu0raqUr91pn0Z/JTy1ZytxRH8ekfoXLYlOVeYj9Poe43k8mGLIWX55EbsAt1tLHvQNPvOUxpMw0R4XsJySJ+jZaX8/UTBOEl2TJevEo+bX5rckQESAR5XnIKjcaZB6QiF/hNpFidg0BMtMmuUodRrGQ9GZGbN8Gs3UYJQ09NxYJ7OkgWQJGErP0OmcgszWbg=
