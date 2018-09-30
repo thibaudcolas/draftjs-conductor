@@ -7,12 +7,13 @@
   "main": "dist/draftjs-conductor.cjs.js",
   "module": "dist/draftjs-conductor.esm.js",
   "keywords": [
+    "draftjs",
     "draft-js",
-    "draftjs-utils",
-    "draft-js-utils",
     "editor",
+    "react",
     "wysiwyg",
     "rich text",
+    "richtext",
     "rte"
   ],
   "repository": {
