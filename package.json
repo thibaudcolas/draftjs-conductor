@@ -29,17 +29,6 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "prettier": {
-    "printWidth": 80,
-    "tabWidth": 2,
-    "useTabs": false,
-    "semi": true,
-    "singleQuote": false,
-    "trailingComma": "all",
-    "bracketSpacing": true,
-    "arrowParens": "always",
-    "proseWrap": "preserve"
-  },
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
