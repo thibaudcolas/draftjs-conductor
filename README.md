@@ -8,8 +8,8 @@ Check out the [online demo](https://thibaudcolas.github.io/draftjs-conductor)!
 
 ## Features
 
-* [Infinite list nesting](#infinite-list-nesting)
-* [Idempotent copy-paste between editors](#idempotent-copy-paste-between-editors)
+- [Infinite list nesting](#infinite-list-nesting)
+- [Idempotent copy-paste between editors](#idempotent-copy-paste-between-editors)
 
 ---
 
@@ -36,8 +36,8 @@ import { ListNestingStyles, blockDepthStyleFn } from "draftjs-conductor";
 
 Relevant Draft.js issues:
 
-* [maxDepth param is greater than 4 in RichUtils.onTab – facebook/draft-js#997](https://github.com/facebook/draft-js/issues/997)
-* Still problematic: [Nested list styles above 4 levels are not retained when copy-pasting between Draft instances. – facebook/draft-js#1605 (comment)](https://github.com/facebook/draft-js/pull/1605#pullrequestreview-87340460)
+- [maxDepth param is greater than 4 in RichUtils.onTab – facebook/draft-js#997](https://github.com/facebook/draft-js/issues/997)
+- Still problematic: [Nested list styles above 4 levels are not retained when copy-pasting between Draft instances. – facebook/draft-js#1605 (comment)](https://github.com/facebook/draft-js/pull/1605#pullrequestreview-87340460)
 
 ---
 
@@ -47,13 +47,13 @@ The default Draft.js copy-paste handlers lose a lot of the formatting when copy-
 
 Relevant Draft.js issues:
 
-* [Copy/paste between editors – facebook/draft-js#787](https://github.com/facebook/draft-js/issues/787)
-* [Extra newlines added to text pasted between two Draft editors – facebook/draft-js#1389](https://github.com/facebook/draft-js/issues/1389)
-* [Copy/paste between editors strips soft returns – facebook/draft-js#1154](https://github.com/facebook/draft-js/issues/1154)
-* [Sequential unstyled blocks are merged into the same block on paste – facebook/draft-js#738](https://github.com/facebook/draft-js/issues/738)
-* [Nested list styles are not retained when copy-pasting between Draft instances. – facebook/draft-js#1163](https://github.com/facebook/draft-js/issues/1163)
-* [Nested list styles above 4 levels are not retained when copy-pasting between Draft instances. – facebook/draft-js#1605 (comment)](https://github.com/facebook/draft-js/pull/1605#pullrequestreview-87340460)
-* [Merged `<p>` tags on paste – facebook/draft-js#523 (comment)](https://github.com/facebook/draft-js/issues/523#issuecomment-371098488)
+- [Copy/paste between editors – facebook/draft-js#787](https://github.com/facebook/draft-js/issues/787)
+- [Extra newlines added to text pasted between two Draft editors – facebook/draft-js#1389](https://github.com/facebook/draft-js/issues/1389)
+- [Copy/paste between editors strips soft returns – facebook/draft-js#1154](https://github.com/facebook/draft-js/issues/1154)
+- [Sequential unstyled blocks are merged into the same block on paste – facebook/draft-js#738](https://github.com/facebook/draft-js/issues/738)
+- [Nested list styles are not retained when copy-pasting between Draft instances. – facebook/draft-js#1163](https://github.com/facebook/draft-js/issues/1163)
+- [Nested list styles above 4 levels are not retained when copy-pasting between Draft instances. – facebook/draft-js#1605 (comment)](https://github.com/facebook/draft-js/pull/1605#pullrequestreview-87340460)
+- [Merged `<p>` tags on paste – facebook/draft-js#523 (comment)](https://github.com/facebook/draft-js/issues/523#issuecomment-371098488)
 
 To make it _just work_:
 

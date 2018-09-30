@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
-* **copy-paste:** preserve line breaks for pasting into word processors ([8a09efa](https://github.com/thibaudcolas/draftjs-conductor/commit/8a09efa))
+- **copy-paste:** preserve line breaks for pasting into word processors ([8a09efa](https://github.com/thibaudcolas/draftjs-conductor/commit/8a09efa))
 
 <a name="0.2.0"></a>
 
@@ -16,7 +16,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
-* **copy-paste:** override Draft.js copy-paste to preserve full editor content ([#2](https://github.com/thibaudcolas/draftjs-conductor/pull/2))
+- **copy-paste:** override Draft.js copy-paste to preserve full editor content ([#2](https://github.com/thibaudcolas/draftjs-conductor/pull/2))
 
 <a name="0.1.0"></a>
 
@@ -24,6 +24,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
-* **api:** add react and react-dom as peerDependencies ([63acfb3](https://github.com/thibaudcolas/draftjs-conductor/commit/63acfb3))
-* **lists:** add list nesting styles api to package ([8fb7073](https://github.com/thibaudcolas/draftjs-conductor/commit/8fb7073))
-* **lists:** remove whitespace filtering from list styles ([2e29541](https://github.com/thibaudcolas/draftjs-conductor/commit/2e29541))
+- **api:** add react and react-dom as peerDependencies ([63acfb3](https://github.com/thibaudcolas/draftjs-conductor/commit/63acfb3))
+- **lists:** add list nesting styles api to package ([8fb7073](https://github.com/thibaudcolas/draftjs-conductor/commit/8fb7073))
+- **lists:** remove whitespace filtering from list styles ([2e29541](https://github.com/thibaudcolas/draftjs-conductor/commit/2e29541))
