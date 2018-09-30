@@ -29,11 +29,6 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
   "browserslist": "> 1%, IE 11",
   "babel": {
     "presets": [
