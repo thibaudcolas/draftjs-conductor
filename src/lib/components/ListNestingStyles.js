@@ -1,4 +1,7 @@
+// @flow
 import React, { PureComponent } from "react";
+
+import type { BlockNode } from "draft-js/lib/BlockNode.js.flow";
 
 // Default maximum block depth supported by Draft.js CSS.
 export const DRAFT_DEFAULT_MAX_DEPTH = 4;
@@ -13,9 +16,9 @@ export const DRAFT_DEFAULT_DEPTH_CLASS = "public-DraftStyleDefault-depth";
  * @param {number} maxDepth
  */
 export const generateListNestingStyles = (
-  selectorPrefix,
-  minDepth,
-  maxDepth,
+  selectorPrefix: string,
+  minDepth: number,
+  maxDepth: number,
 ) => {
   let styles = "";
 
@@ -39,7 +42,14 @@ export const generateListNestingStyles = (
  * Pure component - will only re-render when `max` changes (eg. never).
  * @param {number} max
  */
-class ListNestingStyles extends PureComponent {
+class ListNestingStyles extends PureComponent<{
+  prefix: string,
+  max: number,
+}> {
+  static defaultProps: {
+    prefix: string,
+  };
+
   render() {
     const { prefix, max } = this.props;
     const min = DRAFT_DEFAULT_MAX_DEPTH + 1;
@@ -59,7 +69,7 @@ ListNestingStyles.defaultProps = {
  * See https://github.com/facebook/draft-js/blob/232791a4e92d94a52c869f853f9869367bdabdac/src/component/contents/DraftEditorContents-core.react.js#L58-L62.
  * @param {ContentBlock} block
  */
-export const blockDepthStyleFn = (block) => {
+export const blockDepthStyleFn = (block: BlockNode) => {
   const depth = block.getDepth();
   return depth > DRAFT_DEFAULT_MAX_DEPTH
     ? `${DRAFT_DEFAULT_DEPTH_CLASS}${depth}`

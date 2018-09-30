@@ -1,6 +1,7 @@
+// @flow
 import { EditorState, Modifier, RichUtils } from "draft-js";
 
-const addLineBreak = (editorState) => {
+const addLineBreak = (editorState: EditorState) => {
   const content = editorState.getCurrentContent();
   const selection = editorState.getSelection();
 
