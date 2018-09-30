@@ -24,7 +24,7 @@
   },
   "homepage": "https://thibaudcolas.github.io/draftjs-conductor/",
   "files": [
-    "dist"
+    "dist/*.js"
   ],
   "browserslist": "> 1%, IE 11",
   "babel": {
@@ -77,6 +77,7 @@
     "linter:commit": "commitlint",
     "report:coverage": "open coverage/lcov-report/index.html",
     "report:build": "open public/source-map-explorer.html",
+    "report:package": "npm pack --loglevel notice 2>&1 >/dev/null | sed -e 's/^npm notice //' | tee build/package.txt && rm *.tgz",
     "formatter": "prettier --write",
     "lint": "npm run linter:css -s -- src/**/*.css && npm run linter:md -s -- '**/*.md'",
     "format": "npm run formatter -s -- '**/*.{md,css,js}'",
