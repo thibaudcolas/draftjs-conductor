@@ -6,6 +6,6 @@ _Before_ submitting a pull request, please make sure to:
 4.  Ensure that:
 
 * The test suite passes, with 100% coverage (`npm run test:coverage`)
-* The linting passes (`npm run lint`, `npm run flow`).
+* The linting passes (`npm run lint`, `npx flow`).
 
 Thanks you!

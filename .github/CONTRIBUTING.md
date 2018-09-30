@@ -14,8 +14,6 @@ We welcome all support, whether on bug reports, feature requests, code, design, 
 nvm install
 # Then, install all project dependencies.
 npm install
-# Install the git hooks.
-./.githooks/deploy
 ```
 
 ### Working on the project
@@ -30,7 +28,7 @@ npm run start
 # Runs linting.
 npm run lint
 # Start a Flow server for type errors.
-npm run flow
+npx flow
 # Re-formats all of the files in the project (with Prettier).
 npm run format
 # Run tests in a watcher.
