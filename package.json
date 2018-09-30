@@ -26,9 +26,6 @@
   "files": [
     "dist"
   ],
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": "> 1%, IE 11",
   "babel": {
     "presets": [
