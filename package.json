@@ -36,6 +36,9 @@
   "devDependencies": {
     "@commitlint/cli": "^7.1.2",
     "@commitlint/config-conventional": "^7.1.2",
+    "@semantic-release/changelog": "^3.0.0",
+    "@semantic-release/exec": "^3.1.3",
+    "@semantic-release/git": "^7.0.4",
     "core-js": "^2.5.7",
     "danger": "^4.0.2",
     "draft-js": "0.10.5",
@@ -52,6 +55,7 @@
     "react-test-renderer": "^16.3.2",
     "rollup": "^0.66.2",
     "rollup-plugin-babel": "^3.0.3",
+    "semantic-release": "^15.9.16",
     "source-map-explorer": "^1.6.0"
   },
   "dependencies": {},
@@ -64,6 +68,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build && source-map-explorer --html build/static/js/main.* > build/source-map-explorer.html && rollup -c",
     "dist": "CI=true npm run build -s",
+    "semantic-release": "semantic-release",
     "danger": "danger ci --verbose",
     "release": "standard-version --no-verify",
     "test": "npm run test:coverage -s",
