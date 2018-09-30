@@ -9,7 +9,6 @@ install:
 script:
   - npm run test:ci
   - commitlint-travis
-  - npm run release -- --dry-run
   - npm run danger
   - npm run report:package
 after_success:
