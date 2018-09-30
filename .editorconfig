@@ -14,10 +14,17 @@ indent_style = space
 indent_size = 2
 max_line_length = 80
 
-# Rules for markdown documents.
+# Documentation.
 [*.md]
 max_line_length = 0
 trim_trailing_whitespace = false
 
+# Git commit messages.
 [COMMIT_EDITMSG]
 max_line_length = 0
+trim_trailing_whitespace = false
+
+# Makefiles require tabs.
+[Makefile]
+indent_style = tab
+indent_size = 8
