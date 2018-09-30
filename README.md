@@ -13,12 +13,6 @@ Check out the [online demo](https://thibaudcolas.github.io/draftjs-conductor)!
 
 ---
 
-> This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html), and measures performance and [code coverage](https://coveralls.io/github/thibaudcolas/draftjs-conductor).
->
-> This package ships as an ES module – if you use a recent module bundler (Webpack, Rollup, Parcel), it can be configured to only include the helpers you actually use in your code.
-
----
-
 ### Infinite list nesting
 
 By default, Draft.js only provides support for [5 list levels](https://github.com/facebook/draft-js/blob/232791a4e92d94a52c869f853f9869367bdabdac/src/component/contents/DraftEditorContents-core.react.js#L58-L62) for bulleted and numbered lists. While this is often more than enough, some editors need to go further.

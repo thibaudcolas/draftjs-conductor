@@ -42,7 +42,3 @@ npm run report:build
 # View other available commands with:
 npm run
 ```
-
-### Releases
-
-Use `npm run release`, which uses [standard-version](https://github.com/conventional-changelog/standard-version) to generate the CHANGELOG and decide on the version bump based on the commits since the last release.

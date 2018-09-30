@@ -1,6 +1,6 @@
-import path from "path";
+// @flow
+// flowlint untyped-import:off
 import { danger, message, warn, fail, schedule } from "danger";
-import jest from "danger-plugin-jest";
 
 const libModifiedFiles = danger.git.modified_files.filter(
   (path) => path.startsWith("src/lib") && path.endsWith("js"),
@@ -85,8 +85,4 @@ schedule(async () => {
       );
     }
   }
-});
-
-jest({
-  testResultsJsonPath: path.resolve(__dirname, "build/test-results.json"),
 });
