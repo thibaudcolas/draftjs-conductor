@@ -1,7 +1,5 @@
 // @flow
-import type { ElementRef } from "react";
 import {
-  Editor,
   EditorState,
   Modifier,
   convertToRaw,
@@ -9,6 +7,9 @@ import {
   ContentState,
 } from "draft-js";
 import getFragmentFromSelection from "draft-js/lib/getFragmentFromSelection";
+
+import type { ElementRef } from "react";
+import type { Editor } from "draft-js";
 
 // Custom attribute to store Draft.js content in the HTML clipboard.
 const FRAGMENT_ATTR = "data-draftjs-conductor-fragment";
