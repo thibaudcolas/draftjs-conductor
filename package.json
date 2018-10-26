@@ -6,6 +6,7 @@
   "license": "MIT",
   "main": "dist/draftjs-conductor.cjs.js",
   "module": "dist/draftjs-conductor.esm.js",
+  "sideEffects": false,
   "keywords": [
     "draftjs",
     "draft-js",
