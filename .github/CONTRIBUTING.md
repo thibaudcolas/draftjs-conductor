@@ -14,6 +14,8 @@ We welcome all support, whether on bug reports, feature requests, code, design, 
 nvm install
 # Then, install all project dependencies.
 npm install
+# Install the git hooks.
+./.githooks/deploy.sh
 ```
 
 ### Working on the project
