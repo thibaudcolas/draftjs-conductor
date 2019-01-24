@@ -41,6 +41,7 @@ The default Draft.js copy-paste handlers lose a lot of the formatting when copy-
 
 Relevant Draft.js issues:
 
+- [Ability to retain pasted custom entities - facebook/draft-js#380](https://github.com/facebook/draft-js/issues/380)
 - [Copy/paste between editors – facebook/draft-js#787](https://github.com/facebook/draft-js/issues/787)
 - [Extra newlines added to text pasted between two Draft editors – facebook/draft-js#1389](https://github.com/facebook/draft-js/issues/1389)
 - [Copy/paste between editors strips soft returns – facebook/draft-js#1154](https://github.com/facebook/draft-js/issues/1154)
