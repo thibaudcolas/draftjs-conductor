@@ -50,7 +50,11 @@ Relevant Draft.js issues:
 - [Nested list styles above 4 levels are not retained when copy-pasting between Draft instances. – facebook/draft-js#1605 (comment)](https://github.com/facebook/draft-js/pull/1605#pullrequestreview-87340460)
 - [Merged `<p>` tags on paste – facebook/draft-js#523 (comment)](https://github.com/facebook/draft-js/issues/523#issuecomment-371098488)
 
-To make it _just work_:
+All of those problems can be fixed with this library, which overrides the `copy` event to transfer more of the editor’s content, and introduces a function to use with the Draft.js [`handlePastedText`](https://draftjs.org/docs/api-reference-editor#handlepastedtext) to retrieve the pasted content.
+
+**This will paste all copied content, even if the target editor might not support it.** To ensure only supported content is retained, use filters like [draftjs-filters](https://github.com/thibaudcolas/draftjs-filters).
+
+Here’s how to use the copy override, and the paste handler:
 
 ```js
 import {
