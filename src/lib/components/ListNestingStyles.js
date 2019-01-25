@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from "react";
+import React from "react";
 
 import type { BlockNode } from "draft-js/lib/BlockNode.js.flow";
 
@@ -37,28 +37,23 @@ export const generateListNestingStyles = (
   return styles;
 };
 
+type Props = {
+  prefix: string,
+  max: number,
+};
+
 /**
  * Dynamically generates the right list nesting styles.
  * Pure component - will only re-render when `max` changes (eg. never).
- * @param {number} max
  */
-class ListNestingStyles extends PureComponent<{
-  prefix: string,
-  max: number,
-}> {
-  static defaultProps: {
-    prefix: string,
-  };
+const ListNestingStyles = (props: Props) => {
+  const { prefix, max } = props;
+  const min = DRAFT_DEFAULT_MAX_DEPTH + 1;
 
-  render() {
-    const { prefix, max } = this.props;
-    const min = DRAFT_DEFAULT_MAX_DEPTH + 1;
-
-    return max > DRAFT_DEFAULT_MAX_DEPTH ? (
-      <style>{generateListNestingStyles(prefix, min, max)}</style>
-    ) : null;
-  }
-}
+  return max > DRAFT_DEFAULT_MAX_DEPTH ? (
+    <style>{generateListNestingStyles(prefix, min, max)}</style>
+  ) : null;
+};
 
 ListNestingStyles.defaultProps = {
   prefix: DRAFT_DEFAULT_DEPTH_CLASS,
