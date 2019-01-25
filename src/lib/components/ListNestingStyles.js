@@ -37,26 +37,19 @@ export const generateListNestingStyles = (
   return styles;
 };
 
-type Props = {
-  prefix: string,
-  max: number,
-};
-
 /**
  * Dynamically generates the right list nesting styles.
  * Pure component - will only re-render when `max` changes (eg. never).
  */
-const ListNestingStyles = (props: Props) => {
-  const { prefix, max } = props;
+const ListNestingStyles = (props: { max: number }) => {
+  const { max } = props;
   const min = DRAFT_DEFAULT_MAX_DEPTH + 1;
 
   return max > DRAFT_DEFAULT_MAX_DEPTH ? (
-    <style>{generateListNestingStyles(prefix, min, max)}</style>
+    <style>
+      {generateListNestingStyles(DRAFT_DEFAULT_DEPTH_CLASS, min, max)}
+    </style>
   ) : null;
-};
-
-ListNestingStyles.defaultProps = {
-  prefix: DRAFT_DEFAULT_DEPTH_CLASS,
 };
 
 /**

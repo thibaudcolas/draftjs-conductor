@@ -28,6 +28,16 @@ import { ListNestingStyles, blockDepthStyleFn } from "draftjs-conductor";
 
 `ListNestingStyles` will generate the necessary CSS for your editor’s lists. `blockDepthStyleFn` will then apply classes to blocks based on their depth, so the styles take effect. Voilà!
 
+With React v16.6 and up, you can also leverage [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) to speed up re-renders:
+
+```js
+const NestingStyles = React.memo(ListNestingStyles);
+
+<NestingStyles max={6} />;
+```
+
+Should you need more flexibility, import `generateListNestingStyles` which will allow you to further specify how the styles are generated.
+
 Relevant Draft.js issues:
 
 - [maxDepth param is greater than 4 in RichUtils.onTab – facebook/draft-js#997](https://github.com/facebook/draft-js/issues/997)
