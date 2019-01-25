@@ -29,6 +29,8 @@ import DraftUtils from "../utils/DraftUtils";
 
 import "./DemoEditor.css";
 
+const NestingStyles = React.memo(ListNestingStyles);
+
 const BLOCKS = {
   unstyled: "P",
   "unordered-list-item": "UL",
@@ -321,7 +323,7 @@ class DemoEditor extends Component<Props, State> {
             handlePastedText={this.handlePastedText}
           />
         </SentryBoundary>
-        <ListNestingStyles max={MAX_LIST_NESTING} />
+        <NestingStyles max={MAX_LIST_NESTING} />
         <details>
           <summary>
             <span className="link">Debug</span>
