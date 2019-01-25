@@ -20,7 +20,12 @@ const FRAGMENT_ATTR = "data-draftjs-conductor-fragment";
  * We serialise the editor content within HTML, not as a separate mime type, because Draft.js only allows access
  * to HTML in its paste event handler.
  */
-const draftEditorCopyListener = (ref: ElementRef<Editor>, e: Object) => {
+const draftEditorCopyListener = (
+  ref: ElementRef<Editor>,
+  e: Event & {
+    clipboardData: DataTransfer,
+  },
+) => {
   const selection = window.getSelection();
   // Get clipboard content like Draft.js would.
   // https://github.com/facebook/draft-js/blob/37989027063ccc8279bfdc99a813b857549512a6/src/component/handlers/edit/editOnCopy.js#L34
