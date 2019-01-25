@@ -79,8 +79,7 @@ export const handleDraftEditorPastedText = (
   editorState: EditorStateType,
 ) => {
   // Plain-text pastes are better handled by Draft.js.
-  // flowlint sketchy-null-string:off
-  if (!html) {
+  if (html === "" || typeof html === "undefined" || html === null) {
     return false;
   }
 
