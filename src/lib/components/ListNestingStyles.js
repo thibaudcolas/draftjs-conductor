@@ -41,7 +41,7 @@ export const generateListNestingStyles = (
  * Dynamically generates the right list nesting styles.
  * Pure component - will only re-render when `max` changes (eg. never).
  */
-const ListNestingStyles = (props: { max: number }) => {
+export const ListNestingStyles = (props: { max: number }) => {
   const { max } = props;
   const min = DRAFT_DEFAULT_MAX_DEPTH + 1;
 
@@ -63,5 +63,3 @@ export const blockDepthStyleFn = (block: BlockNode) => {
     ? `${DRAFT_DEFAULT_DEPTH_CLASS}${depth}`
     : "";
 };
-
-export default ListNestingStyles;

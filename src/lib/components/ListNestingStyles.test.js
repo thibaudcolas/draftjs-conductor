@@ -3,7 +3,8 @@ import { shallow } from "enzyme";
 import prettier from "prettier";
 import { ContentBlock } from "draft-js";
 
-import ListNestingStyles, {
+import {
+  ListNestingStyles,
   DRAFT_DEFAULT_MAX_DEPTH,
   DRAFT_DEFAULT_DEPTH_CLASS,
   generateListNestingStyles,
