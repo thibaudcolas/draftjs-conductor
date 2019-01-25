@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html), enforced with [semantic-release](https://github.com/semantic-release/semantic-release).
 
+# [0.4.0](https://github.com/thibaudcolas/draftjs-conductor/compare/v0.3.0...v0.4.0) (2019-01-25)
+
+### Features
+
+- **api:** add WIP publication of flow types ([fb7fa29](https://github.com/thibaudcolas/draftjs-conductor/commit/fb7fa29))
+- **api:** convert ListNestingStyles from PureComponent to function ([44f9a5f](https://github.com/thibaudcolas/draftjs-conductor/commit/44f9a5f))
+- **api:** publish package with Flow annotations built in ([d7e190f](https://github.com/thibaudcolas/draftjs-conductor/commit/d7e190f))
+- **api:** remove (undocumented) prefix prop on ListNestingStyles ([774fe8a](https://github.com/thibaudcolas/draftjs-conductor/commit/774fe8a))
+
 # [0.3.0](https://github.com/thibaudcolas/draftjs-conductor/compare/v0.2.1...v0.3.0) (2018-10-27)
 
 ### Features
