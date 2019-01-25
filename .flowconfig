@@ -13,7 +13,6 @@
 
 [lints]
 all=error
-unclear-type=off
 
 [options]
 module.name_mapper='.*\(.css\)' -> 'empty/object'

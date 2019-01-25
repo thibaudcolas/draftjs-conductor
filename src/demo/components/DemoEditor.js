@@ -101,12 +101,14 @@ type State = {
   editorState: EditorState,
 };
 
+/* :: import type { ElementRef } from "react"; */
+
 /**
  * Demo editor.
  */
 class DemoEditor extends Component<Props, State> {
-  editorRef: ?Object;
-  copySource: Object;
+  /* :: editorRef: ?ElementRef<Editor>; */
+  /* :: copySource: { unregister: () => void }; */
 
   constructor(props: Props) {
     super(props);
@@ -134,14 +136,15 @@ class DemoEditor extends Component<Props, State> {
     this.state = {
       editorState: editorState,
     };
-    (this: any).onChange = this.onChange.bind(this);
-    (this: any).onTab = this.onTab.bind(this);
-    (this: any).addBR = this.addBR.bind(this);
-    (this: any).toggleStyle = this.toggleStyle.bind(this);
-    (this: any).toggleBlock = this.toggleBlock.bind(this);
-    (this: any).toggleEntity = this.toggleEntity.bind(this);
-    (this: any).blockRenderer = this.blockRenderer.bind(this);
-    (this: any).handlePastedText = this.handlePastedText.bind(this);
+
+    this.onChange = this.onChange.bind(this);
+    this.onTab = this.onTab.bind(this);
+    this.addBR = this.addBR.bind(this);
+    this.toggleStyle = this.toggleStyle.bind(this);
+    this.toggleBlock = this.toggleBlock.bind(this);
+    this.toggleEntity = this.toggleEntity.bind(this);
+    this.blockRenderer = this.blockRenderer.bind(this);
+    this.handlePastedText = this.handlePastedText.bind(this);
   }
 
   componentDidMount() {
@@ -152,6 +155,7 @@ class DemoEditor extends Component<Props, State> {
     this.copySource.unregister();
   }
 
+  /* :: onChange: (nextState: EditorState) => void; */
   onChange(nextState: EditorState) {
     this.setState({ editorState: nextState });
 
@@ -161,6 +165,7 @@ class DemoEditor extends Component<Props, State> {
     );
   }
 
+  /* :: toggleStyle: (type: string, e: Event) => void; */
   toggleStyle(type: string, e: Event) {
     const { editorState } = this.state;
     this.onChange(RichUtils.toggleInlineStyle(editorState, type));
@@ -168,6 +173,7 @@ class DemoEditor extends Component<Props, State> {
     e.preventDefault();
   }
 
+  /* :: toggleBlock: (type: string, e: Event) => void; */
   toggleBlock(type: DraftBlockType, e: Event) {
     const { editorState } = this.state;
     this.onChange(RichUtils.toggleBlockType(editorState, type));
@@ -175,6 +181,7 @@ class DemoEditor extends Component<Props, State> {
     e.preventDefault();
   }
 
+  /* :: toggleEntity: (type: DraftEntityType | "HORIZONTAL_RULE") => void; */
   toggleEntity(type: DraftEntityType | "HORIZONTAL_RULE") {
     const { editorState } = this.state;
     let content = editorState.getCurrentContent();
@@ -205,6 +212,7 @@ class DemoEditor extends Component<Props, State> {
     }
   }
 
+  /* :: blockRenderer: (block: ContentBlock) => { component: typeof Component, editable: boolean }; */
   blockRenderer(block: ContentBlock) {
     const { editorState } = this.state;
     const content = editorState.getCurrentContent();
@@ -236,6 +244,7 @@ class DemoEditor extends Component<Props, State> {
     };
   }
 
+  /* :: handlePastedText: (text: string, html: ?string, editorState: EditorState) => boolean; */
   handlePastedText(text: string, html: ?string, editorState: EditorState) {
     let newState = handleDraftEditorPastedText(html, editorState);
 
@@ -247,6 +256,7 @@ class DemoEditor extends Component<Props, State> {
     return false;
   }
 
+  /* :: onTab: (event: SyntheticKeyboardEvent<>) => void; */
   onTab(event: SyntheticKeyboardEvent<>) {
     const { editorState } = this.state;
     const newState = RichUtils.onTab(event, editorState, MAX_LIST_NESTING);
@@ -254,6 +264,7 @@ class DemoEditor extends Component<Props, State> {
     this.onChange(newState);
   }
 
+  /* :: addBR: (e: Event) => void; */
   addBR(e: Event) {
     const { editorState } = this.state;
     this.onChange(DraftUtils.addLineBreak(editorState));
