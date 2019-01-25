@@ -6,10 +6,10 @@ import {
   convertFromRaw,
   ContentState,
 } from "draft-js";
-import getFragmentFromSelection from "draft-js/lib/getFragmentFromSelection";
-
 import type { ElementRef } from "react";
-import type { Editor } from "draft-js";
+import type { Editor, EditorState as EditorStateType } from "draft-js";
+
+const getFragmentFromSelection = require("draft-js/lib/getFragmentFromSelection");
 
 // Custom attribute to store Draft.js content in the HTML clipboard.
 const FRAGMENT_ATTR = "data-draftjs-conductor-fragment";
@@ -76,7 +76,7 @@ export const registerCopySource = (ref: ElementRef<Editor>) => {
  */
 export const handleDraftEditorPastedText = (
   html: ?string,
-  editorState: EditorState,
+  editorState: EditorStateType,
 ) => {
   // Plain-text pastes are better handled by Draft.js.
   // flowlint sketchy-null-string:off
