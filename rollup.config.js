@@ -1,8 +1,7 @@
 import babel from "rollup-plugin-babel";
 import pkg from "./package.json";
 
-// const BANNER = `// @flow`;
-const BANNER = ``;
+const BANNER = `// @flow`;
 
 export default [
   {

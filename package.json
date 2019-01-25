@@ -81,7 +81,7 @@
     "report:package": "npm pack --loglevel notice 2>&1 >/dev/null | sed -e 's/^npm notice //' | tee build/package.txt && rm *.tgz",
     "lint": "prettier --check '**/*.{js,css,md,json,yaml,yml,html}'",
     "format": "prettier --write '**/*.{js,css,md,json,yaml,yml,html}'",
-    "test:ci": "npm run lint -s && flow && npm run dist -s && npm run test:coverage -s -- --outputFile build/test-results.json --json",
+    "test:ci": "npm run lint -s && npm run dist -s && flow && npm run test:coverage -s -- --outputFile build/test-results.json --json",
     "prepublishOnly": "npm run dist -s"
   }
 }
