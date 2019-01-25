@@ -7,7 +7,7 @@ const BANNER = ``;
 export default [
   {
     input: "src/lib/index.js",
-    external: []
+    external: ["draft-js/lib/getFragmentFromSelection"]
       .concat(Object.keys(pkg.dependencies))
       .concat(Object.keys(pkg.peerDependencies)),
     output: [
