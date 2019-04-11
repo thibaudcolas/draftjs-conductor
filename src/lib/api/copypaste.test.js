@@ -7,7 +7,8 @@ import {
 import { registerCopySource, handleDraftEditorPastedText } from "./copypaste";
 
 jest.mock("draft-js/lib/generateRandomKey", () => () => "a");
-jest.mock("draft-js/lib/getFragmentFromSelection", () => () => ({
+jest.mock("draft-js/lib/getDraftEditorSelection", () => () => ({}));
+jest.mock("draft-js/lib/getContentStateFragment", () => () => ({
   toArray() {},
 }));
 

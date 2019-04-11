@@ -9,7 +9,8 @@ import {
 import type { ElementRef } from "react";
 import type { Editor, EditorState as EditorStateType } from "draft-js";
 
-const getFragmentFromSelection = require("draft-js/lib/getFragmentFromSelection");
+const getContentStateFragment = require("draft-js/lib/getContentStateFragment");
+const getDraftEditorSelection = require("draft-js/lib/getDraftEditorSelection");
 
 // Custom attribute to store Draft.js content in the HTML clipboard.
 const FRAGMENT_ATTR = "data-draftjs-conductor-fragment";
@@ -27,9 +28,15 @@ const draftEditorCopyListener = (
   },
 ) => {
   const selection = window.getSelection();
-  // Get clipboard content like Draft.js would.
-  // https://github.com/facebook/draft-js/blob/37989027063ccc8279bfdc99a813b857549512a6/src/component/handlers/edit/editOnCopy.js#L34
-  const fragment = getFragmentFromSelection(ref._latestEditorState);
+  // Get clipboard content from the selection like Draft.js would.
+  const editorState = ref._latestEditorState;
+  const editorRoot = ref.editor;
+  const { selectionState } = getDraftEditorSelection(editorState, editorRoot);
+
+  const fragment = getContentStateFragment(
+    editorState.getCurrentContent(),
+    selectionState,
+  );
 
   // Override the default behavior if there is a selection, and content, and clipboardData is supported (IE11 is out).
   if (selection.rangeCount > 0 && fragment && e.clipboardData) {
