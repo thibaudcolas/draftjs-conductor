@@ -21,13 +21,13 @@ describe("copypaste", () => {
         _latestEditorState: EditorState.createEmpty(),
       });
 
-      window.getSelection = jest.fn();
+      window.getSelection = jest.fn(() => ({}));
       editor.dispatchEvent(new Event("copy"));
       expect(window.getSelection).toHaveBeenCalled();
 
       copySource.unregister();
 
-      window.getSelection = jest.fn();
+      window.getSelection = jest.fn(() => ({}));
       editor.dispatchEvent(new Event("cut"));
       expect(window.getSelection).not.toHaveBeenCalled();
     });
@@ -40,13 +40,13 @@ describe("copypaste", () => {
         _latestEditorState: EditorState.createEmpty(),
       });
 
-      window.getSelection = jest.fn();
+      window.getSelection = jest.fn(() => ({}));
       editor.dispatchEvent(new Event("cut"));
       expect(window.getSelection).toHaveBeenCalled();
 
       copySource.unregister();
 
-      window.getSelection = jest.fn();
+      window.getSelection = jest.fn(() => ({}));
       editor.dispatchEvent(new Event("cut"));
       expect(window.getSelection).not.toHaveBeenCalled();
     });

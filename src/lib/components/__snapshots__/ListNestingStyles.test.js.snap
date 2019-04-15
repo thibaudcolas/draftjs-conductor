@@ -3,10 +3,10 @@
 exports[`ListNestingStyles max > DRAFT_DEFAULT_MAX_DEPTH 1`] = `
 <style>
   
-  .public-DraftStyleDefault-depth5.public-DraftStyleDefault-listLTR { margin-left: 9em; }
-  .public-DraftStyleDefault-depth5.public-DraftStyleDefault-listRTL { margin-right: 9em; }
-  .public-DraftStyleDefault-depth5.public-DraftStyleDefault-orderedListItem::before { content: counter(ol5) '. '; counter-increment: ol5; }
-  .public-DraftStyleDefault-depth5.public-DraftStyleDefault-reset { counter-reset: ol5; }
+.public-DraftStyleDefault-depth5.public-DraftStyleDefault-listLTR { margin-left: 9em; }
+.public-DraftStyleDefault-depth5.public-DraftStyleDefault-listRTL { margin-right: 9em; }
+.public-DraftStyleDefault-depth5.public-DraftStyleDefault-orderedListItem::before { content: counter(ol5) '. '; counter-increment: ol5; }
+.public-DraftStyleDefault-depth5.public-DraftStyleDefault-reset { counter-reset: ol5; }
 </style>
 `;
 
