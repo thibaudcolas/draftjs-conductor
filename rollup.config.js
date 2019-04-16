@@ -19,14 +19,14 @@ export default [
         exclude: ["node_modules/**"],
         presets: [
           [
-            "env",
+            "@babel/env",
             {
               modules: false,
             },
           ],
-          "react",
+          "@babel/react",
         ],
-        plugins: ["transform-flow-comments"],
+        plugins: ["@babel/transform-flow-comments"],
       }),
     ],
   },
