@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html), enforced with [semantic-release](https://github.com/semantic-release/semantic-release).
 
+## [0.4.3](https://github.com/thibaudcolas/draftjs-conductor/compare/v0.4.2...v0.4.3) (2019-04-21)
+
+### Bug Fixes
+
+- **selection:** use getContentStateFragment for readonly copy. Fix [#14](https://github.com/thibaudcolas/draftjs-conductor/issues/14) ([0483d82](https://github.com/thibaudcolas/draftjs-conductor/commit/0483d82))
+
 ## [0.4.2](https://github.com/thibaudcolas/draftjs-conductor/compare/v0.4.1...v0.4.2) (2019-04-21)
 
 ### Bug Fixes
