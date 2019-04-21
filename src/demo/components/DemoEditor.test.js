@@ -312,4 +312,26 @@ describe("DemoEditor", () => {
       expect(wrapper.instance().onChange).toHaveBeenCalled();
     });
   });
+
+  describe("toggleReadOnly", () => {
+    let wrapper;
+
+    beforeEach(() => {
+      wrapper = mount(<DemoEditor extended={false} />);
+    });
+
+    it("works", () => {
+      expect(wrapper.instance().state.readOnly).toBe(false);
+      expect(wrapper.find(".EditorToolbar button:last-child").text()).toBe(
+        "📖",
+      );
+      wrapper.instance().toggleReadOnly({
+        preventDefault() {},
+      });
+      expect(wrapper.instance().state.readOnly).toBe(true);
+      expect(wrapper.find(".EditorToolbar button:last-child").text()).toBe(
+        "📕",
+      );
+    });
+  });
 });
