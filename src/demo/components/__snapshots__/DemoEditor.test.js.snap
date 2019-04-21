@@ -123,6 +123,11 @@ exports[`DemoEditor #extended works 1`] = `
   >
     BR
   </button>
+  <button
+    onMouseDown={[Function]}
+  >
+    📖
+  </button>
 </div>
 `;
 
@@ -208,6 +213,11 @@ exports[`DemoEditor renders 1`] = `
     onMouseDown={[Function]}
   >
     BR
+  </button>
+  <button
+    onMouseDown={[Function]}
+  >
+    📖
   </button>
 </div>
 `;

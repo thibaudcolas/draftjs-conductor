@@ -101,6 +101,7 @@ type Props = {
 
 type State = {
   editorState: EditorState,
+  readOnly: boolean,
 };
 
 /* :: import type { ElementRef } from "react"; */
@@ -137,11 +138,13 @@ class DemoEditor extends Component<Props, State> {
 
     this.state = {
       editorState: editorState,
+      readOnly: false,
     };
 
     this.onChange = this.onChange.bind(this);
     this.onTab = this.onTab.bind(this);
     this.addBR = this.addBR.bind(this);
+    this.toggleReadOnly = this.toggleReadOnly.bind(this);
     this.toggleStyle = this.toggleStyle.bind(this);
     this.toggleBlock = this.toggleBlock.bind(this);
     this.toggleEntity = this.toggleEntity.bind(this);
@@ -274,9 +277,16 @@ class DemoEditor extends Component<Props, State> {
     e.preventDefault();
   }
 
+  /* :: toggleReadOnly: (e: Event) => void; */
+  toggleReadOnly(e: Event) {
+    this.setState(({ readOnly }: State) => ({ readOnly: !readOnly }));
+
+    e.preventDefault();
+  }
+
   render() {
     const { extended } = this.props;
-    const { editorState } = this.state;
+    const { editorState, readOnly } = this.state;
     const styles = extended ? STYLES_EXTENDED : STYLES;
     const blocks = extended ? BLOCKS_EXTENDED : BLOCKS;
 
@@ -309,12 +319,16 @@ class DemoEditor extends Component<Props, State> {
               </button>
             ))}
             <button onMouseDown={this.addBR}>BR</button>
+            <button onMouseDown={this.toggleReadOnly}>
+              {readOnly ? "📕" : "📖"}
+            </button>
           </div>
           <Editor
             ref={(ref) => {
               this.editorRef = ref;
             }}
             editorState={editorState}
+            readOnly={readOnly}
             onChange={this.onChange}
             stripPastedStyles={false}
             blockRendererFn={this.blockRenderer}
