@@ -23,13 +23,15 @@ export const generateListNestingStyles = (
   let styles = "";
 
   for (let depth = minDepth; depth <= maxDepth; depth++) {
-    const prefix = `${selectorPrefix}${depth}`;
-    const counter = `ol${depth}`;
+    const d = String(depth);
+    const prefix = `${selectorPrefix}${d}`;
+    const counter = `ol${d}`;
     const margin = 1.5 * (depth + 1);
+    const m = String(margin);
 
     styles += `
-.${prefix}.public-DraftStyleDefault-listLTR { margin-left: ${margin}em; }
-.${prefix}.public-DraftStyleDefault-listRTL { margin-right: ${margin}em; }
+.${prefix}.public-DraftStyleDefault-listLTR { margin-left: ${m}em; }
+.${prefix}.public-DraftStyleDefault-listRTL { margin-right: ${m}em; }
 .${prefix}.public-DraftStyleDefault-orderedListItem::before { content: counter(${counter}) '. '; counter-increment: ${counter}; }
 .${prefix}.public-DraftStyleDefault-reset { counter-reset: ${counter}; }`;
   }
@@ -60,6 +62,6 @@ export const ListNestingStyles = (props: { max: number }) => {
 export const blockDepthStyleFn = (block: BlockNode) => {
   const depth = block.getDepth();
   return depth > DRAFT_DEFAULT_MAX_DEPTH
-    ? `${DRAFT_DEFAULT_DEPTH_CLASS}${depth}`
+    ? `${DRAFT_DEFAULT_DEPTH_CLASS}${String(depth)}`
     : "";
 };
