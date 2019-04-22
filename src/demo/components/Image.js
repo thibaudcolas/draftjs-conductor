@@ -14,7 +14,12 @@ const Image = ({
     ? contentState.getEntity(entityKey).getData().src
     : "/404";
 
-  return <img src={src} alt="" width="256" />;
+  return (
+    <div>
+      <p>Image:</p>
+      <img src={src} alt="" width="256" />
+    </div>
+  );
 };
 
 export default Image;

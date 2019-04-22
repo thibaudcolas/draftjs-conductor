@@ -1,17 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Image no entity 1`] = `
-<img
-  alt=""
-  src="/404"
-  width="256"
-/>
+<div>
+  <p>
+    Image:
+  </p>
+  <img
+    alt=""
+    src="/404"
+    width="256"
+  />
+</div>
 `;
 
 exports[`Image renders 1`] = `
-<img
-  alt=""
-  src="/example.png"
-  width="256"
-/>
+<div>
+  <p>
+    Image:
+  </p>
+  <img
+    alt=""
+    src="/example.png"
+    width="256"
+  />
+</div>
 `;
