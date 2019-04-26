@@ -23,13 +23,21 @@ describe("copypaste", () => {
       });
 
       window.getSelection = jest.fn(() => ({}));
-      editor.dispatchEvent(new Event("copy"));
+      editor.dispatchEvent(
+        Object.assign(new Event("copy"), {
+          clipboardData: {},
+        }),
+      );
       expect(window.getSelection).toHaveBeenCalled();
 
       copySource.unregister();
 
       window.getSelection = jest.fn(() => ({}));
-      editor.dispatchEvent(new Event("cut"));
+      editor.dispatchEvent(
+        Object.assign(new Event("cut"), {
+          clipboardData: {},
+        }),
+      );
       expect(window.getSelection).not.toHaveBeenCalled();
     });
 
@@ -42,13 +50,21 @@ describe("copypaste", () => {
       });
 
       window.getSelection = jest.fn(() => ({}));
-      editor.dispatchEvent(new Event("cut"));
+      editor.dispatchEvent(
+        Object.assign(new Event("cut"), {
+          clipboardData: {},
+        }),
+      );
       expect(window.getSelection).toHaveBeenCalled();
 
       copySource.unregister();
 
       window.getSelection = jest.fn(() => ({}));
-      editor.dispatchEvent(new Event("cut"));
+      editor.dispatchEvent(
+        Object.assign(new Event("cut"), {
+          clipboardData: {},
+        }),
+      );
       expect(window.getSelection).not.toHaveBeenCalled();
     });
   });

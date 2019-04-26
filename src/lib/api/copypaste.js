@@ -27,6 +27,11 @@ const draftEditorCopyListener = (
     clipboardData: DataTransfer,
   },
 ) => {
+  // Completely skip event handling if clipboardData is not supported (IE11 is out).
+  if (!e.clipboardData) {
+    return;
+  }
+
   const selection = window.getSelection();
   // Get clipboard content from the selection like Draft.js would.
   const editorState = ref._latestEditorState;
@@ -38,8 +43,8 @@ const draftEditorCopyListener = (
     selectionState,
   );
 
-  // Override the default behavior if there is a selection, and content, and clipboardData is supported (IE11 is out).
-  if (selection.rangeCount > 0 && fragment && e.clipboardData) {
+  // Override the default behavior if there is a selection, and content.
+  if (selection.rangeCount > 0 && fragment) {
     const content = ContentState.createFromBlockArray(fragment.toArray());
     const serialisedContent = JSON.stringify(convertToRaw(content));
 
