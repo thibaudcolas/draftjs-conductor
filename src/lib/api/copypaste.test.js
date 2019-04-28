@@ -4,13 +4,28 @@ import {
   convertToRaw,
   ContentState,
 } from "draft-js";
-import { registerCopySource, handleDraftEditorPastedText } from "./copypaste";
+import {
+  registerCopySource,
+  handleDraftEditorPastedText,
+  getSelectedContent,
+} from "./copypaste";
 
 jest.mock("draft-js/lib/generateRandomKey", () => () => "a");
 jest.mock("draft-js/lib/getDraftEditorSelection", () => () => ({}));
 jest.mock("draft-js/lib/getContentStateFragment", () => () => ({
   toArray() {},
 }));
+
+const dispatchEvent = (editor, type, setData) => {
+  const event = Object.assign(new Event(type), {
+    clipboardData: { setData },
+    preventDefault: jest.fn(),
+  });
+
+  editor.dispatchEvent(event);
+
+  return event;
+};
 
 describe("copypaste", () => {
   describe("registerCopySource", () => {
@@ -22,22 +37,14 @@ describe("copypaste", () => {
         _latestEditorState: EditorState.createEmpty(),
       });
 
-      window.getSelection = jest.fn(() => ({}));
-      editor.dispatchEvent(
-        Object.assign(new Event("copy"), {
-          clipboardData: {},
-        }),
-      );
+      window.getSelection = jest.fn(() => ({ rangeCount: 0 }));
+      dispatchEvent(editor, "copy");
       expect(window.getSelection).toHaveBeenCalled();
 
       copySource.unregister();
 
-      window.getSelection = jest.fn(() => ({}));
-      editor.dispatchEvent(
-        Object.assign(new Event("cut"), {
-          clipboardData: {},
-        }),
-      );
+      window.getSelection = jest.fn(() => ({ rangeCount: 0 }));
+      dispatchEvent(editor, "cut");
       expect(window.getSelection).not.toHaveBeenCalled();
     });
 
@@ -49,22 +56,14 @@ describe("copypaste", () => {
         _latestEditorState: EditorState.createEmpty(),
       });
 
-      window.getSelection = jest.fn(() => ({}));
-      editor.dispatchEvent(
-        Object.assign(new Event("cut"), {
-          clipboardData: {},
-        }),
-      );
+      window.getSelection = jest.fn(() => ({ rangeCount: 0 }));
+      dispatchEvent(editor, "cut");
       expect(window.getSelection).toHaveBeenCalled();
 
       copySource.unregister();
 
-      window.getSelection = jest.fn(() => ({}));
-      editor.dispatchEvent(
-        Object.assign(new Event("cut"), {
-          clipboardData: {},
-        }),
-      );
+      window.getSelection = jest.fn(() => ({ rangeCount: 0 }));
+      dispatchEvent(editor, "cut");
       expect(window.getSelection).not.toHaveBeenCalled();
     });
   });
@@ -87,11 +86,7 @@ describe("copypaste", () => {
         };
       });
 
-      const event = new Event("copy");
-      event.clipboardData = {};
-      event.preventDefault = jest.fn();
-      editor.dispatchEvent(event);
-
+      const event = dispatchEvent(editor, "copy");
       expect(event.preventDefault).not.toHaveBeenCalled();
     });
 
@@ -155,19 +150,14 @@ describe("copypaste", () => {
         };
       });
 
-      const event = new Event("copy");
-      event.preventDefault = jest.fn();
-      event.clipboardData = {
-        setData(type, data) {
-          if (type === "text/plain") {
-            expect(data).toBe("toString selection");
-          } else if (type === "text/html") {
-            expect(data).toMatchSnapshot();
-            done();
-          }
-        },
-      };
-      editor.dispatchEvent(event);
+      dispatchEvent(editor, "copy", (type, data) => {
+        if (type === "text/plain") {
+          expect(data).toBe("toString selection");
+        } else if (type === "text/html") {
+          expect(data).toMatchSnapshot();
+          done();
+        }
+      });
     });
   });
 

@@ -16,6 +16,28 @@ const getDraftEditorSelection = require("draft-js/lib/getDraftEditorSelection");
 const FRAGMENT_ATTR = "data-draftjs-conductor-fragment";
 
 /**
+ * Get clipboard content from the selection like Draft.js would.
+ */
+export const getSelectedContent = (
+  editorState: EditorStateType,
+  editorRoot: HTMLElement,
+  selection: Selection,
+) => {
+  if (selection.rangeCount === 0) {
+    return null;
+  }
+
+  const { selectionState } = getDraftEditorSelection(editorState, editorRoot);
+
+  const fragment = getContentStateFragment(
+    editorState.getCurrentContent(),
+    selectionState,
+  );
+
+  return fragment;
+};
+
+/**
  * Overrides the default copy/cut behavior, adding the serialised Draft.js content to the clipboard data.
  * See also https://github.com/basecamp/trix/blob/62145978f352b8d971cf009882ba06ca91a16292/src/trix/controllers/input_controller.coffee#L415-L422
  * We serialise the editor content within HTML, not as a separate mime type, because Draft.js only allows access
@@ -33,18 +55,14 @@ const draftEditorCopyListener = (
   }
 
   const selection = window.getSelection();
-  // Get clipboard content from the selection like Draft.js would.
-  const editorState = ref._latestEditorState;
-  const editorRoot = ref.editor;
-  const { selectionState } = getDraftEditorSelection(editorState, editorRoot);
-
-  const fragment = getContentStateFragment(
-    editorState.getCurrentContent(),
-    selectionState,
+  const fragment = getSelectedContent(
+    ref._latestEditorState,
+    ref.editor,
+    selection,
   );
 
-  // Override the default behavior if there is a selection, and content.
-  if (selection.rangeCount > 0 && fragment) {
+  // Override the default behavior if there is selected content.
+  if (fragment) {
     const content = ContentState.createFromBlockArray(fragment.toArray());
     const serialisedContent = JSON.stringify(convertToRaw(content));
 
