@@ -34,7 +34,14 @@ export const getSelectedContent = (
     selectionState,
   );
 
-  return fragment;
+  // If the selection contains no content (according to Draft.js), use the default browser behavior.
+  // This happens when selecting text that's within contenteditable=false blocks in Draft.js.
+  // See https://github.com/thibaudcolas/draftjs-conductor/issues/12.
+  const isEmpty = fragment.every((block) => {
+    return block.getText().length === 0;
+  });
+
+  return isEmpty ? null : fragment;
 };
 
 /**
