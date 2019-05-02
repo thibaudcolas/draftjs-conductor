@@ -1,20 +1,11 @@
-import {
-  EditorState,
-  convertFromRaw,
-  convertToRaw,
-  ContentState,
-} from "draft-js";
-import {
-  registerCopySource,
-  handleDraftEditorPastedText,
-  getSelectedContent,
-} from "./copypaste";
+import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
+import { registerCopySource, handleDraftEditorPastedText } from "./copypaste";
 
 jest.mock("draft-js/lib/generateRandomKey", () => () => "a");
 jest.mock("draft-js/lib/getDraftEditorSelection", () => () => ({}));
-jest.mock("draft-js/lib/getContentStateFragment", () => () => ({
-  toArray() {},
-}));
+jest.mock("draft-js/lib/getContentStateFragment", () => (content) =>
+  content.getBlockMap(),
+);
 
 const dispatchEvent = (editor, type, setData) => {
   const event = Object.assign(new Event(type), {
@@ -27,6 +18,25 @@ const dispatchEvent = (editor, type, setData) => {
   return event;
 };
 
+const getSelection = (selection) => {
+  return jest.fn(() =>
+    Object.assign(
+      {
+        rangeCount: 0,
+        toString: () => "toString selection",
+        getRangeAt() {
+          return {
+            cloneContents() {
+              return document.createElement("div");
+            },
+          };
+        },
+      },
+      selection,
+    ),
+  );
+};
+
 describe("copypaste", () => {
   describe("registerCopySource", () => {
     it("registers and unregisters works for copy", () => {
@@ -37,13 +47,13 @@ describe("copypaste", () => {
         _latestEditorState: EditorState.createEmpty(),
       });
 
-      window.getSelection = jest.fn(() => ({ rangeCount: 0 }));
+      window.getSelection = getSelection();
       dispatchEvent(editor, "copy");
       expect(window.getSelection).toHaveBeenCalled();
 
       copySource.unregister();
 
-      window.getSelection = jest.fn(() => ({ rangeCount: 0 }));
+      window.getSelection = getSelection();
       dispatchEvent(editor, "cut");
       expect(window.getSelection).not.toHaveBeenCalled();
     });
@@ -56,13 +66,13 @@ describe("copypaste", () => {
         _latestEditorState: EditorState.createEmpty(),
       });
 
-      window.getSelection = jest.fn(() => ({ rangeCount: 0 }));
+      window.getSelection = getSelection();
       dispatchEvent(editor, "cut");
       expect(window.getSelection).toHaveBeenCalled();
 
       copySource.unregister();
 
-      window.getSelection = jest.fn(() => ({ rangeCount: 0 }));
+      window.getSelection = getSelection();
       dispatchEvent(editor, "cut");
       expect(window.getSelection).not.toHaveBeenCalled();
     });
@@ -80,11 +90,7 @@ describe("copypaste", () => {
         _latestEditorState: EditorState.createEmpty(),
       });
 
-      window.getSelection = jest.fn(() => {
-        return {
-          rangeCount: 0,
-        };
-      });
+      window.getSelection = getSelection();
 
       const event = dispatchEvent(editor, "copy");
       expect(event.preventDefault).not.toHaveBeenCalled();
@@ -98,11 +104,7 @@ describe("copypaste", () => {
         _latestEditorState: EditorState.createEmpty(),
       });
 
-      window.getSelection = jest.fn(() => {
-        return {
-          rangeCount: 1,
-        };
-      });
+      window.getSelection = getSelection({ rangeCount: 1 });
 
       const event = new Event("copy");
       event.preventDefault = jest.fn();
@@ -113,11 +115,6 @@ describe("copypaste", () => {
 
     it("works", (done) => {
       const editor = document.createElement("div");
-
-      registerCopySource({
-        editor,
-        _latestEditorState: EditorState.createEmpty(),
-      });
 
       const content = {
         blocks: [
@@ -130,25 +127,14 @@ describe("copypaste", () => {
         entityMap: {},
       };
 
-      jest
-        .spyOn(ContentState, "createFromBlockArray")
-        .mockImplementationOnce(() => {
-          return convertFromRaw(content);
-        });
-
-      window.getSelection = jest.fn(() => {
-        return {
-          rangeCount: 1,
-          toString: () => "toString selection",
-          getRangeAt() {
-            return {
-              cloneContents() {
-                return document.createElement("div");
-              },
-            };
-          },
-        };
+      registerCopySource({
+        editor,
+        _latestEditorState: EditorState.createWithContent(
+          convertFromRaw(content),
+        ),
       });
+
+      window.getSelection = getSelection({ rangeCount: 1 });
 
       dispatchEvent(editor, "copy", (type, data) => {
         if (type === "text/plain") {
