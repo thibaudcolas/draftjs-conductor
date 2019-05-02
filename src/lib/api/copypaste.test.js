@@ -145,6 +145,33 @@ describe("copypaste", () => {
         }
       });
     });
+
+    it("uses the default copy-paste behavior if content is empty", () => {
+      const editor = document.createElement("div");
+
+      const content = {
+        blocks: [
+          {
+            key: "a",
+            type: "unstyled",
+            text: "",
+          },
+        ],
+        entityMap: {},
+      };
+
+      registerCopySource({
+        editor,
+        _latestEditorState: EditorState.createWithContent(
+          convertFromRaw(content),
+        ),
+      });
+
+      window.getSelection = getSelection({ rangeCount: 1 });
+
+      const event = dispatchEvent(editor, "copy", () => {});
+      expect(event.preventDefault).not.toHaveBeenCalled();
+    });
   });
 
   describe("handleDraftEditorPastedText", () => {
