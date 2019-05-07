@@ -24,6 +24,7 @@ import SentryBoundary from "./SentryBoundary";
 import Highlight from "./Highlight";
 import Link, { linkStrategy } from "./Link";
 import Image from "./Image";
+import Snippet from "./Snippet";
 
 import DraftUtils from "../utils/DraftUtils";
 
@@ -84,6 +85,12 @@ const ENTITIES = [
     whitelist: {
       src: "^http",
     },
+  },
+  {
+    type: "SNIPPET",
+    label: "🌱",
+    attributes: ["text"],
+    whitelist: {},
   },
   {
     type: "HORIZONTAL_RULE",
@@ -186,8 +193,8 @@ class DemoEditor extends Component<Props, State> {
     e.preventDefault();
   }
 
-  /* :: toggleEntity: (type: DraftEntityType | "HORIZONTAL_RULE") => void; */
-  toggleEntity(type: DraftEntityType | "HORIZONTAL_RULE") {
+  /* :: toggleEntity: (type: DraftEntityType | "HORIZONTAL_RULE" | "SNIPPET") => void; */
+  toggleEntity(type: DraftEntityType | "HORIZONTAL_RULE" | "SNIPPET") {
     const { editorState } = this.state;
     let content = editorState.getCurrentContent();
 
@@ -195,6 +202,15 @@ class DemoEditor extends Component<Props, State> {
       content = content.createEntity(type, "IMMUTABLE", {
         src:
           "https://thibaudcolas.github.io/draftjs-conductor/wysiwyg-magic-wand.png",
+      });
+      const entityKey = content.getLastCreatedEntityKey();
+      this.onChange(
+        AtomicBlockUtils.insertAtomicBlock(editorState, entityKey, " "),
+      );
+    } else if (type === "SNIPPET") {
+      // $FlowFixMe
+      content = content.createEntity(type, "IMMUTABLE", {
+        text: "Content of the snippet goes here",
       });
       const entityKey = content.getLastCreatedEntityKey();
       this.onChange(
@@ -239,6 +255,13 @@ class DemoEditor extends Component<Props, State> {
     if (entity.getType() === "HORIZONTAL_RULE") {
       return {
         component: () => <hr />,
+        editable: false,
+      };
+    }
+
+    if (entity.getType() === "SNIPPET") {
+      return {
+        component: Snippet,
         editable: false,
       };
     }

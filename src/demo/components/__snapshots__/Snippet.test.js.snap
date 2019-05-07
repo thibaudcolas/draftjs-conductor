@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snippet no entity 1`] = `
+<div
+  className="Snippet"
+  contentEditable={false}
+>
+  This is a snippet block:
+  <div
+    className="Snippet__text"
+    contentEditable={false}
+  >
+    Placeholder
+  </div>
+</div>
+`;
+
+exports[`Snippet renders 1`] = `
+<div
+  className="Snippet"
+  contentEditable={false}
+>
+  This is a snippet block:
+  <div
+    className="Snippet__text"
+    contentEditable={false}
+  >
+    This is a snippet
+  </div>
+</div>
+`;

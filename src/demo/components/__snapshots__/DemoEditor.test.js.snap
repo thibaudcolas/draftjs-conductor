@@ -113,6 +113,12 @@ exports[`DemoEditor #extended works 1`] = `
     📷
   </button>
   <button
+    key="SNIPPET"
+    onMouseDown={[Function]}
+  >
+    🌱
+  </button>
+  <button
     key="HORIZONTAL_RULE"
     onMouseDown={[Function]}
   >
@@ -202,6 +208,12 @@ exports[`DemoEditor renders 1`] = `
     onMouseDown={[Function]}
   >
     📷
+  </button>
+  <button
+    key="SNIPPET"
+    onMouseDown={[Function]}
+  >
+    🌱
   </button>
   <button
     key="HORIZONTAL_RULE"
