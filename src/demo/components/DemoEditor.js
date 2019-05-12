@@ -33,7 +33,7 @@ import "./DemoEditor.css";
 const NestingStyles = React.memo(ListNestingStyles);
 
 const BLOCKS = {
-  unstyled: "P",
+  "unstyled": "P",
   "unordered-list-item": "UL",
   "ordered-list-item": "OL",
   "header-one": "H1",
@@ -43,7 +43,7 @@ const BLOCKS = {
 };
 
 const BLOCKS_EXTENDED = {
-  unstyled: "P",
+  "unstyled": "P",
   "unordered-list-item": "UL",
   "ordered-list-item": "OL",
   "header-one": "H1",
@@ -52,7 +52,7 @@ const BLOCKS_EXTENDED = {
   "header-four": "H4",
   "header-five": "H5",
   "header-six": "H6",
-  blockquote: "❝",
+  "blockquote": "❝",
   "code-block": "{ }",
 };
 
