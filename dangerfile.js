@@ -1,6 +1,7 @@
 // @flow
 // flowlint untyped-import:off
 const { danger, message, warn, fail, schedule } = require("danger");
+const isLocal = !danger.github;
 
 const libModifiedFiles = danger.git.modified_files.filter(
   (path) => path.startsWith("src/lib") && path.endsWith("js"),
@@ -15,35 +16,37 @@ const hasLibTestChanges =
   ).length > 0;
 const hasREADMEChanges = danger.git.modified_files.includes("README.md");
 
-const hasLabels = danger.github.issue.labels.length !== 0;
-const isEnhancement =
-  danger.github.issue.labels.some((l) => l.name === "enhancement") ||
-  danger.github.pr.title.includes("feature");
-const isBug =
-  danger.github.issue.labels.some((l) => l.name === "bug") ||
-  danger.github.pr.title.includes("fix") ||
-  danger.github.pr.title.includes("bug");
+if (!isLocal) {
+  const hasLabels = danger.github.issue.labels.length !== 0;
+  const isEnhancement =
+    danger.github.issue.labels.some((l) => l.name === "enhancement") ||
+    danger.github.pr.title.includes("feature");
+  const isBug =
+    danger.github.issue.labels.some((l) => l.name === "bug") ||
+    danger.github.pr.title.includes("fix") ||
+    danger.github.pr.title.includes("bug");
 
-if (!hasLabels) {
-  message("What labels should we add to this PR?");
-}
+  if (!hasLabels) {
+    message("What labels should we add to this PR?");
+  }
 
-// Fails if the description is too short.
-if (!danger.github.pr.body || danger.github.pr.body.length < 10) {
-  fail(":grey_question: This pull request needs a description.");
-}
+  // Fails if the description is too short.
+  if (!danger.github.pr.body || danger.github.pr.body.length < 10) {
+    fail(":grey_question: This pull request needs a description.");
+  }
 
-if (hasLibChanges && !hasLibTestChanges && (isEnhancement || isBug)) {
-  message("This PR may require new test cases");
-}
+  if (hasLibChanges && !hasLibTestChanges && (isEnhancement || isBug)) {
+    message("This PR may require new test cases");
+  }
 
-// Warns if the PR title contains [WIP]
-const isWIP = danger.github.pr.title.includes("WIP");
-if (isWIP) {
-  const title = ":construction_worker: Work In Progress";
-  const idea =
-    "This PR appears to be a work in progress, and may not be ready to be merged yet.";
-  warn(`${title} - <i>${idea}</i>`);
+  // Warns if the PR title contains [WIP]
+  const isWIP = danger.github.pr.title.includes("WIP");
+  if (isWIP) {
+    const title = ":construction_worker: Work In Progress";
+    const idea =
+      "This PR appears to be a work in progress, and may not be ready to be merged yet.";
+    warn(`${title} - <i>${idea}</i>`);
+  }
 }
 
 if (hasLibChanges && !hasREADMEChanges) {
