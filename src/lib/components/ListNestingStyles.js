@@ -41,7 +41,7 @@ export const generateListNestingStyles = (
 
 /**
  * Dynamically generates the right list nesting styles.
- * Pure component - will only re-render when `max` changes (eg. never).
+ * Can be wrapped as a pure component - to re-render only when `max` changes (eg. never).
  */
 export const ListNestingStyles = (props: { max: number }) => {
   const { max } = props;
