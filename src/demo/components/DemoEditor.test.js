@@ -7,8 +7,6 @@ import DraftUtils from "../utils/DraftUtils";
 
 describe("DemoEditor", () => {
   beforeEach(() => {
-    jest.spyOn(Storage.prototype, "getItem");
-    jest.spyOn(Storage.prototype, "setItem");
     jest.spyOn(RichUtils, "toggleInlineStyle");
     jest.spyOn(RichUtils, "toggleBlockType");
     jest.spyOn(RichUtils, "toggleLink");
@@ -42,29 +40,17 @@ describe("DemoEditor", () => {
       ).toMatchSnapshot();
     });
 
-    it("save feature", () => {
-      global.sessionStorage.getItem.mockReturnValue(
-        JSON.stringify({
-          entityMap: {},
-          blocks: [
-            {
-              key: "a",
-              text: "test",
-            },
-          ],
-        }),
-      );
-
+    it("can take predefined content", () => {
       expect(
-        mount(<DemoEditor extended />)
-          .state("editorState")
-          .getCurrentContent()
-          .getBlockMap()
-          .map((b) => b.getText())
-          .toJS(),
-      ).toEqual({
-        a: "test",
-      });
+        mount(
+          <DemoEditor
+            rawContentState={{
+              blocks: [{ key: "a", text: "Test" }],
+              entityMap: {},
+            }}
+          />,
+        ).find(".EditorToolbar"),
+      ).toMatchSnapshot();
     });
   });
 
@@ -112,6 +98,14 @@ describe("DemoEditor", () => {
       expect(AtomicBlockUtils.insertAtomicBlock).toHaveBeenCalled();
     });
 
+    it("SNIPPET", () => {
+      mount(<DemoEditor extended={false} />)
+        .instance()
+        .toggleEntity("SNIPPET");
+
+      expect(AtomicBlockUtils.insertAtomicBlock).toHaveBeenCalled();
+    });
+
     it("HORIZONTAL_RULE", () => {
       mount(<DemoEditor extended={false} />)
         .instance()
@@ -155,34 +149,36 @@ describe("DemoEditor", () => {
     });
 
     it("HORIZONTAL_RULE", () => {
-      window.sessionStorage.getItem = jest.fn(() =>
-        JSON.stringify({
-          entityMap: {
-            "3": {
-              type: "HORIZONTAL_RULE",
-              data: {},
+      const Component = mount(
+        <DemoEditor
+          extended={true}
+          rawContentState={{
+            entityMap: {
+              "5": {
+                type: "HORIZONTAL_RULE",
+                data: {},
+              },
             },
-          },
-          blocks: [
-            {
-              type: "atomic",
-              text: " ",
-              entityRanges: [
-                {
-                  key: 3,
-                  offset: 0,
-                  length: 1,
-                },
-              ],
-            },
-          ],
-        }),
-      );
-      const Component = mount(<DemoEditor extended={true} />)
+            blocks: [
+              {
+                type: "atomic",
+                text: " ",
+                entityRanges: [
+                  {
+                    key: 5,
+                    offset: 0,
+                    length: 1,
+                  },
+                ],
+              },
+            ],
+          }}
+        />,
+      )
         .instance()
         .blockRenderer({
           getType: () => "atomic",
-          getEntityAt: () => "3",
+          getEntityAt: () => "5",
         }).component;
       expect(Component()).toEqual(<hr />);
     });
@@ -193,6 +189,42 @@ describe("DemoEditor", () => {
           entityMap: {
             "1": {
               type: "IMAGE",
+              data: {
+                src: "example.png",
+              },
+            },
+          },
+          blocks: [
+            {
+              type: "atomic",
+              text: " ",
+              entityRanges: [
+                {
+                  key: 1,
+                  offset: 0,
+                  length: 1,
+                },
+              ],
+            },
+          ],
+        }),
+      );
+
+      const Component = mount(<DemoEditor extended={true} />)
+        .instance()
+        .blockRenderer({
+          getType: () => "atomic",
+          getEntityAt: () => "1",
+        }).component;
+      expect(<Component />).toMatchSnapshot();
+    });
+
+    it("SNIPPET", () => {
+      window.sessionStorage.getItem = jest.fn(() =>
+        JSON.stringify({
+          entityMap: {
+            "1": {
+              type: "SNIPPET",
               data: {
                 src: "example.png",
               },

@@ -1,5 +1,100 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`DemoEditor #extended can take predefined content 1`] = `
+<div
+  className="EditorToolbar"
+>
+  <button
+    key="BOLD"
+    onMouseDown={[Function]}
+  >
+    B
+  </button>
+  <button
+    key="ITALIC"
+    onMouseDown={[Function]}
+  >
+    I
+  </button>
+  <button
+    key="unstyled"
+    onMouseDown={[Function]}
+  >
+    P
+  </button>
+  <button
+    key="unordered-list-item"
+    onMouseDown={[Function]}
+  >
+    UL
+  </button>
+  <button
+    key="ordered-list-item"
+    onMouseDown={[Function]}
+  >
+    OL
+  </button>
+  <button
+    key="header-one"
+    onMouseDown={[Function]}
+  >
+    H1
+  </button>
+  <button
+    key="header-two"
+    onMouseDown={[Function]}
+  >
+    H2
+  </button>
+  <button
+    key="header-three"
+    onMouseDown={[Function]}
+  >
+    H3
+  </button>
+  <button
+    key="code-block"
+    onMouseDown={[Function]}
+  >
+    { }
+  </button>
+  <button
+    key="LINK"
+    onMouseDown={[Function]}
+  >
+    🔗
+  </button>
+  <button
+    key="IMAGE"
+    onMouseDown={[Function]}
+  >
+    📷
+  </button>
+  <button
+    key="SNIPPET"
+    onMouseDown={[Function]}
+  >
+    🌱
+  </button>
+  <button
+    key="HORIZONTAL_RULE"
+    onMouseDown={[Function]}
+  >
+    HR
+  </button>
+  <button
+    onMouseDown={[Function]}
+  >
+    BR
+  </button>
+  <button
+    onMouseDown={[Function]}
+  >
+    📖
+  </button>
+</div>
+`;
+
 exports[`DemoEditor #extended works 1`] = `
 <div
   className="EditorToolbar"
@@ -138,6 +233,8 @@ exports[`DemoEditor #extended works 1`] = `
 `;
 
 exports[`DemoEditor blockRenderer IMAGE 1`] = `<Image />`;
+
+exports[`DemoEditor blockRenderer SNIPPET 1`] = `<Image />`;
 
 exports[`DemoEditor renders 1`] = `
 <div

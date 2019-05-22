@@ -4,11 +4,199 @@ exports[`App renders 1`] = `
 <div
   className="App"
 >
-  <DemoEditor
-    extended={false}
-  />
+  <h2>
+    Idempotent copy-paste between editors
+  </h2>
+  <p>
+    The default Draft.js copy-paste handlers lose a lot of the formatting when copy-pasting between Draft.js editors. While this might be ok for some use cases, sites with multiple editors on the same page need them to reliably support copy-paste.
+  </p>
   <DemoEditor
     extended={true}
+    rawContentState={
+      Object {
+        "blocks": Array [
+          Object {
+            "key": "8qfte",
+            "text": "Copy this content",
+            "type": "header-two",
+          },
+          Object {
+            "entityRanges": Array [
+              Object {
+                "key": 0,
+                "length": 1,
+                "offset": 0,
+              },
+            ],
+            "key": "6m80m",
+            "text": " ",
+            "type": "atomic",
+          },
+          Object {
+            "key": "c0ala",
+            "text": "",
+            "type": "unstyled",
+          },
+          Object {
+            "key": "7knr3",
+            "text": "From here",
+            "type": "header-three",
+          },
+          Object {
+            "key": "er6ke",
+            "text": "To the editor below!",
+            "type": "unordered-list-item",
+          },
+          Object {
+            "entityRanges": Array [
+              Object {
+                "key": 1,
+                "length": 1,
+                "offset": 0,
+              },
+            ],
+            "key": "47a3o",
+            "text": " ",
+            "type": "atomic",
+          },
+          Object {
+            "key": "826u0",
+            "text": "Numbered list",
+            "type": "ordered-list-item",
+          },
+        ],
+        "entityMap": Object {
+          "0": Object {
+            "data": Object {},
+            "mutability": "IMMUTABLE",
+            "type": "HORIZONTAL_RULE",
+          },
+          "1": Object {
+            "data": Object {
+              "text": "Content of the snippet goes here",
+            },
+            "mutability": "IMMUTABLE",
+            "type": "SNIPPET",
+          },
+        },
+      }
+    }
+  />
+  <DemoEditor
+    extended={false}
+    rawContentState={null}
+  />
+  <h2>
+    Infinite list nesting
+  </h2>
+  <p>
+    By default, Draft.js only provides support for 5 list levels for bulleted and numbered lists. While this is often more than enough, some editors need to go further. This provides infinite list nesting styles.
+  </p>
+  <DemoEditor
+    extended={false}
+    rawContentState={
+      Object {
+        "blocks": Array [
+          Object {
+            "depth": 0,
+            "key": "ako0c",
+            "text": "Infinite",
+            "type": "unordered-list-item",
+          },
+          Object {
+            "depth": 1,
+            "key": "adreo",
+            "text": "Nested",
+            "type": "unordered-list-item",
+          },
+          Object {
+            "depth": 2,
+            "key": "bm3ec",
+            "text": "List",
+            "type": "unordered-list-item",
+          },
+          Object {
+            "depth": 3,
+            "key": "aqg1s",
+            "text": "Nesting",
+            "type": "unordered-list-item",
+          },
+          Object {
+            "depth": 4,
+            "key": "4dns4",
+            "text": "Styles",
+            "type": "unordered-list-item",
+          },
+          Object {
+            "depth": 5,
+            "key": "5k6tv",
+            "text": "Work",
+            "type": "unordered-list-item",
+          },
+          Object {
+            "depth": 6,
+            "key": "9htu8",
+            "text": "For",
+            "type": "unordered-list-item",
+          },
+          Object {
+            "depth": 7,
+            "key": "at7om",
+            "text": "As",
+            "type": "unordered-list-item",
+          },
+          Object {
+            "depth": 8,
+            "key": "8fddl",
+            "text": "Many",
+            "type": "unordered-list-item",
+          },
+          Object {
+            "depth": 9,
+            "key": "2ja3i",
+            "text": "Levels",
+            "type": "unordered-list-item",
+          },
+          Object {
+            "depth": 10,
+            "key": "cv49i",
+            "text": "As",
+            "type": "unordered-list-item",
+          },
+          Object {
+            "depth": 11,
+            "key": "4aoq9",
+            "text": "Configured",
+            "type": "unordered-list-item",
+          },
+          Object {
+            "depth": 12,
+            "key": "d4hhk",
+            "text": "Here",
+            "type": "unordered-list-item",
+          },
+          Object {
+            "depth": 13,
+            "key": "bbeuk",
+            "text": "Up",
+            "type": "unordered-list-item",
+          },
+          Object {
+            "depth": 14,
+            "key": "6s9a8",
+            "text": "To",
+            "type": "unordered-list-item",
+          },
+          Object {
+            "depth": 15,
+            "key": "48sq1",
+            "text": "15!",
+            "type": "unordered-list-item",
+          },
+        ],
+        "entityMap": Object {},
+      }
+    }
   />
 </div>
 `;
