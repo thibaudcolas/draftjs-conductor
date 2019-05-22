@@ -103,6 +103,7 @@ const ENTITIES = [
 const MAX_LIST_NESTING = 15;
 
 type Props = {
+  rawContentState: ?{},
   extended: boolean,
 };
 
@@ -120,9 +121,13 @@ class DemoEditor extends Component<Props, State> {
   /* :: editorRef: ?ElementRef<Editor>; */
   /* :: copySource: { unregister: () => void }; */
 
+  static defaultProps = {
+    rawContentState: null,
+  };
+
   constructor(props: Props) {
     super(props);
-    const { extended } = props;
+    const { rawContentState } = props;
 
     const decorator = new CompositeDecorator([
       {
@@ -131,11 +136,11 @@ class DemoEditor extends Component<Props, State> {
       },
     ]);
 
-    const save = window.sessionStorage.getItem("extended");
     let editorState;
 
-    if (extended && save) {
-      const content = convertFromRaw(JSON.parse(save));
+    if (rawContentState) {
+      // $FlowFixMe
+      const content = convertFromRaw(rawContentState);
       // $FlowFixMe
       editorState = EditorState.createWithContent(content, decorator);
     } else {
@@ -170,11 +175,6 @@ class DemoEditor extends Component<Props, State> {
   /* :: onChange: (nextState: EditorState) => void; */
   onChange(nextState: EditorState) {
     this.setState({ editorState: nextState });
-
-    window.sessionStorage.setItem(
-      `content`,
-      JSON.stringify(convertToRaw(nextState.getCurrentContent())),
-    );
   }
 
   /* :: toggleStyle: (type: string, e: Event) => void; */
