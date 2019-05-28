@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html), enforced with [semantic-release](https://github.com/semantic-release/semantic-release).
 
+## [0.4.4](https://github.com/thibaudcolas/draftjs-conductor/compare/v0.4.3...v0.4.4) (2019-05-28)
+
+### Bug Fixes
+
+- **copy-paste:** fix partial copy from decorator text. Fix [#12](https://github.com/thibaudcolas/draftjs-conductor/issues/12) ([e043b74](https://github.com/thibaudcolas/draftjs-conductor/commit/e043b74))
+- **copy-paste:** support copy from decorators. Fix [#12](https://github.com/thibaudcolas/draftjs-conductor/issues/12) ([d90bbbc](https://github.com/thibaudcolas/draftjs-conductor/commit/d90bbbc))
+- **release:** remove unneeded react-dom peerDependency ([3e59f05](https://github.com/thibaudcolas/draftjs-conductor/commit/3e59f05))
+
+### Performance Improvements
+
+- **copy-paste:** completely skip event handling operations in IE11 ([9521758](https://github.com/thibaudcolas/draftjs-conductor/commit/9521758))
+
 ## [0.4.3](https://github.com/thibaudcolas/draftjs-conductor/compare/v0.4.2...v0.4.3) (2019-04-21)
 
 ### Bug Fixes
