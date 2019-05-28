@@ -128,7 +128,7 @@ class MyEditor extends Component {
 
 `registerCopySource` will ensure the clipboard contains a full representation of the Draft.js content state on copy, while `handleDraftEditorPastedText` retrieves Draft.js content state from the clipboard. Voilà! This also changes the HTML clipboard content to be more semantic, with less styles copied to other word processors/editors.
 
-Note: IE11 isn’t supported, as it doesn't support storing HTML in the clipboard.
+Note: IE11 isn’t supported, as it doesn't support storing HTML in the clipboard, and we also use the [`Element.closest`](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest) API.
 
 ## Contributing
 

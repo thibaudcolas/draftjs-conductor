@@ -172,6 +172,216 @@ describe("copypaste", () => {
       const event = dispatchEvent(editor, "copy", () => {});
       expect(event.preventDefault).not.toHaveBeenCalled();
     });
+
+    it("supports copy-pasting from decorators content", () => {
+      const editor = document.createElement("div");
+
+      const content = {
+        blocks: [
+          {
+            key: "a",
+            type: "unstyled",
+            text: "",
+          },
+        ],
+        entityMap: {},
+      };
+
+      registerCopySource({
+        editor,
+        _latestEditorState: EditorState.createWithContent(
+          convertFromRaw(content),
+        ),
+      });
+
+      const contents = document.createElement("div");
+      contents.setAttribute("data-contents", "true");
+      const decorator = document.createElement("div");
+      decorator.setAttribute("contenteditable", "false");
+      contents.appendChild(decorator);
+      const anchorNode = document.createElement("div");
+      decorator.appendChild(anchorNode);
+      const focusNode = document.createElement("div");
+      anchorNode.appendChild(focusNode);
+
+      window.getSelection = getSelection({
+        rangeCount: 1,
+        anchorNode,
+        focusNode,
+      });
+
+      const event = dispatchEvent(editor, "copy", () => {});
+      expect(event.preventDefault).not.toHaveBeenCalled();
+    });
+
+    it("supports copy-pasting from decorators content #2", () => {
+      const editor = document.createElement("div");
+
+      const content = {
+        blocks: [
+          {
+            key: "a",
+            type: "unstyled",
+            text: "",
+          },
+        ],
+        entityMap: {},
+      };
+
+      registerCopySource({
+        editor,
+        _latestEditorState: EditorState.createWithContent(
+          convertFromRaw(content),
+        ),
+      });
+
+      const contents = document.createElement("div");
+      contents.setAttribute("data-contents", "true");
+      const focusDecorator = document.createElement("div");
+      focusDecorator.setAttribute("contenteditable", "false");
+      contents.appendChild(focusDecorator);
+      const anchorDecorator = document.createElement("div");
+      anchorDecorator.setAttribute("contenteditable", "false");
+      contents.appendChild(anchorDecorator);
+      const anchorNode = document.createElement("div");
+      const focusNode = document.createElement("div");
+      anchorDecorator.appendChild(anchorNode);
+      focusDecorator.appendChild(focusNode);
+      focusDecorator.appendChild(anchorDecorator);
+
+      window.getSelection = getSelection({
+        rangeCount: 1,
+        anchorNode,
+        focusNode,
+      });
+
+      const event = dispatchEvent(editor, "copy", () => {});
+      expect(event.preventDefault).not.toHaveBeenCalled();
+    });
+
+    it("supports pasting from text nodes only", () => {
+      const editor = document.createElement("div");
+
+      const content = {
+        blocks: [
+          {
+            key: "a",
+            type: "unstyled",
+            text: "",
+          },
+        ],
+        entityMap: {},
+      };
+
+      registerCopySource({
+        editor,
+        _latestEditorState: EditorState.createWithContent(
+          convertFromRaw(content),
+        ),
+      });
+
+      const contents = document.createElement("div");
+      contents.setAttribute("data-contents", "true");
+      const decorator = document.createElement("div");
+      decorator.setAttribute("contenteditable", "false");
+      contents.appendChild(decorator);
+      const anchorParent = document.createElement("div");
+      decorator.appendChild(anchorParent);
+      const anchorNode = document.createTextNode("this is text");
+      anchorParent.appendChild(anchorNode);
+      const focusNode = document.createTextNode("this is text");
+      anchorParent.appendChild(focusNode);
+
+      window.getSelection = getSelection({
+        rangeCount: 1,
+        anchorNode,
+        focusNode,
+      });
+
+      const event = dispatchEvent(editor, "copy", () => {});
+      expect(event.preventDefault).not.toHaveBeenCalled();
+    });
+  });
+
+  it("checks whether anchor node is indeed in a decorator", () => {
+    const editor = document.createElement("div");
+
+    const content = {
+      blocks: [
+        {
+          key: "a",
+          type: "unstyled",
+          text: "",
+        },
+      ],
+      entityMap: {},
+    };
+
+    registerCopySource({
+      editor,
+      _latestEditorState: EditorState.createWithContent(
+        convertFromRaw(content),
+      ),
+    });
+
+    const contents = document.createElement("div");
+    contents.setAttribute("data-contents", "true");
+    const decorator = document.createElement("div");
+    decorator.setAttribute("contenteditable", "false");
+    contents.appendChild(decorator);
+    const anchorNode = document.createElement("div");
+    decorator.appendChild(anchorNode);
+    const focusNode = document.createElement("div");
+    // focusNode.appendChild(anchorNode);
+
+    window.getSelection = getSelection({
+      rangeCount: 1,
+      anchorNode,
+      focusNode,
+    });
+
+    const event = dispatchEvent(editor, "copy", () => {});
+    expect(event.preventDefault).not.toHaveBeenCalled();
+  });
+
+  it("checks whether focus node is indeed in a decorator", () => {
+    const editor = document.createElement("div");
+
+    const content = {
+      blocks: [
+        {
+          key: "a",
+          type: "unstyled",
+          text: "",
+        },
+      ],
+      entityMap: {},
+    };
+
+    registerCopySource({
+      editor,
+      _latestEditorState: EditorState.createWithContent(
+        convertFromRaw(content),
+      ),
+    });
+
+    const contents = document.createElement("div");
+    contents.setAttribute("data-contents", "true");
+    const decorator = document.createElement("div");
+    decorator.setAttribute("contenteditable", "false");
+    contents.appendChild(decorator);
+    const anchorNode = document.createElement("div");
+    const focusNode = document.createElement("div");
+    focusNode.appendChild(anchorNode);
+
+    window.getSelection = getSelection({
+      rangeCount: 1,
+      anchorNode,
+      focusNode,
+    });
+
+    const event = dispatchEvent(editor, "copy", () => {});
+    expect(event.preventDefault).not.toHaveBeenCalled();
   });
 
   describe("handleDraftEditorPastedText", () => {
