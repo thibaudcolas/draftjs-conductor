@@ -15,18 +15,37 @@ const getDraftEditorSelection = require("draft-js/lib/getDraftEditorSelection");
 // Custom attribute to store Draft.js content in the HTML clipboard.
 const FRAGMENT_ATTR = "data-draftjs-conductor-fragment";
 
-/**
- * Get clipboard content from the selection like Draft.js would.
- */
-export const getSelectedContent = (
-  editorState: EditorStateType,
-  editorRoot: HTMLElement,
-  selection: Selection,
-) => {
-  if (selection.rangeCount === 0) {
-    return null;
+const DRAFT_DECORATOR = '[data-contents="true"] [contenteditable="false"]';
+
+// Checks whether the selection is inside a decorator or not.
+// This is important to change the copy-cut behavior accordingly.
+const isSelectionInDecorator = (selection: Selection) => {
+  const { anchorNode, focusNode } = selection;
+  if (!anchorNode || !focusNode) {
+    return false;
   }
 
+  const anchor =
+    anchorNode instanceof Element ? anchorNode : anchorNode.parentElement;
+  const focus =
+    focusNode instanceof Element ? focusNode : focusNode.parentElement;
+
+  const anchorDecorator = anchor && anchor.closest(DRAFT_DECORATOR);
+  const focusDecorator = focus && focus.closest(DRAFT_DECORATOR);
+
+  return (
+    anchorDecorator &&
+    focusDecorator &&
+    (anchorDecorator.contains(focusDecorator) ||
+      focusDecorator.contains(anchorDecorator))
+  );
+};
+
+// Get clipboard content from the selection like Draft.js would.
+const getSelectedContent = (
+  editorState: EditorStateType,
+  editorRoot: HTMLElement,
+) => {
   const { selectionState } = getDraftEditorSelection(editorState, editorRoot);
 
   const fragment = getContentStateFragment(
@@ -44,29 +63,30 @@ export const getSelectedContent = (
   return isEmpty ? null : fragment;
 };
 
-/**
- * Overrides the default copy/cut behavior, adding the serialised Draft.js content to the clipboard data.
- * See also https://github.com/basecamp/trix/blob/62145978f352b8d971cf009882ba06ca91a16292/src/trix/controllers/input_controller.coffee#L415-L422
- * We serialise the editor content within HTML, not as a separate mime type, because Draft.js only allows access
- * to HTML in its paste event handler.
- */
+// Overrides the default copy/cut behavior, adding the serialised Draft.js content to the clipboard data.
+// See also https://github.com/basecamp/trix/blob/62145978f352b8d971cf009882ba06ca91a16292/src/trix/controllers/input_controller.coffee#L415-L422
+// We serialise the editor content within HTML, not as a separate mime type, because Draft.js only allows access
+// to HTML in its paste event handler.
 const draftEditorCopyListener = (
   ref: ElementRef<Editor>,
   e: Event & {
     clipboardData: DataTransfer,
   },
 ) => {
+  const selection = window.getSelection();
+
   // Completely skip event handling if clipboardData is not supported (IE11 is out).
-  if (!e.clipboardData) {
+  // Also skip if there is no selection ranges.
+  // Or if the selection is fully within a decorator.
+  if (
+    !e.clipboardData ||
+    selection.rangeCount === 0 ||
+    isSelectionInDecorator(selection)
+  ) {
     return;
   }
 
-  const selection = window.getSelection();
-  const fragment = getSelectedContent(
-    ref._latestEditorState,
-    ref.editor,
-    selection,
-  );
+  const fragment = getSelectedContent(ref._latestEditorState, ref.editor);
 
   // Override the default behavior if there is selected content.
   if (fragment) {
@@ -91,6 +111,9 @@ const draftEditorCopyListener = (
   }
 };
 
+/**
+ * Registers custom copy/cut event listeners on an editor.
+ */
 export const registerCopySource = (ref: ElementRef<Editor>) => {
   const editorElt = ref.editor;
   const onCopy = draftEditorCopyListener.bind(null, ref);
