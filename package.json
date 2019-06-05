@@ -74,6 +74,7 @@
     "lint": "prettier --check '**/*.{js,css,md,json,yaml,yml,html}'",
     "format": "prettier --write '**/*.{js,css,md,json,yaml,yml,html}'",
     "test:ci": "npm run lint -s && npm run build -s && flow && npm run test:coverage -s -- --outputFile build/test-results.json --json",
+    "prepare": "./.githooks/deploy.sh",
     "prepublishOnly": "npm run build -s"
   }
 }
