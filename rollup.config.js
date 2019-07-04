@@ -6,7 +6,10 @@ const BANNER = `// @flow`;
 export default [
   {
     input: "src/lib/index.js",
-    external: ["draft-js/lib/getFragmentFromSelection"]
+    external: [
+      "draft-js/lib/getDraftEditorSelection",
+      "draft-js/lib/getContentStateFragment",
+    ]
       .concat(Object.keys(pkg.dependencies))
       .concat(Object.keys(pkg.peerDependencies)),
     output: [
