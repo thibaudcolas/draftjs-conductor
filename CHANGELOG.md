@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html), enforced with [semantic-release](https://github.com/semantic-release/semantic-release).
 
+## [0.4.5](https://github.com/thibaudcolas/draftjs-conductor/compare/v0.4.4...v0.4.5) (2019-07-04)
+
+### Bug Fixes
+
+- **api:** disable Flow types in CommonJS build ([023f6b0](https://github.com/thibaudcolas/draftjs-conductor/commit/023f6b0))
+- **package:** use ES6 import instead of require for draft-js/lib deps ([9bcea6b](https://github.com/thibaudcolas/draftjs-conductor/commit/9bcea6b))
+
 ## [0.4.4](https://github.com/thibaudcolas/draftjs-conductor/compare/v0.4.3...v0.4.4) (2019-05-28)
 
 ### Bug Fixes
