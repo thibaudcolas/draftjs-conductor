@@ -13,7 +13,7 @@ export default [
       .concat(Object.keys(pkg.dependencies))
       .concat(Object.keys(pkg.peerDependencies)),
     output: [
-      { file: pkg.main, format: "cjs", banner: BANNER },
+      { file: pkg.main, format: "cjs" },
       { file: pkg.module, format: "es", banner: BANNER },
     ],
     plugins: [
