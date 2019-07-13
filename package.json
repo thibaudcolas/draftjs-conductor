@@ -38,7 +38,7 @@
     "@semantic-release/exec": "3.3.5",
     "@semantic-release/git": "7.0.16",
     "core-js": "^2.5.7",
-    "coveralls": "3.0.4",
+    "coveralls": "3.0.5",
     "danger": "9.0.3",
     "draft-js": "0.10.5",
     "enzyme": "3.10.0",
