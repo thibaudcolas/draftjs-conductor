@@ -68,7 +68,7 @@
       automerge: true,
     },
     {
-      packagePatterns: ["^react"],
+      packageNames: ["react", "react-dom", "react-test-renderer"],
       groupName: "react",
       automerge: true,
     },
