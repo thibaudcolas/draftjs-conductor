@@ -2,8 +2,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import "normalize.css";
-
 import "./utils/elements.css";
 import "./utils/typography.css";
 import "./utils/layout.css";

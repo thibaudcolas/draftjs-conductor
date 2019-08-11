@@ -28,7 +28,20 @@
   "files": [
     "dist/*.js"
   ],
-  "browserslist": "> 1%, IE 11",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all",
+      "not IE 11"
+    ],
+    "development": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all",
+      "not IE 11"
+    ]
+  },
   "devDependencies": {
     "@babel/plugin-transform-flow-comments": "7.5.5",
     "@commitlint/cli": "8.1.0",
@@ -37,7 +50,6 @@
     "@semantic-release/changelog": "3.0.4",
     "@semantic-release/exec": "3.3.6",
     "@semantic-release/git": "7.0.16",
-    "core-js": "^2.5.7",
     "coveralls": "3.0.6",
     "danger": "9.1.5",
     "draft-js": "0.10.5",
@@ -46,11 +58,10 @@
     "enzyme-to-json": "3.4.0",
     "flow-bin": "0.91.0",
     "immutable": "~3.7.6",
-    "normalize.css": "^7.0.0",
     "prettier": "1.18.2",
     "react": "16.9.0",
     "react-dom": "16.9.0",
-    "react-scripts": "2.1.8",
+    "react-scripts": "3.1.0",
     "react-test-renderer": "16.9.0",
     "rollup": "1.19.4",
     "rollup-plugin-babel": "4.3.3",
