@@ -77,7 +77,7 @@
     "start": "react-scripts start",
     "build": "CI=true react-scripts build && rollup -c",
     "test": "npm run test:coverage -s",
-    "test:coverage": "react-scripts test --env=jsdom --coverage",
+    "test:coverage": "CI=true react-scripts test --env=jsdom --coverage",
     "test:watch": "react-scripts test --env=jsdom",
     "report:coverage": "open coverage/lcov-report/index.html",
     "report:build": "source-map-explorer --html 'build/static/js/*.js' > build/source-map-explorer.html && open build/source-map-explorer.html",
