@@ -4,20 +4,20 @@ import {
   Editor,
   EditorState,
   RichUtils,
-  convertToRaw,
   CompositeDecorator,
   AtomicBlockUtils,
   ContentBlock,
-  convertFromRaw,
 } from "draft-js";
-import type { DraftBlockType } from "draft-js/lib/DraftBlockType.js.flow";
-import type { DraftEntityType } from "draft-js/lib/DraftEntityType.js.flow";
+import type { DraftBlockType } from "draft-js/lib/DraftBlockType";
+import type { DraftEntityType } from "draft-js/lib/DraftEntityType";
 
 import {
   ListNestingStyles,
   blockDepthStyleFn,
   registerCopySource,
   handleDraftEditorPastedText,
+  createEditorStateFromRaw,
+  serialiseEditorStateToRaw,
 } from "../../lib/index";
 
 import SentryBoundary from "./SentryBoundary";
@@ -136,20 +136,9 @@ class DemoEditor extends Component<Props, State> {
       },
     ]);
 
-    let editorState;
-
-    if (rawContentState) {
-      // $FlowFixMe
-      const content = convertFromRaw(rawContentState);
-      // $FlowFixMe
-      editorState = EditorState.createWithContent(content, decorator);
-    } else {
-      // $FlowFixMe
-      editorState = EditorState.createEmpty(decorator);
-    }
-
     this.state = {
-      editorState: editorState,
+      // $FlowFixMe Unclear why the decorator API disagrees with itself.
+      editorState: createEditorStateFromRaw(rawContentState, decorator),
       readOnly: false,
     };
 
@@ -367,7 +356,7 @@ class DemoEditor extends Component<Props, State> {
           </summary>
           <Highlight
             value={JSON.stringify(
-              convertToRaw(editorState.getCurrentContent()),
+              serialiseEditorStateToRaw(editorState),
               null,
               2,
             )}
