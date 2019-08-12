@@ -6,6 +6,8 @@ import {
   blockDepthStyleFn,
   registerCopySource,
   handleDraftEditorPastedText,
+  createEditorStateFromRaw,
+  serialiseEditorStateToRaw,
 } from "./index";
 
 const pkg = require("../../package.json");
@@ -31,4 +33,10 @@ describe(pkg.name, () => {
 
   it("handleDraftEditorPastedText", () =>
     expect(handleDraftEditorPastedText).toBeDefined());
+
+  it("createEditorStateFromRaw", () =>
+    expect(createEditorStateFromRaw).toBeDefined());
+
+  it("serialiseEditorStateToRaw", () =>
+    expect(serialiseEditorStateToRaw).toBeDefined());
 });
