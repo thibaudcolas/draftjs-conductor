@@ -10,6 +10,7 @@ Check out the [online demo](https://thibaudcolas.github.io/draftjs-conductor)!
 
 - [Infinite list nesting](#infinite-list-nesting)
 - [Idempotent copy-paste between editors](#idempotent-copy-paste-between-editors)
+- [Editor state data conversion helpers](#editor-state-data-conversion-helpers)
 
 ---
 
@@ -129,6 +130,32 @@ class MyEditor extends Component {
 `registerCopySource` will ensure the clipboard contains a full representation of the Draft.js content state on copy, while `handleDraftEditorPastedText` retrieves Draft.js content state from the clipboard. Voilà! This also changes the HTML clipboard content to be more semantic, with less styles copied to other word processors/editors.
 
 Note: IE11 isn’t supported, as it doesn't support storing HTML in the clipboard, and we also use the [`Element.closest`](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest) API.
+
+### Editor state data conversion helpers
+
+Draft.js has its own data conversion helpers, [`convertFromRaw`](https://draftjs.org/docs/api-reference-data-conversion#convertfromraw) and [`convertToRaw`](https://draftjs.org/docs/api-reference-data-conversion#converttoraw), which work really well, but aren’t providing that good of an API when initialising or persisting the content of an editor.
+
+We provide two helper methods to simplify the initialisation and serialisation of content. **`createEditorStateFromRaw`** combines [`EditorState.createWithContent`](https://draftjs.org/docs/api-reference-editor-state#createwithcontent), [`EditorState.createEmpty`](https://draftjs.org/docs/api-reference-editor-state#createempty) and [`convertFromRaw`](https://draftjs.org/docs/api-reference-data-conversion#convertfromraw) as a single method:
+
+```js
+import { createEditorStateFromRaw } from "draftjs-conductor";
+
+// Initialise with `null` if there’s no preexisting state.
+const editorState = createEditorStateFromRaw(null);
+// Initialise with the raw content state otherwise
+const editorState = createEditorStateFromRaw({ entityMap: {}, blocks: [] });
+// Optionally use a decorator, like with Draft.js APIs.
+const editorState = createEditorStateFromRaw(null, decorator);
+```
+
+To save content, **`serialiseEditorStateToRaw`** combines [`convertToRaw`](https://draftjs.org/docs/api-reference-data-conversion#converttoraw) with checks for empty content – so empty content is saved as `null`, rather than a single text block with empty text as would be the case otherwise.
+
+```js
+import { serialiseEditorStateToRaw } from "draftjs-conductor";
+
+// Content will be `null` if there’s no textual content, or RawDraftContentState otherwise.
+const content = serialiseEditorStateToRaw(editorState);
+```
 
 ## Contributing
 
