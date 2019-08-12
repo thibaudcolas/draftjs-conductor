@@ -1,7 +1,7 @@
 // @flow
 import React from "react";
 
-import type { BlockNode } from "draft-js/lib/BlockNode.js.flow";
+import type { BlockNode } from "draft-js/lib/BlockNode";
 
 // Default maximum block depth supported by Draft.js CSS.
 export const DRAFT_DEFAULT_MAX_DEPTH = 4;
