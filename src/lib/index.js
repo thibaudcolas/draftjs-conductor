@@ -12,3 +12,8 @@ export {
   registerCopySource,
   handleDraftEditorPastedText,
 } from "./api/copypaste";
+
+export {
+  createEditorStateFromRaw,
+  serialiseEditorStateToRaw,
+} from "./api/conversion";
