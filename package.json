@@ -27,7 +27,7 @@
   },
   "homepage": "https://thibaudcolas.github.io/draftjs-conductor/",
   "files": [
-    "dist/*.js"
+    "dist/*"
   ],
   "browserslist": {
     "production": [
