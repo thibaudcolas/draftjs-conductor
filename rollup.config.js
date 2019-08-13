@@ -15,6 +15,8 @@ export default [
     output: [
       { file: pkg.main, format: "cjs" },
       { file: pkg.module, format: "es", banner: BANNER },
+      // Compile a .flow version of the package used for typings only.
+      { file: pkg.flow, format: "es", banner: BANNER },
     ],
     plugins: [
       babel({
