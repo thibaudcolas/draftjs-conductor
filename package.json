@@ -1,6 +1,6 @@
 {
   "name": "draftjs-conductor",
-  "version": "0.5.2",
+  "version": "1.0.0",
   "description": "📝✨ Little Draft.js helpers to make rich text editors “just work”",
   "author": "Thibaud Colas",
   "license": "MIT",
