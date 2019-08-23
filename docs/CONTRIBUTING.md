@@ -8,7 +8,7 @@ We welcome all support, whether on bug reports, feature requests, code, design, 
 
 ### Install
 
-> Clone the project on your computer, and install [Node](https://nodejs.org). This project also uses [nvm](https://github.com/creationix/nvm).
+> Clone the project on your computer. You will also need [Node](https://nodejs.org) and [nvm](https://github.com/creationix/nvm).
 
 ```sh
 nvm install
