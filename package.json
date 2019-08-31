@@ -65,7 +65,7 @@
     "react-dom": "16.9.0",
     "react-scripts": "3.1.1",
     "react-test-renderer": "16.9.0",
-    "rollup": "1.20.2",
+    "rollup": "1.20.3",
     "rollup-plugin-babel": "4.3.3",
     "semantic-release": "15.13.24",
     "source-map-explorer": "^1.8.0"
