@@ -52,7 +52,7 @@
     "@semantic-release/changelog": "3.0.4",
     "@semantic-release/exec": "3.3.7",
     "@semantic-release/git": "7.0.16",
-    "coveralls": "3.0.6",
+    "coveralls": "3.0.7",
     "danger": "9.2.1",
     "draft-js": "0.10.5",
     "enzyme": "3.10.0",
