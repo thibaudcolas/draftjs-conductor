@@ -53,7 +53,7 @@
     "@semantic-release/exec": "3.3.8",
     "@semantic-release/git": "7.0.18",
     "coveralls": "3.0.7",
-    "danger": "9.2.2",
+    "danger": "9.2.4",
     "draft-js": "0.10.5",
     "enzyme": "3.10.0",
     "enzyme-adapter-react-16": "1.15.1",
