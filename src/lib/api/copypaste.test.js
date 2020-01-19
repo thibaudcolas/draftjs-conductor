@@ -7,6 +7,12 @@ jest.mock("draft-js/lib/getContentStateFragment", () => (content) =>
   content.getBlockMap(),
 );
 
+jest.mock("draft-js-11/lib/generateRandomKey", () => () => "a");
+jest.mock("draft-js-11/lib/getDraftEditorSelection", () => () => ({}));
+jest.mock("draft-js-11/lib/getContentStateFragment", () => (content) =>
+  content.getBlockMap(),
+);
+
 const dispatchEvent = (editor, type, setData) => {
   const event = Object.assign(new Event(type), {
     clipboardData: { setData },
