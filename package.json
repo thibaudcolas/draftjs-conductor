@@ -59,7 +59,7 @@
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.2",
     "enzyme-to-json": "3.4.4",
-    "flow-bin": "0.124.0",
+    "flow-bin": "0.125.1",
     "immutable": "~3.7.6",
     "prettier": "2.0.5",
     "react": "16.13.1",
