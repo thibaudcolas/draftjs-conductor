@@ -130,14 +130,10 @@ export const registerCopySource = (ref: ElementRef<Editor>) => {
 };
 
 /**
- * Handles pastes coming from Draft.js editors set up to serialise
+ * Returns pasted content coming from Draft.js editors set up to serialise
  * their Draft.js content within the HTML.
- * This SHOULD NOT be used for stripPastedStyles editor.
  */
-export const handleDraftEditorPastedText = (
-  html: ?string,
-  editorState: EditorStateType,
-) => {
+export const getDraftEditorPastedContent = (html: ?string) => {
   // Plain-text pastes are better handled by Draft.js.
   if (html === "" || typeof html === "undefined" || html === null) {
     return false;
@@ -160,7 +156,25 @@ export const handleDraftEditorPastedText = (
       return false;
     }
 
-    const fragment = convertFromRaw(rawContent).getBlockMap();
+    return convertFromRaw(rawContent);
+  }
+
+  return false;
+};
+
+/**
+ * Handles pastes coming from Draft.js editors set up to serialise
+ * their Draft.js content within the HTML.
+ * This SHOULD NOT be used for stripPastedStyles editor.
+ */
+export const handleDraftEditorPastedText = (
+  html: ?string,
+  editorState: EditorStateType,
+) => {
+  const pastedContent = getDraftEditorPastedContent(html);
+
+  if (pastedContent) {
+    const fragment = pastedContent.getBlockMap();
 
     const content = Modifier.replaceWithFragment(
       editorState.getCurrentContent(),
