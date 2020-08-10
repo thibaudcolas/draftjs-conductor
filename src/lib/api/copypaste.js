@@ -136,7 +136,7 @@ export const registerCopySource = (ref: ElementRef<Editor>) => {
 export const getDraftEditorPastedContent = (html: ?string) => {
   // Plain-text pastes are better handled by Draft.js.
   if (html === "" || typeof html === "undefined" || html === null) {
-    return false;
+    return null;
   }
 
   const doc = new DOMParser().parseFromString(html, "text/html");
@@ -153,13 +153,13 @@ export const getDraftEditorPastedContent = (html: ?string) => {
       // $FlowFixMe
       rawContent = JSON.parse(fragmentAttr);
     } catch (error) {
-      return false;
+      return null;
     }
 
     return convertFromRaw(rawContent);
   }
 
-  return false;
+  return null;
 };
 
 /**

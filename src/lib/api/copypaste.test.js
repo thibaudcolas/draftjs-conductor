@@ -1,5 +1,9 @@
 import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
-import { registerCopySource, handleDraftEditorPastedText } from "./copypaste";
+import {
+  registerCopySource,
+  handleDraftEditorPastedText,
+  getDraftEditorPastedContent,
+} from "./copypaste";
 
 jest.mock("draft-js/lib/generateRandomKey", () => () => "a");
 jest.mock("draft-js/lib/getDraftEditorSelection", () => () => ({}));
@@ -429,6 +433,45 @@ describe("copypaste", () => {
       const editorState = EditorState.createEmpty();
       const html = `<div data-draftjs-conductor-fragment='{"blocks":[{"key"'><p>Hello, world!</p></div>`;
       expect(handleDraftEditorPastedText(html, editorState)).toBe(false);
+    });
+  });
+
+  describe("getDraftEditorPastedContent", () => {
+    it("no HTML", () => {
+      expect(getDraftEditorPastedContent(null)).toEqual(null);
+    });
+
+    it("HTML from other app", () => {
+      const editorState = EditorState.createEmpty();
+      const html = `<p>Hello, world!</p>`;
+      expect(getDraftEditorPastedContent(html, editorState)).toEqual(null);
+    });
+
+    it("HTML from draftjs-conductor", () => {
+      const content = {
+        blocks: [
+          {
+            data: {},
+            depth: 0,
+            entityRanges: [],
+            inlineStyleRanges: [],
+            key: "a",
+            text: "hello,\nworld!",
+            type: "unstyled",
+          },
+        ],
+        entityMap: {},
+      };
+      const html = `<div data-draftjs-conductor-fragment='${JSON.stringify(
+        content,
+      )}'><p>Hello, world!</p></div>`;
+      const pastedContent = getDraftEditorPastedContent(html);
+      expect(convertToRaw(pastedContent)).toEqual(content);
+    });
+
+    it("invalid JSON", () => {
+      const html = `<div data-draftjs-conductor-fragment='{"blocks":[{"key"'><p>Hello, world!</p></div>`;
+      expect(getDraftEditorPastedContent(html)).toBe(null);
     });
   });
 });
