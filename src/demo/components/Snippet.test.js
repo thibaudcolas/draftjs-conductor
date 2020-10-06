@@ -8,7 +8,7 @@ describe("Snippet", () => {
   it("renders", () => {
     const content = convertFromRaw({
       entityMap: {
-        "0": {
+        0: {
           type: "SNIPPET",
           data: {
             text: "This is a snippet",

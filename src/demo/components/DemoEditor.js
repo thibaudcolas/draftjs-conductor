@@ -274,7 +274,7 @@ class DemoEditor extends Component<Props, State> {
   }
 
   /* :: onTab: (event: SyntheticKeyboardEvent<>) => void; */
-  onTab(event: SyntheticKeyboardEvent<>) {
+  onTab(event: SyntheticKeyboardEvent /*:: <> */) {
     const { editorState } = this.state;
     const newState = RichUtils.onTab(event, editorState, MAX_LIST_NESTING);
 

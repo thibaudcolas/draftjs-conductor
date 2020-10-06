@@ -154,7 +154,7 @@ describe("DemoEditor", () => {
           extended={true}
           rawContentState={{
             entityMap: {
-              "5": {
+              5: {
                 type: "HORIZONTAL_RULE",
                 data: {},
               },
@@ -187,7 +187,7 @@ describe("DemoEditor", () => {
       window.sessionStorage.getItem = jest.fn(() =>
         JSON.stringify({
           entityMap: {
-            "1": {
+            1: {
               type: "IMAGE",
               data: {
                 src: "example.png",
@@ -223,7 +223,7 @@ describe("DemoEditor", () => {
       window.sessionStorage.getItem = jest.fn(() =>
         JSON.stringify({
           entityMap: {
-            "1": {
+            1: {
               type: "SNIPPET",
               data: {
                 src: "example.png",

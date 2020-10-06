@@ -57,12 +57,14 @@ const copyPasteContent = {
     },
   ],
   entityMap: {
-    "0": {
+    // prettier-ignore
+    '0': {
       type: "HORIZONTAL_RULE",
       mutability: "IMMUTABLE",
       data: {},
     },
-    "1": {
+    // prettier-ignore
+    '1': {
       type: "SNIPPET",
       mutability: "IMMUTABLE",
       data: {
