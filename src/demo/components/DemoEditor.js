@@ -15,7 +15,8 @@ import type { DraftEntityType } from "draft-js/lib/DraftEntityType";
 import {
   ListNestingStyles,
   blockDepthStyleFn,
-  registerCopySource,
+  onDraftEditorCopy,
+  onDraftEditorCut,
   handleDraftEditorPastedText,
   createEditorStateFromRaw,
   serialiseEditorStateToRaw,
@@ -113,15 +114,10 @@ type State = {
   readOnly: boolean,
 };
 
-/* :: import type { ElementRef } from "react"; */
-
 /**
  * Demo editor.
  */
 class DemoEditor extends Component<Props, State> {
-  /* :: editorRef: ?ElementRef<Editor>; */
-  /* :: copySource: { unregister: () => void }; */
-
   static defaultProps = {
     rawContentState: null,
   };
@@ -152,14 +148,6 @@ class DemoEditor extends Component<Props, State> {
     this.toggleEntity = this.toggleEntity.bind(this);
     this.blockRenderer = this.blockRenderer.bind(this);
     this.handlePastedText = this.handlePastedText.bind(this);
-  }
-
-  componentDidMount() {
-    this.copySource = registerCopySource(this.editorRef);
-  }
-
-  componentWillUnmount() {
-    this.copySource.unregister();
   }
 
   /* :: onChange: (nextState: EditorState) => void; */
@@ -345,9 +333,6 @@ class DemoEditor extends Component<Props, State> {
             </button>
           </div>
           <Editor
-            ref={(ref) => {
-              this.editorRef = ref;
-            }}
             editorState={editorState}
             readOnly={readOnly}
             onChange={this.onChange}
@@ -355,6 +340,8 @@ class DemoEditor extends Component<Props, State> {
             blockRendererFn={this.blockRenderer}
             blockStyleFn={blockDepthStyleFn}
             keyBindingFn={this.keyBindingFn}
+            onCopy={onDraftEditorCopy}
+            onCut={onDraftEditorCut}
             handlePastedText={this.handlePastedText}
           />
         </SentryBoundary>
