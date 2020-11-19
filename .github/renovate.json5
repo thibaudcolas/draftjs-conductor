@@ -3,7 +3,7 @@
   // https://renovatebot.com/docs/configuration-options/#commitbodytable
   commitBodyTable: true,
   // https://renovatebot.com/docs/configuration-options/#ignoredeps
-  ignoreDeps: ["immutable", "draft-js", "source-map-explorer"],
+  ignoreDeps: ["immutable", "draft-js", "source-map-explorer", "flow-bin"],
   // https://renovatebot.com/docs/configuration-options/#labels
   labels: ["enhancement"],
   // https://renovatebot.com/docs/configuration-options/#prcreation
@@ -39,11 +39,6 @@
       groupName: "prettier",
       automerge: true,
       automergeType: "branch",
-    },
-    {
-      packageNames: ["flow-bin"],
-      groupName: "flow",
-      automerge: true,
     },
     {
       packageNames: ["coveralls"],
