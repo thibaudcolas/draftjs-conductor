@@ -22,6 +22,8 @@ const addLineBreak = (editorState: EditorState) => {
   return EditorState.push(editorState, newContent, "insert-fragment");
 };
 
-export default {
+const DraftUtils = {
   addLineBreak,
 };
+
+export default DraftUtils;
