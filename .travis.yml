@@ -28,7 +28,7 @@ deploy:
     local_dir: build
     github_token: "$PAGES_GITHUB_API_TOKEN"
     on:
-      branch: master
+      branch: main
       condition: "$DRAFTJS_VERSION = 0.10"
   - provider: script
     skip_cleanup: true
