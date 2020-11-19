@@ -5,8 +5,10 @@ install:
   - npm ci
 jobs:
   include:
-    - env: DRAFTJS_VERSION=0.10
     - env: DRAFTJS_VERSION=0.11
+    - env: DRAFTJS_VERSION=0.10
+      script:
+        - npm run test
 script:
   # Test Git hooks in CI, to make sure script upgrades do not break them.
   - npm run prepare
