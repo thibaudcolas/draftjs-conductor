@@ -21,6 +21,10 @@
   prBodyColumns: ["Package", "Update", "Type", "Change", "Sourcegraph"],
   // https://renovatebot.com/docs/configuration-options/#schedule
   schedule: ["every weekend"],
+  // Silently merge updates without PRs
+  automergeType: "branch",
+  // Limit the number of consecutive PRs
+  prHourlyLimit: 2,
   node: {
     enabled: true,
     major: {
