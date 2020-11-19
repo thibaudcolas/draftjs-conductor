@@ -75,7 +75,8 @@ Here’s how to use the copy/cut override, and the paste handler:
 
 ```js
 import {
-  registerCopySource,
+  onDraftEditorCopy,
+  onDraftEditorCut,
   handleDraftEditorPastedText,
 } from "draftjs-conductor";
 
@@ -89,10 +90,6 @@ class MyEditor extends Component {
 
     this.onChange = this.onChange.bind(this);
     this.handlePastedText = this.handlePastedText.bind(this);
-  }
-
-  componentDidMount() {
-    this.copySource = registerCopySource(this.editorRef);
   }
 
   onChange(nextState: EditorState) {
