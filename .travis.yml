@@ -29,12 +29,12 @@ deploy:
     github_token: "$PAGES_GITHUB_API_TOKEN"
     on:
       branch: main
-      condition: "$DRAFTJS_VERSION = 0.10"
+      condition: "$DRAFTJS_VERSION = 0.11"
   - provider: script
     skip_cleanup: true
     script: npx semantic-release
     on:
-      condition: "$DRAFTJS_VERSION = 0.10"
+      condition: "$DRAFTJS_VERSION = 0.11"
 notifications:
   email: false
 env:

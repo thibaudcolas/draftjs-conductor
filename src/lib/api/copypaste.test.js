@@ -11,9 +11,9 @@ jest.mock("draft-js/lib/getContentStateFragment", () => (content) =>
   content.getBlockMap(),
 );
 
-jest.mock("draft-js-11/lib/generateRandomKey", () => () => "a");
-jest.mock("draft-js-11/lib/getDraftEditorSelection", () => () => ({}));
-jest.mock("draft-js-11/lib/getContentStateFragment", () => (content) =>
+jest.mock("draft-js-10/lib/generateRandomKey", () => () => "a");
+jest.mock("draft-js-10/lib/getDraftEditorSelection", () => () => ({}));
+jest.mock("draft-js-10/lib/getContentStateFragment", () => (content) =>
   content.getBlockMap(),
 );
 
