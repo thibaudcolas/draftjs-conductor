@@ -4,6 +4,35 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html), enforced with [semantic-release](https://github.com/semantic-release/semantic-release).
 
+# [2.0.0](https://github.com/thibaudcolas/draftjs-conductor/compare/v1.2.0...v2.0.0) (2020-11-19)
+
+### Features
+
+- **api:** replace list nesting APIs with a single getListNestingStyles ([3703b2f](https://github.com/thibaudcolas/draftjs-conductor/commit/3703b2fae1a5e83946041f72b107f58f3b59038b))
+- **deps:** proactively declare support with Draft.js v0.12.0 ([586b385](https://github.com/thibaudcolas/draftjs-conductor/commit/586b38511fa6ca7a32a16d16340640b3d9fc60fd))
+
+### BREAKING CHANGES
+
+- **api:** The `<ListNestingStyles max={6} />` component has been removed,
+  and the `generateListNestingStyles` method is now deprecated and
+  will be removed in a future release.
+
+Both are replaced with a `getListNestingStyles` method, which works exactly the same as
+`generateListNestingStyles`, but with a different parameter order, and with default values:
+
+```js
+export const getListNestingStyles = (
+  maxDepth: number,
+  minDepth: number = DRAFT_DEFAULT_MAX_DEPTH + 1,
+  selectorPrefix: string = DRAFT_DEFAULT_DEPTH_CLASS,
+) => {
+  return generateListNestingStyles(selectorPrefix, minDepth, maxDepth);
+};
+```
+
+This small breaking change allows us to remove this package’s peerDependency on React,
+making it easier to upgrade to React 17, and other versions in the future.
+
 # [1.2.0](https://github.com/thibaudcolas/draftjs-conductor/compare/v1.1.0...v1.2.0) (2020-11-19)
 
 ### Features
