@@ -40,13 +40,22 @@ describe("Link", () => {
       ],
     });
 
+    const entityKey = contentState.getFirstBlock().getEntityAt(3);
+
     expect(
       shallow(
-        <Link contentState={contentState} entityKey="1">
+        <Link contentState={contentState} entityKey={entityKey}>
           Test
         </Link>,
       ),
-    ).toMatchSnapshot();
+    ).toMatchInlineSnapshot(`
+      <span
+        className="link"
+        title="www.example.com"
+      >
+        Test
+      </span>
+    `);
   });
 });
 

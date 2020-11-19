@@ -7,6 +7,7 @@ import {
   CompositeDecorator,
   AtomicBlockUtils,
   ContentBlock,
+  getDefaultKeyBinding,
 } from "draft-js";
 import type { DraftBlockType } from "draft-js/lib/DraftBlockType";
 import type { DraftEntityType } from "draft-js/lib/DraftEntityType";
@@ -143,7 +144,7 @@ class DemoEditor extends Component<Props, State> {
     };
 
     this.onChange = this.onChange.bind(this);
-    this.onTab = this.onTab.bind(this);
+    this.keyBindingFn = this.keyBindingFn.bind(this);
     this.addBR = this.addBR.bind(this);
     this.toggleReadOnly = this.toggleReadOnly.bind(this);
     this.toggleStyle = this.toggleStyle.bind(this);
@@ -273,12 +274,20 @@ class DemoEditor extends Component<Props, State> {
     return false;
   }
 
-  /* :: onTab: (event: SyntheticKeyboardEvent<>) => void; */
-  onTab(event: SyntheticKeyboardEvent /*:: <> */) {
-    const { editorState } = this.state;
-    const newState = RichUtils.onTab(event, editorState, MAX_LIST_NESTING);
-
-    this.onChange(newState);
+  /* :: keyBindingFn: (event: SyntheticKeyboardEvent<>) => void; */
+  keyBindingFn(event: SyntheticKeyboardEvent /*:: <> */) {
+    const TAB = 9;
+    switch (event.keyCode) {
+      case TAB: {
+        const { editorState } = this.state;
+        const newState = RichUtils.onTab(event, editorState, MAX_LIST_NESTING);
+        this.onChange(newState);
+        return null;
+      }
+      default: {
+        return getDefaultKeyBinding(event);
+      }
+    }
   }
 
   /* :: addBR: (e: Event) => void; */
@@ -345,7 +354,7 @@ class DemoEditor extends Component<Props, State> {
             stripPastedStyles={false}
             blockRendererFn={this.blockRenderer}
             blockStyleFn={blockDepthStyleFn}
-            onTab={this.onTab}
+            keyBindingFn={this.keyBindingFn}
             handlePastedText={this.handlePastedText}
           />
         </SentryBoundary>

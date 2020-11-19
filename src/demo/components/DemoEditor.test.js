@@ -149,110 +149,105 @@ describe("DemoEditor", () => {
     });
 
     it("HORIZONTAL_RULE", () => {
-      const Component = mount(
-        <DemoEditor
-          extended={true}
-          rawContentState={{
-            entityMap: {
-              5: {
-                type: "HORIZONTAL_RULE",
-                data: {},
-              },
-            },
-            blocks: [
+      const rawContentState = {
+        entityMap: {
+          5: {
+            type: "HORIZONTAL_RULE",
+            data: {},
+          },
+        },
+        blocks: [
+          {
+            type: "atomic",
+            text: " ",
+            entityRanges: [
               {
-                type: "atomic",
-                text: " ",
-                entityRanges: [
-                  {
-                    key: 5,
-                    offset: 0,
-                    length: 1,
-                  },
-                ],
+                key: 5,
+                offset: 0,
+                length: 1,
               },
             ],
-          }}
-        />,
-      )
-        .instance()
-        .blockRenderer({
-          getType: () => "atomic",
-          getEntityAt: () => "5",
-        }).component;
+          },
+        ],
+      };
+      const instance = mount(
+        <DemoEditor rawContentState={rawContentState} extended={true} />,
+      ).instance();
+
+      const Component = instance.blockRenderer(
+        instance.state.editorState.getCurrentContent().getFirstBlock(),
+      ).component;
       expect(Component()).toEqual(<hr />);
     });
 
     it("IMAGE", () => {
-      window.sessionStorage.getItem = jest.fn(() =>
-        JSON.stringify({
-          entityMap: {
-            1: {
-              type: "IMAGE",
-              data: {
-                src: "example.png",
-              },
+      const rawContentState = {
+        entityMap: {
+          1: {
+            type: "IMAGE",
+            data: {
+              src: "example.png",
             },
           },
-          blocks: [
-            {
-              type: "atomic",
-              text: " ",
-              entityRanges: [
-                {
-                  key: 1,
-                  offset: 0,
-                  length: 1,
-                },
-              ],
-            },
-          ],
-        }),
-      );
+        },
+        blocks: [
+          {
+            type: "atomic",
+            text: " ",
+            entityRanges: [
+              {
+                key: 1,
+                offset: 0,
+                length: 1,
+              },
+            ],
+          },
+        ],
+      };
 
-      const Component = mount(<DemoEditor extended={true} />)
-        .instance()
-        .blockRenderer({
-          getType: () => "atomic",
-          getEntityAt: () => "1",
-        }).component;
-      expect(<Component />).toMatchSnapshot();
+      const instance = mount(
+        <DemoEditor rawContentState={rawContentState} extended={true} />,
+      ).instance();
+
+      const Component = instance.blockRenderer(
+        instance.state.editorState.getCurrentContent().getFirstBlock(),
+      ).component;
+      expect(<Component />).toMatchInlineSnapshot(`<Image />`);
     });
 
     it("SNIPPET", () => {
-      window.sessionStorage.getItem = jest.fn(() =>
-        JSON.stringify({
-          entityMap: {
-            1: {
-              type: "SNIPPET",
-              data: {
-                src: "example.png",
-              },
+      const rawContentState = {
+        entityMap: {
+          0: {
+            type: "SNIPPET",
+            data: {
+              src: "example.png",
             },
           },
-          blocks: [
-            {
-              type: "atomic",
-              text: " ",
-              entityRanges: [
-                {
-                  key: 1,
-                  offset: 0,
-                  length: 1,
-                },
-              ],
-            },
-          ],
-        }),
-      );
+        },
+        blocks: [
+          {
+            type: "atomic",
+            text: " ",
+            entityRanges: [
+              {
+                key: 0,
+                offset: 0,
+                length: 1,
+              },
+            ],
+          },
+        ],
+      };
 
-      const Component = mount(<DemoEditor extended={true} />)
-        .instance()
-        .blockRenderer({
-          getType: () => "atomic",
-          getEntityAt: () => "1",
-        }).component;
-      expect(<Component />).toMatchSnapshot();
+      const instance = mount(
+        <DemoEditor rawContentState={rawContentState} extended={true} />,
+      ).instance();
+
+      const Component = instance.blockRenderer(
+        instance.state.editorState.getCurrentContent().getFirstBlock(),
+      ).component;
+      expect(<Component />).toMatchInlineSnapshot(`<Snippet />`);
     });
   });
 
@@ -303,21 +298,21 @@ describe("DemoEditor", () => {
     });
   });
 
-  describe("onTab", () => {
+  describe("keyBindingFn", () => {
     it("works", () => {
       const wrapper = mount(<DemoEditor extended={false} />);
 
       wrapper.instance().onChange = jest.fn();
-      wrapper.instance().onTab({});
+      wrapper.instance().keyBindingFn({ keyCode: 9 });
       expect(wrapper.instance().onChange).toHaveBeenCalled();
     });
 
-    it("#extended", () => {
-      const wrapper = mount(<DemoEditor extended />);
+    it("does not change state directly with other keys", () => {
+      const wrapper = mount(<DemoEditor extended={false} />);
 
       wrapper.instance().onChange = jest.fn();
-      wrapper.instance().onTab({});
-      expect(wrapper.instance().onChange).toHaveBeenCalled();
+      wrapper.instance().keyBindingFn({ keyCode: 22 });
+      expect(wrapper.instance().onChange).not.toHaveBeenCalled();
     });
   });
 

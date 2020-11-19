@@ -232,10 +232,6 @@ exports[`DemoEditor #extended works 1`] = `
 </div>
 `;
 
-exports[`DemoEditor blockRenderer IMAGE 1`] = `<Image />`;
-
-exports[`DemoEditor blockRenderer SNIPPET 1`] = `<Image />`;
-
 exports[`DemoEditor renders 1`] = `
 <div
   className="EditorToolbar"
