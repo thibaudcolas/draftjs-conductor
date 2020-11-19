@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html), enforced with [semantic-release](https://github.com/semantic-release/semantic-release).
 
+# [1.2.0](https://github.com/thibaudcolas/draftjs-conductor/compare/v1.1.0...v1.2.0) (2020-11-19)
+
+### Features
+
+- **api:** onDraftEditorCopy, onDraftEditorCut for draft-js@0.11 ([#268](https://github.com/thibaudcolas/draftjs-conductor/issues/268)) ([05b31cb](https://github.com/thibaudcolas/draftjs-conductor/commit/05b31cb8bb400ee2fb59cb80a482410fc24506c4))
+
 # [1.1.0](https://github.com/thibaudcolas/draftjs-conductor/compare/v1.0.1...v1.1.0) (2020-08-16)
 
 ### Features
