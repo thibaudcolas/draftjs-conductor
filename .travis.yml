@@ -3,18 +3,13 @@ dist: bionic
 language: node_js
 install:
   - npm ci
-jobs:
-  include:
-    - env: DRAFTJS_VERSION=0.11
-    - env: DRAFTJS_VERSION=0.10
-      script:
-        - npm run test
 script:
   # Test Git hooks in CI, to make sure script upgrades do not break them.
   - npm run prepare
   # Test commit message validation in CI.
   - git log -1 --pretty=%B >> latest.log && ./.git/hooks/commit-msg latest.log
-  - npm run test:ci
+  - DRAFTJS_VERSION=0.11 npm run test:ci
+  - DRAFTJS_VERSION=0.10 npm run test
   - npx commitlint-travis
   - if [ "$TRAVIS_SECURE_ENV_VARS" == true ]; then npx danger ci --verbose; fi
   - npm run report:package
@@ -31,12 +26,11 @@ deploy:
     github_token: "$PAGES_GITHUB_API_TOKEN"
     on:
       branch: main
-      condition: "$DRAFTJS_VERSION = 0.11"
   - provider: script
     skip_cleanup: true
     script: npx semantic-release
     on:
-      condition: "$DRAFTJS_VERSION = 0.11"
+      branch: main
 notifications:
   email: false
 env:
