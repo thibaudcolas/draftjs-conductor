@@ -63,11 +63,15 @@ Relevant Draft.js issues:
 - [Nested list styles above 4 levels are not retained when copy-pasting between Draft instances. – facebook/draft-js#1605 (comment)](https://github.com/facebook/draft-js/pull/1605#pullrequestreview-87340460)
 - [Merged `<p>` tags on paste – facebook/draft-js#523 (comment)](https://github.com/facebook/draft-js/issues/523#issuecomment-371098488)
 
-All of those problems can be fixed with this library, which overrides the `copy` event to transfer more of the editor’s content, and introduces a function to use with the Draft.js [`handlePastedText`](https://draftjs.org/docs/api-reference-editor#handlepastedtext) to retrieve the pasted content.
+All of those problems can be fixed with this library, which overrides the `copy` and `cut` events to transfer more of the editor’s content, and introduces a function to use with the Draft.js [`handlePastedText`](https://draftjs.org/docs/api-reference-editor#handlepastedtext) to retrieve the pasted content.
 
 **This will paste all copied content, even if the target editor might not support it.** To ensure only supported content is retained, use filters like [draftjs-filters](https://github.com/thibaudcolas/draftjs-filters).
 
-Here’s how to use the copy override, and the paste handler:
+Note: IE11 isn’t supported, as it doesn't support storing HTML in the clipboard, and we also use the [`Element.closest`](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest) API.
+
+#### With draft.js 0.11 and above
+
+Here’s how to use the copy/cut override, and the paste handler:
 
 ```js
 import {
@@ -106,6 +110,41 @@ class MyEditor extends Component {
     return false;
   }
 
+  render() {
+    const { editorState } = this.state;
+
+    return (
+      <Editor
+        editorState={editorState}
+        onChange={this.onChange}
+        onCopy={onDraftEditorCopy}
+        onCut={onDraftEditorCut}
+        handlePastedText={this.handlePastedText}
+      />
+    );
+  }
+}
+```
+
+The copy/cut event handlers will ensure the clipboard contains a full representation of the Draft.js content state on copy/cut, while `handleDraftEditorPastedText` retrieves Draft.js content state from the clipboard. Voilà! This also changes the HTML clipboard content to be more semantic, with less styles copied to other word processors/editors.
+
+You can also use `getDraftEditorPastedContent` method and set new EditorState by yourself. It is useful when you need to do some transformation with content (for example filtering unsupported styles), before past it in the state.
+
+#### With draft.js 0.10
+
+The above code relies on the `onCopy` and `onCut` event handlers, only available from Draft.js v0.11.0 onwards. For Draft.js v0.10.5, use `registerCopySource` instead, providing a `ref` to the editor:
+
+```js
+import {
+  registerCopySource,
+  handleDraftEditorPastedText,
+} from "draftjs-conductor";
+
+class MyEditor extends Component {
+  componentDidMount() {
+    this.copySource = registerCopySource(this.editorRef);
+  }
+
   componentWillUnmount() {
     if (this.copySource) {
       this.copySource.unregister();
@@ -129,11 +168,29 @@ class MyEditor extends Component {
 }
 ```
 
-`registerCopySource` will ensure the clipboard contains a full representation of the Draft.js content state on copy, while `handleDraftEditorPastedText` retrieves Draft.js content state from the clipboard. Voilà! This also changes the HTML clipboard content to be more semantic, with less styles copied to other word processors/editors.
+#### With draft-js-plugins
 
-You can also use `getDraftEditorPastedContent` method and set new EditorState by yourself. It is useful when you need to do some transformation with content (for example filtering unsupported styles), before past it in the state.
+The setup is slightly different with `draft-js-plugins` (and React hooks) – we need to use the provided `getEditorRef` method:
 
-Note: IE11 isn’t supported, as it doesn't support storing HTML in the clipboard, and we also use the [`Element.closest`](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest) API.
+```tsx
+// reference to the editor
+const editor = useRef<Editor>(null);
+
+// register code for copying
+useEffect(() => {
+  let unregisterCopySource: undefined | unregisterObject = undefined;
+  if (editor.current !== null) {
+    unregisterCopySource = registerCopySource(
+      editor.current.getEditorRef() as any,
+    );
+  }
+  return () => {
+    unregisterCopySource?.unregister();
+  };
+});
+```
+
+See [#115](https://github.com/thibaudcolas/draftjs-conductor/issues/115) for further details.
 
 ### Editor state data conversion helpers
 

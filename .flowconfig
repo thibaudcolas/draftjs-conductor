@@ -5,8 +5,9 @@
 .*/node_modules/draft-js/lib/DraftEditorLeaf.react.js.flow
 .*/node_modules/draft-js/lib/DraftEditorDragHandler.js.flow
 .*/node_modules/draft-js/lib/DraftEditor.react.js.flow
+.*/node_modules/draft-js/lib/DraftEditor.react.js.flow
 .*/node_modules/config-chain
-.*/node_modules/fbjs/lib/emptyFunction.js.flow
+.*/node_modules/fbjs/lib/editOnPaste.js.flow
 suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
 
 [include]

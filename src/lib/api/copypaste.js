@@ -1,6 +1,9 @@
 // @flow
 import getContentStateFragment from "draft-js/lib/getContentStateFragment";
 import getDraftEditorSelection from "draft-js/lib/getDraftEditorSelection";
+import editOnCopy from "draft-js/lib/editOnCopy";
+import editOnCut from "draft-js/lib/editOnCut";
+
 import {
   EditorState,
   Modifier,
@@ -67,11 +70,9 @@ const getSelectedContent = (
 // See also https://github.com/basecamp/trix/blob/62145978f352b8d971cf009882ba06ca91a16292/src/trix/controllers/input_controller.coffee#L415-L422
 // We serialise the editor content within HTML, not as a separate mime type, because Draft.js only allows access
 // to HTML in its paste event handler.
-const draftEditorCopyListener = (
+const draftEditorCopyCutListener = (
   ref: ElementRef<Editor>,
-  e: Event & {
-    clipboardData: DataTransfer,
-  },
+  e: SyntheticClipboardEvent<>,
 ) => {
   const selection = window.getSelection();
 
@@ -111,20 +112,36 @@ const draftEditorCopyListener = (
   }
 };
 
+export const onDraftEditorCopy = (
+  editor: Editor,
+  e: SyntheticClipboardEvent<>,
+) => {
+  draftEditorCopyCutListener(editor, e);
+  editOnCopy(editor, e);
+};
+
+export const onDraftEditorCut = (
+  editor: Editor,
+  e: SyntheticClipboardEvent<>,
+) => {
+  draftEditorCopyCutListener(editor, e);
+  editOnCut(editor, e);
+};
+
 /**
  * Registers custom copy/cut event listeners on an editor.
  */
 export const registerCopySource = (ref: ElementRef<Editor>) => {
   const editorElt = ref.editor;
-  const onCopy = draftEditorCopyListener.bind(null, ref);
+  const onCopyCut = draftEditorCopyCutListener.bind(null, ref);
 
-  editorElt.addEventListener("copy", onCopy);
-  editorElt.addEventListener("cut", onCopy);
+  editorElt.addEventListener("copy", onCopyCut);
+  editorElt.addEventListener("cut", onCopyCut);
 
   return {
     unregister() {
-      editorElt.removeEventListener("copy", onCopy);
-      editorElt.removeEventListener("cut", onCopy);
+      editorElt.removeEventListener("copy", onCopyCut);
+      editorElt.removeEventListener("cut", onCopyCut);
     },
   };
 };

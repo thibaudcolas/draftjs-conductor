@@ -10,6 +10,8 @@ export {
 
 export {
   registerCopySource,
+  onDraftEditorCopy,
+  onDraftEditorCut,
   handleDraftEditorPastedText,
   getDraftEditorPastedContent,
 } from "./api/copypaste";

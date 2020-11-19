@@ -3,12 +3,14 @@ import pkg from "./package.json";
 
 const BANNER = `// @flow`;
 
-export default [
+const config = [
   {
     input: "src/lib/index.js",
     external: [
       "draft-js/lib/getDraftEditorSelection",
       "draft-js/lib/getContentStateFragment",
+      "draft-js/lib/editOnCopy",
+      "draft-js/lib/editOnCut",
     ].concat(Object.keys(pkg.peerDependencies)),
     output: [
       { file: pkg.main, format: "cjs" },
@@ -34,3 +36,5 @@ export default [
     ],
   },
 ];
+
+export default config;

@@ -24,15 +24,6 @@ describe("DemoEditor", () => {
     ).toMatchSnapshot();
   });
 
-  it("componentWillUnmount", () => {
-    const wrapper = mount(<DemoEditor extended={false} />);
-    const copySource = wrapper.instance().copySource;
-    jest.spyOn(copySource, "unregister");
-    expect(copySource).not.toBeNull();
-    wrapper.unmount();
-    expect(copySource.unregister).toHaveBeenCalled();
-  });
-
   describe("#extended", () => {
     it("works", () => {
       expect(
@@ -127,19 +118,21 @@ describe("DemoEditor", () => {
     });
 
     it("no entity", () => {
-      window.sessionStorage.getItem = jest.fn(() =>
-        JSON.stringify({
-          entityMap: {},
-          blocks: [
-            {
-              type: "atomic",
-              text: " ",
-              entityRanges: [],
-            },
-          ],
-        }),
-      );
-      const editable = mount(<DemoEditor extended={true} />)
+      const editable = mount(
+        <DemoEditor
+          rawContentState={{
+            entityMap: {},
+            blocks: [
+              {
+                type: "atomic",
+                text: " ",
+                entityRanges: [],
+              },
+            ],
+          }}
+          extended={true}
+        />,
+      )
         .instance()
         .blockRenderer({
           getType: () => "atomic",

@@ -1,6 +1,8 @@
 import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
 import {
   registerCopySource,
+  onDraftEditorCopy,
+  onDraftEditorCut,
   handleDraftEditorPastedText,
   getDraftEditorPastedContent,
 } from "./copypaste";
@@ -11,11 +13,16 @@ jest.mock("draft-js/lib/getContentStateFragment", () => (content) =>
   content.getBlockMap(),
 );
 
+jest.mock("draft-js/lib/editOnCopy", () => jest.fn(() => {}));
+jest.mock("draft-js/lib/editOnCut", () => jest.fn(() => {}));
+
 jest.mock("draft-js-10/lib/generateRandomKey", () => () => "a");
 jest.mock("draft-js-10/lib/getDraftEditorSelection", () => () => ({}));
 jest.mock("draft-js-10/lib/getContentStateFragment", () => (content) =>
   content.getBlockMap(),
 );
+jest.mock("draft-js-10/lib/editOnCopy", () => jest.fn(() => {}));
+jest.mock("draft-js-10/lib/editOnCut", () => jest.fn(() => {}));
 
 const dispatchEvent = (editor, type, setData) => {
   const event = Object.assign(new Event(type), {
@@ -85,6 +92,22 @@ describe("copypaste", () => {
       window.getSelection = getSelection();
       dispatchEvent(editor, "cut");
       expect(window.getSelection).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("onDraftEditorCopy", () => {
+    it("calls editOnCopy", () => {
+      const editor = document.createElement("div");
+      window.getSelection = getSelection();
+      onDraftEditorCopy(editor, dispatchEvent(editor, "copy"));
+    });
+  });
+
+  describe("onDraftEditorCut", () => {
+    it("does not break", () => {
+      const editor = document.createElement("div");
+      window.getSelection = getSelection();
+      onDraftEditorCut(editor, dispatchEvent(editor, "cut"));
     });
   });
 
