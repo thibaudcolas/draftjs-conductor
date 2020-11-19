@@ -1,6 +1,4 @@
 // @flow
-import React from "react";
-
 import type { BlockNode } from "draft-js/lib/BlockNode";
 
 // Default maximum block depth supported by Draft.js CSS.
@@ -11,6 +9,7 @@ export const DRAFT_DEFAULT_DEPTH_CLASS = "public-DraftStyleDefault-depth";
 
 /**
  * Generates CSS styles for list items, for a given selector pattern.
+ * @deprecated Use getListNestingStyles instead, which has the same signature.
  * @param {string} selectorPrefix
  * @param {number} minDepth
  * @param {number} maxDepth
@@ -43,15 +42,12 @@ export const generateListNestingStyles = (
  * Dynamically generates the right list nesting styles.
  * Can be wrapped as a pure component - to re-render only when `max` changes (eg. never).
  */
-export const ListNestingStyles = (props: { max: number }) => {
-  const { max } = props;
-  const min = DRAFT_DEFAULT_MAX_DEPTH + 1;
-
-  return max > DRAFT_DEFAULT_MAX_DEPTH ? (
-    <style>
-      {generateListNestingStyles(DRAFT_DEFAULT_DEPTH_CLASS, min, max)}
-    </style>
-  ) : null;
+export const getListNestingStyles = (
+  maxDepth: number,
+  minDepth: number = DRAFT_DEFAULT_MAX_DEPTH + 1,
+  selectorPrefix: string = DRAFT_DEFAULT_DEPTH_CLASS,
+) => {
+  return generateListNestingStyles(selectorPrefix, minDepth, maxDepth);
 };
 
 /**

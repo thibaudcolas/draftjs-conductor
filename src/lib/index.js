@@ -1,12 +1,12 @@
 // @flow
 
 export {
-  ListNestingStyles,
+  getListNestingStyles,
   DRAFT_DEFAULT_MAX_DEPTH,
   DRAFT_DEFAULT_DEPTH_CLASS,
   generateListNestingStyles,
   blockDepthStyleFn,
-} from "./components/ListNestingStyles";
+} from "./api/lists";
 
 export {
   registerCopySource,

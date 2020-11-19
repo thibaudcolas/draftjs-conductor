@@ -20,26 +20,34 @@ Check out the [online demo](https://thibaudcolas.github.io/draftjs-conductor)!
 
 By default, Draft.js only provides support for [5 list levels](https://github.com/facebook/draft-js/blob/232791a4e92d94a52c869f853f9869367bdabdac/src/component/contents/DraftEditorContents-core.react.js#L58-L62) for bulleted and numbered lists. While this is often more than enough, some editors need to go further.
 
-Instead of manually writing and maintaining the list nesting styles, use this little helper:
+Instead of manually writing and maintaining the list nesting styles, use those little helpers:
 
 ```js
-import { ListNestingStyles, blockDepthStyleFn } from "draftjs-conductor";
+import { getListNestingStyles, blockDepthStyleFn } from "draftjs-conductor";
 
+<style>
+  {getListNestingStyles(6)}
+</style>
 <Editor blockStyleFn={blockDepthStyleFn} />
-<ListNestingStyles max={6} />
 ```
 
-`ListNestingStyles` will generate the necessary CSS for your editor’s lists. `blockDepthStyleFn` will then apply classes to blocks based on their depth, so the styles take effect. Voilà!
+`getListNestingStyles` will generate the necessary CSS for your editor’s lists. `blockDepthStyleFn` will then apply classes to blocks based on their depth, so the styles take effect. Voilà!
 
-With React v16.6 and up, you can also leverage [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) to speed up re-renders:
+If your editor’s maximum list nesting depth never changes, pre-render the styles as a fragment for better performance:
+
+```js
+const listNestingStyles = <style>{getListNestingStyles(6)}</style>;
+```
+
+You can also leverage [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) to speed up re-renders even if `max` was to change:
 
 ```js
 const NestingStyles = React.memo(ListNestingStyles);
 
-<NestingStyles max={6} />;
+<style>
+  <NestingStyles max={max} />
+</style>;
 ```
-
-Should you need more flexibility, import `generateListNestingStyles` which will allow you to further specify how the styles are generated.
 
 Relevant Draft.js issues:
 
