@@ -9,9 +9,7 @@ export default [
     external: [
       "draft-js/lib/getDraftEditorSelection",
       "draft-js/lib/getContentStateFragment",
-    ]
-      .concat(Object.keys(pkg.dependencies))
-      .concat(Object.keys(pkg.peerDependencies)),
+    ].concat(Object.keys(pkg.peerDependencies)),
     output: [
       { file: pkg.main, format: "cjs" },
       { file: pkg.module, format: "es", banner: BANNER },
