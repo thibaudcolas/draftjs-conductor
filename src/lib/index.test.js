@@ -1,10 +1,12 @@
 import {
-  ListNestingStyles,
+  getListNestingStyles,
   DRAFT_DEFAULT_MAX_DEPTH,
   DRAFT_DEFAULT_DEPTH_CLASS,
   generateListNestingStyles,
   blockDepthStyleFn,
   registerCopySource,
+  onDraftEditorCopy,
+  onDraftEditorCut,
   handleDraftEditorPastedText,
   createEditorStateFromRaw,
   serialiseEditorStateToRaw,
@@ -16,7 +18,7 @@ const pkg = require("../../package.json");
  * Makes sure the API shape is validated against.
  */
 describe(pkg.name, () => {
-  it("ListNestingStyles", () => expect(ListNestingStyles).toBeDefined());
+  it("getListNestingStyles", () => expect(getListNestingStyles).toBeDefined());
 
   it("DRAFT_DEFAULT_MAX_DEPTH", () =>
     expect(DRAFT_DEFAULT_MAX_DEPTH).toBeDefined());
@@ -30,6 +32,10 @@ describe(pkg.name, () => {
   it("blockDepthStyleFn", () => expect(blockDepthStyleFn).toBeDefined());
 
   it("registerCopySource", () => expect(registerCopySource).toBeDefined());
+
+  it("onDraftEditorCopy", () => expect(onDraftEditorCopy).toBeDefined());
+
+  it("onDraftEditorCut", () => expect(onDraftEditorCut).toBeDefined());
 
   it("handleDraftEditorPastedText", () =>
     expect(handleDraftEditorPastedText).toBeDefined());

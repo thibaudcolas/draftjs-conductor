@@ -13,7 +13,7 @@ import type { DraftBlockType } from "draft-js/lib/DraftBlockType";
 import type { DraftEntityType } from "draft-js/lib/DraftEntityType";
 
 import {
-  ListNestingStyles,
+  getListNestingStyles,
   blockDepthStyleFn,
   onDraftEditorCopy,
   onDraftEditorCut,
@@ -31,8 +31,6 @@ import Snippet from "./Snippet";
 import DraftUtils from "../utils/DraftUtils";
 
 import "./DemoEditor.css";
-
-const NestingStyles = React.memo(ListNestingStyles);
 
 const BLOCKS = {
   "unstyled": "P",
@@ -103,6 +101,10 @@ const ENTITIES = [
 ];
 
 const MAX_LIST_NESTING = 15;
+
+const listNestingStyles = (
+  <style>{getListNestingStyles(MAX_LIST_NESTING)}</style>
+);
 
 type Props = {
   rawContentState: ?{},
@@ -345,7 +347,7 @@ class DemoEditor extends Component<Props, State> {
             handlePastedText={this.handlePastedText}
           />
         </SentryBoundary>
-        <NestingStyles max={MAX_LIST_NESTING} />
+        {listNestingStyles}
         <details>
           <summary>
             <span className="link">Debug</span>
