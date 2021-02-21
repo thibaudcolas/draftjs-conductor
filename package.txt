@@ -7,14 +7,14 @@
 11.3kB dist/draftjs-conductor.esm.js     
 3.0kB  package.json                      
 7.7kB  CHANGELOG.md                      
-10.7kB README.md                         
+10.8kB README.md                         
 === Tarball Details === 
 name:          draftjs-conductor                       
 version:       2.0.0                                   
 filename:      draftjs-conductor-2.0.0.tgz             
 package size:  11.7 kB                                 
-unpacked size: 57.4 kB                                 
-shasum:        13370e4e3380b1a5136bd46f61d5addba04078af
-integrity:     sha512-HsEEzMQKsvCu+[...]260mXfVgUOVMw==
+unpacked size: 57.3 kB                                 
+shasum:        df685680d7fc36d4748d3df05ef24b6a0d1f23b6
+integrity:     sha512-wrdedxF64+xIQ[...]pA8oxLSWIdwVQ==
 total files:   7                                       
 
