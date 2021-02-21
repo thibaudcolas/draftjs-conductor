@@ -3,7 +3,16 @@
   // https://renovatebot.com/docs/configuration-options/#commitbodytable
   commitBodyTable: true,
   // https://renovatebot.com/docs/configuration-options/#ignoredeps
-  ignoreDeps: ["immutable", "draft-js", "draft-js-10", "source-map-explorer", "flow-bin"],
+  ignoreDeps: [
+    "immutable",
+    "draft-js",
+    "draft-js-10",
+    "normalize.css",
+    "flow-bin",
+    "react",
+    "react-dom",
+    "react-test-renderer",
+  ],
   // https://renovatebot.com/docs/configuration-options/#labels
   labels: ["enhancement"],
   // https://renovatebot.com/docs/configuration-options/#prcreation
@@ -79,6 +88,11 @@
       groupName: "semantic-release",
       automerge: true,
       automergeType: "branch",
+    },
+    {
+      packageNames: ["source-map-explorer"],
+      groupName: "source-map-explorer",
+      automerge: true,
     },
   ],
 }
