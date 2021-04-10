@@ -98,6 +98,7 @@
       packageNames: ["JamesIves/github-pages-deploy-action"],
       groupName: "JamesIves/github-pages-deploy-action",
       automerge: true,
+      automergeType: "branch",
     },
   ],
 }
