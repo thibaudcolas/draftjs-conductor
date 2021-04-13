@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>18/18</span>
+                <span class='fraction'>20/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/17</span>
+                <span class='fraction'>19/19</span>
             </div>
         
             
@@ -120,7 +120,26 @@
 <a name='L61'></a><a href='#L61'>61</a>
 <a name='L62'></a><a href='#L62'>62</a>
 <a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -133,17 +152,30 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">48x</span>
 <span class="cline-any cline-yes">48x</span>
 <span class="cline-any cline-yes">48x</span>
 <span class="cline-any cline-yes">48x</span>
@@ -169,7 +201,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -193,30 +231,43 @@ export const DRAFT_DEFAULT_MAX_DEPTH = 4;
 export const DRAFT_DEFAULT_DEPTH_CLASS = "public-DraftStyleDefault-depth";
 &nbsp;
 /**
+ * Matching the counter styles of Google Docs and Draft.js v0.11.
+ * See https://github.com/facebook/draft-js/commit/d2a3ae8.
+ */
+const COUNTER_STYLES = ["decimal", "lower-alpha", "lower-roman"];
+&nbsp;
+/**
  * Generates CSS styles for list items, for a given selector pattern.
  * @deprecated Use getListNestingStyles instead, which has the same signature.
  * @param {string} selectorPrefix
  * @param {number} minDepth
  * @param {number} maxDepth
+ * @param {Array} counterStyles
  */
 export const generateListNestingStyles = (
   selectorPrefix: string,
   minDepth: number,
   maxDepth: number,
+  counterStyles: [string, string, string],
 ) =&gt; {
-  let styles = "";
+  let styles = `
+.${selectorPrefix}1.public-DraftStyleDefault-orderedListItem::before { content: counter(ol1, ${counterStyles[1]}) ". "}
+.${selectorPrefix}2.public-DraftStyleDefault-orderedListItem::before { content: counter(ol2, ${counterStyles[2]}) ". "}
+.${selectorPrefix}4.public-DraftStyleDefault-orderedListItem::before { content: counter(ol4, ${counterStyles[1]}) ". "}
+`;
 &nbsp;
   for (let depth = minDepth; depth &lt;= maxDepth; depth++) {
     const d = String(depth);
     const prefix = `${selectorPrefix}${d}`;
     const counter = `ol${d}`;
+    const counterStyle = counterStyles[depth % 3];
     const margin = 1.5 * (depth + 1);
     const m = String(margin);
 &nbsp;
     styles += `
 .${prefix}.public-DraftStyleDefault-listLTR { margin-left: ${m}em; }
 .${prefix}.public-DraftStyleDefault-listRTL { margin-right: ${m}em; }
-.${prefix}.public-DraftStyleDefault-orderedListItem::before { content: counter(${counter}) '. '; counter-increment: ${counter}; }
+.${prefix}.public-DraftStyleDefault-orderedListItem::before { content: counter(${counter}, ${counterStyle}) '. '; counter-increment: ${counter}; }
 .${prefix}.public-DraftStyleDefault-reset { counter-reset: ${counter}; }`;
   }
 &nbsp;
@@ -231,8 +282,14 @@ export const getListNestingStyles = (
   maxDepth: number,
   minDepth: number = DRAFT_DEFAULT_MAX_DEPTH + 1,
   selectorPrefix: string = DRAFT_DEFAULT_DEPTH_CLASS,
+  counterStyles: [string, string, string] = COUNTER_STYLES,
 ) =&gt; {
-  return generateListNestingStyles(selectorPrefix, minDepth, maxDepth);
+  return generateListNestingStyles(
+    selectorPrefix,
+    minDepth,
+    maxDepth,
+    counterStyles,
+  );
 };
 &nbsp;
 /**
@@ -253,7 +310,7 @@ export const blockDepthStyleFn = (block: BlockNode) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue Apr 13 2021 22:30:59 GMT+0000 (Coordinated Universal Time)
+                at Tue Apr 13 2021 23:14:33 GMT+0000 (Coordinated Universal Time)
             </div>
         </div>
         <script src="../../../prettify.js"></script>
