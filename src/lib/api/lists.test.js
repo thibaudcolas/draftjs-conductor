@@ -11,18 +11,35 @@ import {
 
 describe("generateListNestingStyles", () => {
   it("works", () => {
-    const styles = prettier.format(generateListNestingStyles("TEST", 0, 2), {
-      parser: "css",
-    });
+    const styles = prettier.format(
+      generateListNestingStyles("TEST", 0, 2, [
+        "decimal",
+        "lower-alpha",
+        "lower-roman",
+      ]),
+      {
+        parser: "css",
+      },
+    );
     expect(styles).toMatchInlineSnapshot(`
-      ".TEST0.public-DraftStyleDefault-listLTR {
+      ".TEST1.public-DraftStyleDefault-orderedListItem::before {
+        content: counter(ol1, lower-alpha) \\". \\";
+      }
+      .TEST2.public-DraftStyleDefault-orderedListItem::before {
+        content: counter(ol2, lower-roman) \\". \\";
+      }
+      .TEST4.public-DraftStyleDefault-orderedListItem::before {
+        content: counter(ol4, lower-alpha) \\". \\";
+      }
+
+      .TEST0.public-DraftStyleDefault-listLTR {
         margin-left: 1.5em;
       }
       .TEST0.public-DraftStyleDefault-listRTL {
         margin-right: 1.5em;
       }
       .TEST0.public-DraftStyleDefault-orderedListItem::before {
-        content: counter(ol0) \\". \\";
+        content: counter(ol0, decimal) \\". \\";
         counter-increment: ol0;
       }
       .TEST0.public-DraftStyleDefault-reset {
@@ -35,7 +52,7 @@ describe("generateListNestingStyles", () => {
         margin-right: 3em;
       }
       .TEST1.public-DraftStyleDefault-orderedListItem::before {
-        content: counter(ol1) \\". \\";
+        content: counter(ol1, lower-alpha) \\". \\";
         counter-increment: ol1;
       }
       .TEST1.public-DraftStyleDefault-reset {
@@ -48,7 +65,7 @@ describe("generateListNestingStyles", () => {
         margin-right: 4.5em;
       }
       .TEST2.public-DraftStyleDefault-orderedListItem::before {
-        content: counter(ol2) \\". \\";
+        content: counter(ol2, lower-roman) \\". \\";
         counter-increment: ol2;
       }
       .TEST2.public-DraftStyleDefault-reset {
@@ -61,18 +78,28 @@ describe("generateListNestingStyles", () => {
 
 describe("getListNestingStyles", () => {
   it("works", () => {
-    expect(getListNestingStyles(0)).toMatchInlineSnapshot(`""`);
+    expect(getListNestingStyles(0)).toMatchInlineSnapshot(`
+      "
+      .public-DraftStyleDefault-depth1.public-DraftStyleDefault-orderedListItem::before { content: counter(ol1, lower-alpha) \\". \\"}
+      .public-DraftStyleDefault-depth2.public-DraftStyleDefault-orderedListItem::before { content: counter(ol2, lower-roman) \\". \\"}
+      .public-DraftStyleDefault-depth4.public-DraftStyleDefault-orderedListItem::before { content: counter(ol4, lower-alpha) \\". \\"}
+      "
+    `);
   });
 
   it("max > DRAFT_DEFAULT_MAX_DEPTH", () => {
     expect(getListNestingStyles(DRAFT_DEFAULT_MAX_DEPTH + 1))
       .toMatchInlineSnapshot(`
       "
+      .public-DraftStyleDefault-depth1.public-DraftStyleDefault-orderedListItem::before { content: counter(ol1, lower-alpha) \\". \\"}
+      .public-DraftStyleDefault-depth2.public-DraftStyleDefault-orderedListItem::before { content: counter(ol2, lower-roman) \\". \\"}
+      .public-DraftStyleDefault-depth4.public-DraftStyleDefault-orderedListItem::before { content: counter(ol4, lower-alpha) \\". \\"}
+
       .public-DraftStyleDefault-depth5.public-DraftStyleDefault-listLTR { margin-left: 9em; }
       .public-DraftStyleDefault-depth5.public-DraftStyleDefault-listRTL { margin-right: 9em; }
-      .public-DraftStyleDefault-depth5.public-DraftStyleDefault-orderedListItem::before { content: counter(ol5) '. '; counter-increment: ol5; }
+      .public-DraftStyleDefault-depth5.public-DraftStyleDefault-orderedListItem::before { content: counter(ol5, lower-roman) '. '; counter-increment: ol5; }
       .public-DraftStyleDefault-depth5.public-DraftStyleDefault-reset { counter-reset: ol5; }"
-      `);
+    `);
   });
 });
 
