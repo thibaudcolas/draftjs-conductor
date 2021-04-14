@@ -1,20 +1,20 @@
 
-📦  draftjs-conductor@2.0.0
+📦  draftjs-conductor@2.1.0
 === Tarball Contents === 
 1.1kB  LICENSE                           
-12.2kB dist/draftjs-conductor.cjs.js.flow
-13.2kB dist/draftjs-conductor.cjs.js     
-12.2kB dist/draftjs-conductor.esm.js     
+12.3kB dist/draftjs-conductor.cjs.js.flow
+13.3kB dist/draftjs-conductor.cjs.js     
+12.3kB dist/draftjs-conductor.esm.js     
 3.0kB  package.json                      
-7.7kB  CHANGELOG.md                      
+8.0kB  CHANGELOG.md                      
 10.8kB README.md                         
 === Tarball Details === 
 name:          draftjs-conductor                       
-version:       2.0.0                                   
-filename:      draftjs-conductor-2.0.0.tgz             
-package size:  11.9 kB                                 
-unpacked size: 60.2 kB                                 
-shasum:        74151bd15beaafcbb41a61d78592bdb84315062a
-integrity:     sha512-5XYPjOlf1ZAPC[...]EeiqpKnlYMK1w==
+version:       2.1.0                                   
+filename:      draftjs-conductor-2.1.0.tgz             
+package size:  12.0 kB                                 
+unpacked size: 60.6 kB                                 
+shasum:        c7b54a6c6c70da0f4b99981248962cb35347bb47
+integrity:     sha512-WdUqFFbcyIUSo[...]1SlRhGRN0Oi9w==
 total files:   7                                       
 
