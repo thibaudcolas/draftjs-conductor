@@ -25,19 +25,25 @@ export const generateListNestingStyles = (
   selectorPrefix: string,
   minDepth: number,
   maxDepth: number,
-  counterStyles: [string, string, string],
+  counterStyles: string[],
 ) => {
   let styles = `
-.${selectorPrefix}1.public-DraftStyleDefault-orderedListItem::before { content: counter(ol1, ${counterStyles[1]}) ". "}
-.${selectorPrefix}2.public-DraftStyleDefault-orderedListItem::before { content: counter(ol2, ${counterStyles[2]}) ". "}
-.${selectorPrefix}4.public-DraftStyleDefault-orderedListItem::before { content: counter(ol4, ${counterStyles[1]}) ". "}
+.${selectorPrefix}1.public-DraftStyleDefault-orderedListItem::before { content: counter(ol1, ${
+    counterStyles[1 % counterStyles.length]
+  }) ". "}
+.${selectorPrefix}2.public-DraftStyleDefault-orderedListItem::before { content: counter(ol2, ${
+    counterStyles[2 % counterStyles.length]
+  }) ". "}
+.${selectorPrefix}4.public-DraftStyleDefault-orderedListItem::before { content: counter(ol4, ${
+    counterStyles[4 % counterStyles.length]
+  }) ". "}
 `;
 
   for (let depth = minDepth; depth <= maxDepth; depth++) {
     const d = String(depth);
     const prefix = `${selectorPrefix}${d}`;
     const counter = `ol${d}`;
-    const counterStyle = counterStyles[depth % 3];
+    const counterStyle = counterStyles[depth % counterStyles.length];
     const margin = 1.5 * (depth + 1);
     const m = String(margin);
 
@@ -59,7 +65,7 @@ export const getListNestingStyles = (
   maxDepth: number,
   minDepth: number = DRAFT_DEFAULT_MAX_DEPTH + 1,
   selectorPrefix: string = DRAFT_DEFAULT_DEPTH_CLASS,
-  counterStyles: [string, string, string] = COUNTER_STYLES,
+  counterStyles: string[] = COUNTER_STYLES,
 ) => {
   return generateListNestingStyles(
     selectorPrefix,
