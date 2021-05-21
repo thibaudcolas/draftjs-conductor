@@ -9,8 +9,9 @@ import {
 
 jest.mock("draft-js/lib/generateRandomKey", () => () => "a");
 jest.mock("draft-js/lib/getDraftEditorSelection", () => () => ({}));
-jest.mock("draft-js/lib/getContentStateFragment", () => (content) =>
-  content.getBlockMap(),
+jest.mock(
+  "draft-js/lib/getContentStateFragment",
+  () => (content) => content.getBlockMap(),
 );
 
 jest.mock("draft-js/lib/editOnCopy", () => jest.fn(() => {}));
@@ -18,8 +19,9 @@ jest.mock("draft-js/lib/editOnCut", () => jest.fn(() => {}));
 
 jest.mock("draft-js-10/lib/generateRandomKey", () => () => "a");
 jest.mock("draft-js-10/lib/getDraftEditorSelection", () => () => ({}));
-jest.mock("draft-js-10/lib/getContentStateFragment", () => (content) =>
-  content.getBlockMap(),
+jest.mock(
+  "draft-js-10/lib/getContentStateFragment",
+  () => (content) => content.getBlockMap(),
 );
 jest.mock("draft-js-10/lib/editOnCopy", () => jest.fn(() => {}));
 jest.mock("draft-js-10/lib/editOnCut", () => jest.fn(() => {}));

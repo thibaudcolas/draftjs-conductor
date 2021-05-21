@@ -180,8 +180,7 @@ class DemoEditor extends Component<Props, State> {
 
     if (type === "IMAGE") {
       content = content.createEntity(type, "IMMUTABLE", {
-        src:
-          "https://thibaudcolas.github.io/draftjs-conductor/wysiwyg-magic-wand.png",
+        src: "https://thibaudcolas.github.io/draftjs-conductor/wysiwyg-magic-wand.png",
       });
       const entityKey = content.getLastCreatedEntityKey();
       this.onChange(
