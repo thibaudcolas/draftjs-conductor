@@ -67,7 +67,7 @@
     "react-test-renderer": "16.14.0",
     "rollup": "2.56.2",
     "rollup-plugin-babel": "4.4.0",
-    "semantic-release": "17.4.4",
+    "semantic-release": "17.4.5",
     "source-map-explorer": "2.5.2"
   },
   "peerDependencies": {
