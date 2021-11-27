@@ -13,7 +13,7 @@ version:       2.2.0
 filename:      draftjs-conductor-2.2.0.tgz             
 package size:  9.9 kB                                  
 unpacked size: 52.6 kB                                 
-shasum:        d8d89dcc0c53942e586e14bfbe7e86bdc0e5cd68
-integrity:     sha512-XwDHPiBDpLaKw[...]8YnM2oStK+yAQ==
+shasum:        1f5fa7eb5aa2c5ba55971be3c0e4642ad122f589
+integrity:     sha512-aoQOP0o3CJKRO[...]3wukg7uTsP6UA==
 total files:   6                                       
 
