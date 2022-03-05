@@ -39,24 +39,23 @@
   vulnerabilityAlerts: {
     automerge: true,
   },
+  // Silently merge updates without PRs
+  automergeType: "branch",
   packageRules: [
     {
       packageNames: ["prettier"],
       groupName: "prettier",
       automerge: true,
-      automergeType: "branch",
     },
     {
       packageNames: ["coveralls"],
       groupName: "coveralls",
       automerge: true,
-      automergeType: "branch",
     },
     {
       packageNames: ["danger"],
       groupName: "danger",
       automerge: true,
-      automergeType: "branch",
     },
     {
       packageNames: ["react-scripts"],
@@ -67,19 +66,16 @@
       packagePatterns: ["^@commitlint"],
       groupName: "commitlint",
       automerge: true,
-      automergeType: "branch",
     },
     {
       packagePatterns: ["^enzyme"],
       groupName: "enzyme",
       automerge: true,
-      automergeType: "branch",
     },
     {
       packagePatterns: ["^rollup", "^@babel"],
       groupName: "rollup",
       automerge: true,
-      automergeType: "branch",
     },
     {
       packageNames: ["react", "react-dom", "react-test-renderer"],
@@ -90,7 +86,6 @@
       packagePatterns: ["^semantic-release", "^@semantic-release"],
       groupName: "semantic-release",
       automerge: true,
-      automergeType: "branch",
     },
     {
       packageNames: ["source-map-explorer"],
@@ -101,7 +96,11 @@
       packageNames: ["JamesIves/github-pages-deploy-action"],
       groupName: "JamesIves/github-pages-deploy-action",
       automerge: true,
-      automergeType: "branch",
+    },
+    {
+      packagePatterns: ["^actions/"],
+      groupName: "actions",
+      automerge: true,
     },
   ],
 }
