@@ -63,7 +63,7 @@
     "prettier": "2.6.0",
     "react": "16.14.0",
     "react-dom": "16.14.0",
-    "react-scripts": "4.0.3",
+    "react-scripts": "5.0.0",
     "react-test-renderer": "16.14.0",
     "rollup": "2.70.1",
     "rollup-plugin-babel": "4.4.0",
