@@ -1,23 +1,13 @@
 {
   "files": {
-    "main.css": "/draftjs-conductor/static/css/main.9d40b02d.chunk.css",
-    "main.js": "/draftjs-conductor/static/js/main.e962c62a.chunk.js",
-    "main.js.map": "/draftjs-conductor/static/js/main.e962c62a.chunk.js.map",
-    "runtime-main.js": "/draftjs-conductor/static/js/runtime-main.e9d1ea80.js",
-    "runtime-main.js.map": "/draftjs-conductor/static/js/runtime-main.e9d1ea80.js.map",
-    "static/css/2.504d9bc7.chunk.css": "/draftjs-conductor/static/css/2.504d9bc7.chunk.css",
-    "static/js/2.cba816b9.chunk.js": "/draftjs-conductor/static/js/2.cba816b9.chunk.js",
-    "static/js/2.cba816b9.chunk.js.map": "/draftjs-conductor/static/js/2.cba816b9.chunk.js.map",
+    "main.css": "/draftjs-conductor/static/css/main.1c887312.css",
+    "main.js": "/draftjs-conductor/static/js/main.526a4985.js",
     "index.html": "/draftjs-conductor/index.html",
-    "static/css/2.504d9bc7.chunk.css.map": "/draftjs-conductor/static/css/2.504d9bc7.chunk.css.map",
-    "static/css/main.9d40b02d.chunk.css.map": "/draftjs-conductor/static/css/main.9d40b02d.chunk.css.map",
-    "static/js/2.cba816b9.chunk.js.LICENSE.txt": "/draftjs-conductor/static/js/2.cba816b9.chunk.js.LICENSE.txt"
+    "main.1c887312.css.map": "/draftjs-conductor/static/css/main.1c887312.css.map",
+    "main.526a4985.js.map": "/draftjs-conductor/static/js/main.526a4985.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.e9d1ea80.js",
-    "static/css/2.504d9bc7.chunk.css",
-    "static/js/2.cba816b9.chunk.js",
-    "static/css/main.9d40b02d.chunk.css",
-    "static/js/main.e962c62a.chunk.js"
+    "static/css/main.1c887312.css",
+    "static/js/main.526a4985.js"
   ]
 }
