@@ -1,3 +1,4 @@
+
 #!/usr/bin/env bash
 # Format and re-stage fully staged files only.
 
