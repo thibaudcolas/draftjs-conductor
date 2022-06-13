@@ -69,7 +69,7 @@ describe("DemoEditor", () => {
     mount<DemoEditor>(<DemoEditor extended={false} />)
       .instance()
       // @ts-expect-error
-      .toggleStyle("BOLD", new MouseEvent<HTMLButtonElement>("mousedown"));
+      .toggleStyle("BOLD", new Event("mousedown"));
 
     expect(RichUtils.toggleInlineStyle).toHaveBeenCalled();
   });
@@ -78,10 +78,7 @@ describe("DemoEditor", () => {
     mount<DemoEditor>(<DemoEditor extended={false} />)
       .instance()
       // @ts-expect-error
-      .toggleBlock(
-        "header-two",
-        new MouseEvent<HTMLButtonElement>("mousedown"),
-      );
+      .toggleBlock("header-two", new Event("mousedown"));
 
     expect(RichUtils.toggleBlockType).toHaveBeenCalled();
   });

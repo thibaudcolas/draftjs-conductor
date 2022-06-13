@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component } from "react";
 import {
   Editor,
   EditorState,
@@ -10,7 +10,7 @@ import {
   DraftBlockType,
   DraftEntityType,
   RawDraftContentState,
-} from "draft-js"
+} from "draft-js";
 
 import {
   getListNestingStyles,
@@ -20,17 +20,17 @@ import {
   handleDraftEditorPastedText,
   createEditorStateFromRaw,
   serialiseEditorStateToRaw,
-} from "../../lib/index"
+} from "../../lib/index";
 
-import SentryBoundary from "./SentryBoundary"
-import Highlight from "./Highlight"
-import Link, { linkStrategy } from "./Link"
-import Image from "./Image"
-import Snippet from "./Snippet"
+import SentryBoundary from "./SentryBoundary";
+import Highlight from "./Highlight";
+import Link, { linkStrategy } from "./Link";
+import Image from "./Image";
+import Snippet from "./Snippet";
 
-import DraftUtils from "../utils/DraftUtils"
+import DraftUtils from "../utils/DraftUtils";
 
-import "./DemoEditor.css"
+import "./DemoEditor.css";
 
 const BLOCKS = {
   unstyled: "P",
@@ -40,7 +40,7 @@ const BLOCKS = {
   "header-two": "H2",
   "header-three": "H3",
   "code-block": "{ }",
-}
+};
 
 const BLOCKS_EXTENDED = {
   unstyled: "P",
@@ -54,12 +54,12 @@ const BLOCKS_EXTENDED = {
   "header-six": "H6",
   blockquote: "❝",
   "code-block": "{ }",
-}
+};
 
 const STYLES = {
   BOLD: "B",
   ITALIC: "I",
-}
+};
 
 const STYLES_EXTENDED = {
   BOLD: "B",
@@ -67,7 +67,7 @@ const STYLES_EXTENDED = {
   CODE: "`",
   STRIKETHROUGH: "~",
   UNDERLINE: "_",
-}
+};
 
 const ENTITIES = [
   {
@@ -98,22 +98,22 @@ const ENTITIES = [
     attributes: [],
     whitelist: {},
   },
-]
+];
 
-const MAX_LIST_NESTING = 15
+const MAX_LIST_NESTING = 15;
 
 const listNestingStyles = (
   <style>{getListNestingStyles(MAX_LIST_NESTING)}</style>
-)
+);
 
 export interface DemoEditorProps {
-  rawContentState: RawDraftContentState
-  extended?: boolean
+  rawContentState: RawDraftContentState;
+  extended?: boolean;
 }
 
 export interface DemoEditorState {
-  editorState: EditorState
-  readOnly: boolean
+  editorState: EditorState;
+  readOnly: boolean;
 }
 
 /**
@@ -122,122 +122,122 @@ export interface DemoEditorState {
 class DemoEditor extends Component<DemoEditorProps, DemoEditorState> {
   static defaultProps = {
     rawContentState: null,
-  }
+  };
 
   constructor(props: DemoEditorProps) {
-    super(props)
-    const { rawContentState } = props
+    super(props);
+    const { rawContentState } = props;
     const decorator = new CompositeDecorator([
       {
         strategy: linkStrategy,
         component: Link,
       },
-    ])
+    ]);
     this.state = {
       editorState: createEditorStateFromRaw(rawContentState, decorator),
       readOnly: false,
-    }
-    this.onChange = this.onChange.bind(this)
-    this.keyBindingFn = this.keyBindingFn.bind(this)
-    this.addBR = this.addBR.bind(this)
-    this.toggleReadOnly = this.toggleReadOnly.bind(this)
-    this.toggleStyle = this.toggleStyle.bind(this)
-    this.toggleBlock = this.toggleBlock.bind(this)
-    this.toggleEntity = this.toggleEntity.bind(this)
-    this.blockRenderer = this.blockRenderer.bind(this)
-    this.handlePastedText = this.handlePastedText.bind(this)
+    };
+    this.onChange = this.onChange.bind(this);
+    this.keyBindingFn = this.keyBindingFn.bind(this);
+    this.addBR = this.addBR.bind(this);
+    this.toggleReadOnly = this.toggleReadOnly.bind(this);
+    this.toggleStyle = this.toggleStyle.bind(this);
+    this.toggleBlock = this.toggleBlock.bind(this);
+    this.toggleEntity = this.toggleEntity.bind(this);
+    this.blockRenderer = this.blockRenderer.bind(this);
+    this.handlePastedText = this.handlePastedText.bind(this);
   }
 
   onChange(nextState: EditorState) {
     this.setState({
       editorState: nextState,
-    })
+    });
   }
 
   toggleStyle(type: string, e: React.MouseEvent) {
-    const { editorState } = this.state
-    this.onChange(RichUtils.toggleInlineStyle(editorState, type))
-    e.preventDefault()
+    const { editorState } = this.state;
+    this.onChange(RichUtils.toggleInlineStyle(editorState, type));
+    e.preventDefault();
   }
 
   toggleBlock(type: DraftBlockType, e: React.MouseEvent) {
-    const { editorState } = this.state
-    this.onChange(RichUtils.toggleBlockType(editorState, type))
-    e.preventDefault()
+    const { editorState } = this.state;
+    this.onChange(RichUtils.toggleBlockType(editorState, type));
+    e.preventDefault();
   }
 
   toggleEntity(type: DraftEntityType | "HORIZONTAL_RULE" | "SNIPPET") {
-    const { editorState } = this.state
-    let content = editorState.getCurrentContent()
+    const { editorState } = this.state;
+    let content = editorState.getCurrentContent();
 
     if (type === "IMAGE") {
       content = content.createEntity(type, "IMMUTABLE", {
         src: "https://thibaudcolas.github.io/draftjs-conductor/wysiwyg-magic-wand.png",
-      })
-      const entityKey = content.getLastCreatedEntityKey()
+      });
+      const entityKey = content.getLastCreatedEntityKey();
       this.onChange(
         AtomicBlockUtils.insertAtomicBlock(editorState, entityKey, " "),
-      )
+      );
     } else if (type === "SNIPPET") {
       content = content.createEntity(type, "IMMUTABLE", {
         text: "Content of the snippet goes here",
-      })
-      const entityKey = content.getLastCreatedEntityKey()
+      });
+      const entityKey = content.getLastCreatedEntityKey();
       this.onChange(
         AtomicBlockUtils.insertAtomicBlock(editorState, entityKey, " "),
-      )
+      );
     } else if (type === "HORIZONTAL_RULE") {
-      content = content.createEntity(type, "IMMUTABLE", {})
-      const entityKey = content.getLastCreatedEntityKey()
+      content = content.createEntity(type, "IMMUTABLE", {});
+      const entityKey = content.getLastCreatedEntityKey();
       this.onChange(
         AtomicBlockUtils.insertAtomicBlock(editorState, entityKey, " "),
-      )
+      );
     } else {
       content = content.createEntity(type, "MUTABLE", {
         url: "http://www.example.com/",
-      })
-      const entityKey = content.getLastCreatedEntityKey()
-      const selection = editorState.getSelection()
-      this.onChange(RichUtils.toggleLink(editorState, selection, entityKey))
+      });
+      const entityKey = content.getLastCreatedEntityKey();
+      const selection = editorState.getSelection();
+      this.onChange(RichUtils.toggleLink(editorState, selection, entityKey));
     }
   }
 
   blockRenderer(block: ContentBlock) {
-    const { editorState } = this.state
-    const content = editorState.getCurrentContent()
+    const { editorState } = this.state;
+    const content = editorState.getCurrentContent();
 
     if (block.getType() !== "atomic") {
-      return null
+      return null;
     }
 
-    const entityKey = block.getEntityAt(0)
+    const entityKey = block.getEntityAt(0);
 
     if (!entityKey) {
       return {
         editable: false,
-      }
+      };
     }
 
-    const entity = content.getEntity(entityKey)
+    const entity = content.getEntity(entityKey);
 
     if (entity.getType() === "HORIZONTAL_RULE") {
       return {
         component: () => <hr />,
         editable: false,
-      }
+      };
     }
 
     if (entity.getType() === "SNIPPET") {
       return {
         component: Snippet,
         editable: false,
-      }
+      };
     }
 
     return {
       component: Image,
       editable: false,
-    }
+    };
   }
 
   handlePastedText(
@@ -245,51 +245,51 @@ class DemoEditor extends Component<DemoEditorProps, DemoEditorState> {
     html: string | undefined,
     editorState: EditorState,
   ) {
-    let newState = handleDraftEditorPastedText(html, editorState)
+    let newState = handleDraftEditorPastedText(html, editorState);
 
     if (newState) {
-      this.onChange(newState)
-      return "handled"
+      this.onChange(newState);
+      return "handled";
     }
 
-    return "not-handled"
+    return "not-handled";
   }
 
   keyBindingFn(event: React.KeyboardEvent) {
-    const TAB = 9
+    const TAB = 9;
 
     switch (event.keyCode) {
       case TAB: {
-        const { editorState } = this.state
-        const newState = RichUtils.onTab(event, editorState, MAX_LIST_NESTING)
-        this.onChange(newState)
-        return null
+        const { editorState } = this.state;
+        const newState = RichUtils.onTab(event, editorState, MAX_LIST_NESTING);
+        this.onChange(newState);
+        return null;
       }
 
       default: {
-        return getDefaultKeyBinding(event)
+        return getDefaultKeyBinding(event);
       }
     }
   }
 
   addBR(e: React.MouseEvent) {
-    const { editorState } = this.state
-    this.onChange(DraftUtils.addLineBreak(editorState))
-    e.preventDefault()
+    const { editorState } = this.state;
+    this.onChange(DraftUtils.addLineBreak(editorState));
+    e.preventDefault();
   }
 
   toggleReadOnly(e: React.MouseEvent) {
     this.setState(({ readOnly }: DemoEditorState) => ({
       readOnly: !readOnly,
-    }))
-    e.preventDefault()
+    }));
+    e.preventDefault();
   }
 
   render() {
-    const { extended } = this.props
-    const { editorState, readOnly } = this.state
-    const styles = extended ? STYLES_EXTENDED : STYLES
-    const blocks = extended ? BLOCKS_EXTENDED : BLOCKS
+    const { extended } = this.props;
+    const { editorState, readOnly } = this.state;
+    const styles = extended ? STYLES_EXTENDED : STYLES;
+    const blocks = extended ? BLOCKS_EXTENDED : BLOCKS;
     return (
       <div className="DemoEditor">
         <SentryBoundary>
@@ -351,8 +351,8 @@ class DemoEditor extends Component<DemoEditorProps, DemoEditorState> {
           />
         </details>
       </div>
-    )
+    );
   }
 }
 
-export default DemoEditor
+export default DemoEditor;
