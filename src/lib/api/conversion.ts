@@ -1,7 +1,6 @@
-// @flow
 import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
-import type { RawDraftContentState } from "draft-js/lib/RawDraftContentState";
-import type { DraftDecoratorType } from "draft-js/lib/DraftDecoratorType";
+import { RawDraftContentState } from "draft-js/lib/RawDraftContentState";
+import { DraftDecoratorType } from "draft-js/lib/DraftDecoratorType";
 
 const EMPTY_CONTENT_STATE = null;
 
@@ -10,8 +9,8 @@ const EMPTY_CONTENT_STATE = null;
  * passing `null`. Optionally takes a decorator.
  */
 export const createEditorStateFromRaw = (
-  rawContentState: ?RawDraftContentState,
-  decorator?: ?DraftDecoratorType,
+  rawContentState: RawDraftContentState | null,
+  decorator?: DraftDecoratorType | null,
 ) => {
   let editorState;
 

@@ -1,13 +1,12 @@
-// @flow
 import React from "react";
 import { ContentBlock, ContentState } from "draft-js";
 
 const Image = ({
   block,
-  contentState,
+  contentState
 }: {
   block: ContentBlock,
-  contentState: ContentState,
+  contentState: ContentState
 }) => {
   const entityKey = block.getEntityAt(0);
   const src = entityKey

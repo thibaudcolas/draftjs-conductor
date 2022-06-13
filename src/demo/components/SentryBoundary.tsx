@@ -1,13 +1,12 @@
-// @flow
 import React, { Component } from "react";
-import type { Node } from "react";
+import { Node } from "react";
 
 type Props = {
-  children: Node,
+  children: Node
 };
 
 type State = {
-  error: ?Error,
+  error: Error | null
 };
 
 class SentryBoundary extends Component<Props, State> {
@@ -16,7 +15,9 @@ class SentryBoundary extends Component<Props, State> {
     this.state = { error: null };
   }
 
-  componentDidCatch(error: Error, errorInfo: { componentStack: string }) {
+  componentDidCatch(error: Error, errorInfo: {
+    componentStack: string
+  }) {
     const isRavenAvailable = !!window.Raven;
     this.setState({ error });
 

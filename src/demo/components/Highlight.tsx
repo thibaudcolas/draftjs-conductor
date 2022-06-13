@@ -1,4 +1,3 @@
-// @flow
 import React from "react";
 
 const onCopy = (value: string) => {
@@ -13,7 +12,11 @@ const onCopy = (value: string) => {
   document.body.removeChild(hidden);
 };
 
-const Highlight = ({ value }: { value: string }) => (
+const Highlight = ({
+  value
+}: {
+  value: string
+}) => (
   <pre style={{ position: "relative" }}>
     <button
       onClick={onCopy.bind(null, value)}

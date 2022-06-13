@@ -1,4 +1,3 @@
-// @flow
 import { EditorState, Modifier, RichUtils } from "draft-js";
 
 const addLineBreak = (editorState: EditorState) => {

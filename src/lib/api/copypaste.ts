@@ -1,4 +1,3 @@
-// @flow
 import getContentStateFragment from "draft-js/lib/getContentStateFragment";
 import getDraftEditorSelection from "draft-js/lib/getDraftEditorSelection";
 import editOnCopy from "draft-js/lib/editOnCopy";
@@ -12,8 +11,8 @@ import {
   ContentState,
 } from "draft-js";
 
-import type { ElementRef } from "react";
-import type { Editor, EditorState as EditorStateType } from "draft-js";
+import { ElementRef } from "react";
+import { Editor, EditorState as EditorStateType } from "draft-js";
 
 // Custom attribute to store Draft.js content in the HTML clipboard.
 const FRAGMENT_ATTR = "data-draftjs-conductor-fragment";
@@ -72,7 +71,7 @@ const getSelectedContent = (
 // to HTML in its paste event handler.
 const draftEditorCopyCutListener = (
   ref: ElementRef<Editor>,
-  e: SyntheticClipboardEvent<>,
+  e: SyntheticClipboardEvent,
 ) => {
   const selection = window.getSelection();
 
@@ -114,7 +113,7 @@ const draftEditorCopyCutListener = (
 
 export const onDraftEditorCopy = (
   editor: Editor,
-  e: SyntheticClipboardEvent<>,
+  e: SyntheticClipboardEvent,
 ) => {
   draftEditorCopyCutListener(editor, e);
   editOnCopy(editor, e);
@@ -122,7 +121,7 @@ export const onDraftEditorCopy = (
 
 export const onDraftEditorCut = (
   editor: Editor,
-  e: SyntheticClipboardEvent<>,
+  e: SyntheticClipboardEvent,
 ) => {
   draftEditorCopyCutListener(editor, e);
   editOnCut(editor, e);
@@ -150,7 +149,7 @@ export const registerCopySource = (ref: ElementRef<Editor>) => {
  * Returns pasted content coming from Draft.js editors set up to serialise
  * their Draft.js content within the HTML.
  */
-export const getDraftEditorPastedContent = (html: ?string) => {
+export const getDraftEditorPastedContent = (html: string | null) => {
   // Plain-text pastes are better handled by Draft.js.
   if (html === "" || typeof html === "undefined" || html === null) {
     return null;
@@ -185,7 +184,7 @@ export const getDraftEditorPastedContent = (html: ?string) => {
  * This SHOULD NOT be used for stripPastedStyles editor.
  */
 export const handleDraftEditorPastedText = (
-  html: ?string,
+  html: string | null,
   editorState: EditorStateType,
 ) => {
   const pastedContent = getDraftEditorPastedContent(html);

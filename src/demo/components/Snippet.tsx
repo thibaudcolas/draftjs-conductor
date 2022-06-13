@@ -1,4 +1,3 @@
-// @flow
 import React from "react";
 import { ContentBlock, ContentState } from "draft-js";
 
@@ -6,10 +5,10 @@ import "./Snippet.css";
 
 const Snippet = ({
   block,
-  contentState,
+  contentState
 }: {
   block: ContentBlock,
-  contentState: ContentState,
+  contentState: ContentState
 }) => {
   const entityKey = block.getEntityAt(0);
   const text = entityKey
