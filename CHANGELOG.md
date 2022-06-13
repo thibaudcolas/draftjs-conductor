@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html), enforced with [semantic-release](https://github.com/semantic-release/semantic-release).
 
+# [3.0.0](https://github.com/thibaudcolas/draftjs-conductor/compare/v2.2.0...v3.0.0) (2022-06-13)
+
+### Features
+
+- **api:** convert whole package API to TypeScript ([3fca3fa](https://github.com/thibaudcolas/draftjs-conductor/commit/3fca3fa9002bddd118d19ec0f0b91bb18ec25df9))
+
+### BREAKING CHANGES
+
+- **api:** All helpers are now written in TypeScript.
+
+  Flow types are no longer available, and TypeScript types are built-in.
+
 # [2.2.0](https://github.com/thibaudcolas/draftjs-conductor/compare/v2.1.0...v2.2.0) (2021-04-14)
 
 ### Features
