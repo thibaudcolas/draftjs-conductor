@@ -2,16 +2,21 @@
   extends: ["config:base"],
   // https://renovatebot.com/docs/configuration-options/#commitbodytable
   commitBodyTable: true,
+  // https://docs.renovatebot.com/configuration-options/#dependencydashboard
+  dependencyDashboard: false,
   // https://renovatebot.com/docs/configuration-options/#ignoredeps
   ignoreDeps: [
     "immutable",
+    "@types/draft-js",
     "draft-js",
     "draft-js-10",
     "normalize.css",
-    "flow-bin",
+    "@types/react",
+    "@types/react-dom",
     "react",
     "react-dom",
     "react-test-renderer",
+    "jamesives/github-pages-deploy-action",
   ],
   // https://renovatebot.com/docs/configuration-options/#labels
   labels: ["enhancement"],
@@ -23,11 +28,13 @@
   // https://docs.renovatebot.com/configuration-options/#commitmessagetopic
   commitMessageTopic: "{{depName}}",
   // https://renovatebot.com/docs/configuration-options/#prbodycolumns
-  prBodyColumns: ["Package", "Update", "Type", "Change", "Sourcegraph"],
+  prBodyColumns: ["Package", "Update", "Type", "Change"],
   // https://renovatebot.com/docs/configuration-options/#schedule
   schedule: ["every weekend"],
   // Limit the number of consecutive PRs
   prHourlyLimit: 2,
+  // Silently merge updates without PRs
+  automergeType: "branch",
   node: {
     enabled: true,
     major: {
@@ -39,8 +46,6 @@
   vulnerabilityAlerts: {
     automerge: true,
   },
-  // Silently merge updates without PRs
-  automergeType: "branch",
   packageRules: [
     {
       packageNames: ["prettier"],
@@ -58,8 +63,13 @@
       automerge: true,
     },
     {
-      packageNames: ["react-scripts"],
+      packageNames: ["@types/jest", "react-scripts"],
       groupName: "react-scripts",
+      automerge: true,
+    },
+    {
+      packageNames: ["typescript"],
+      groupName: "typescript",
       automerge: true,
     },
     {
@@ -71,25 +81,21 @@
       packagePatterns: ["^enzyme"],
       groupName: "enzyme",
       automerge: true,
+      automergeType: "branch",
     },
     {
-      packagePatterns: ["^rollup", "^@babel"],
+      packagePatterns: ["^rollup", "^@rollup"],
       groupName: "rollup",
       automerge: true,
     },
     {
-      packageNames: ["react", "react-dom", "react-test-renderer"],
-      groupName: "react",
+      packageNames: ["snapshot-diff"],
+      groupName: "snapshot-diff",
       automerge: true,
     },
     {
       packagePatterns: ["^semantic-release", "^@semantic-release"],
       groupName: "semantic-release",
-      automerge: true,
-    },
-    {
-      packageNames: ["source-map-explorer"],
-      groupName: "source-map-explorer",
       automerge: true,
     },
     {

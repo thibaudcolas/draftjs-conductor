@@ -1,4 +1,3 @@
-import React from "react";
 import { shallow } from "enzyme";
 import {
   EditorState,
@@ -39,7 +38,6 @@ describe("Link", () => {
         },
       ],
     });
-
     const entityKey = contentState.getFirstBlock().getEntityAt(3);
 
     expect(
@@ -63,7 +61,8 @@ describe("linkStrategy", () => {
   it("works", () => {
     const editorState = EditorState.createWithContent(
       ContentState.createFromBlockArray(
-        convertFromHTML(`<h1><a href="http://example.com/">Test</a></h1>`),
+        convertFromHTML(`<h1><a href="http://example.com/">Test</a></h1>`)
+          .contentBlocks,
       ),
     );
     const currentContent = editorState.getCurrentContent();

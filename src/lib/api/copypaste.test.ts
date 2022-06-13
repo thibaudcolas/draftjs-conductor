@@ -1,4 +1,10 @@
-import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
+import {
+  EditorState,
+  convertFromRaw,
+  convertToRaw,
+  ContentState,
+  RawDraftContentState,
+} from "draft-js";
 import {
   registerCopySource,
   onDraftEditorCopy,
@@ -11,7 +17,7 @@ jest.mock("draft-js/lib/generateRandomKey", () => () => "a");
 jest.mock("draft-js/lib/getDraftEditorSelection", () => () => ({}));
 jest.mock(
   "draft-js/lib/getContentStateFragment",
-  () => (content) => content.getBlockMap(),
+  () => (content: ContentState) => content.getBlockMap(),
 );
 
 jest.mock("draft-js/lib/editOnCopy", () => jest.fn(() => {}));
@@ -21,12 +27,16 @@ jest.mock("draft-js-10/lib/generateRandomKey", () => () => "a");
 jest.mock("draft-js-10/lib/getDraftEditorSelection", () => () => ({}));
 jest.mock(
   "draft-js-10/lib/getContentStateFragment",
-  () => (content) => content.getBlockMap(),
+  () => (content: ContentState) => content.getBlockMap(),
 );
 jest.mock("draft-js-10/lib/editOnCopy", () => jest.fn(() => {}));
 jest.mock("draft-js-10/lib/editOnCut", () => jest.fn(() => {}));
 
-const dispatchEvent = (editor, type, setData) => {
+const dispatchEvent = (
+  editor: HTMLElement,
+  type: string,
+  setData?: { [key: string]: any },
+) => {
   const event = Object.assign(new Event(type), {
     clipboardData: { setData },
     preventDefault: jest.fn(),
@@ -37,7 +47,7 @@ const dispatchEvent = (editor, type, setData) => {
   return event;
 };
 
-const getSelection = (selection) => {
+const getSelection = (selection?: Selection) => {
   return jest.fn(() =>
     Object.assign(
       {
@@ -62,7 +72,9 @@ describe("copypaste", () => {
       const editor = document.createElement("div");
 
       const copySource = registerCopySource({
+        // @ts-expect-error
         editor,
+        // @ts-expect-error
         _latestEditorState: EditorState.createEmpty(),
       });
 
@@ -81,7 +93,9 @@ describe("copypaste", () => {
       const editor = document.createElement("div");
 
       const copySource = registerCopySource({
+        // @ts-expect-error
         editor,
+        // @ts-expect-error
         _latestEditorState: EditorState.createEmpty(),
       });
 
@@ -101,6 +115,7 @@ describe("copypaste", () => {
     it("calls editOnCopy", () => {
       const editor = document.createElement("div");
       window.getSelection = getSelection();
+      // @ts-expect-error
       onDraftEditorCopy(editor, dispatchEvent(editor, "copy"));
     });
   });
@@ -109,6 +124,7 @@ describe("copypaste", () => {
     it("does not break", () => {
       const editor = document.createElement("div");
       window.getSelection = getSelection();
+      // @ts-expect-error
       onDraftEditorCut(editor, dispatchEvent(editor, "cut"));
     });
   });
@@ -121,7 +137,9 @@ describe("copypaste", () => {
       const editor = document.createElement("div");
 
       registerCopySource({
+        // @ts-expect-error
         editor,
+        // @ts-expect-error
         _latestEditorState: EditorState.createEmpty(),
       });
 
@@ -135,10 +153,13 @@ describe("copypaste", () => {
       const editor = document.createElement("div");
 
       registerCopySource({
+        // @ts-expect-error
         editor,
+        // @ts-expect-error
         _latestEditorState: EditorState.createEmpty(),
       });
 
+      // @ts-expect-error
       window.getSelection = getSelection({ rangeCount: 1 });
 
       const event = new Event("copy");
@@ -160,18 +181,21 @@ describe("copypaste", () => {
           },
         ],
         entityMap: {},
-      };
+      } as RawDraftContentState;
 
       registerCopySource({
+        // @ts-expect-error
         editor,
+        // @ts-expect-error
         _latestEditorState: EditorState.createWithContent(
           convertFromRaw(content),
         ),
       });
 
+      // @ts-expect-error
       window.getSelection = getSelection({ rangeCount: 1 });
 
-      dispatchEvent(editor, "copy", (type, data) => {
+      dispatchEvent(editor, "copy", (type: string, data: any) => {
         if (type === "text/plain") {
           expect(data).toBe("toString selection");
         } else if (type === "text/html") {
@@ -193,15 +217,18 @@ describe("copypaste", () => {
           },
         ],
         entityMap: {},
-      };
+      } as RawDraftContentState;
 
       registerCopySource({
+        // @ts-expect-error
         editor,
+        // @ts-expect-error
         _latestEditorState: EditorState.createWithContent(
           convertFromRaw(content),
         ),
       });
 
+      // @ts-expect-error
       window.getSelection = getSelection({ rangeCount: 1 });
 
       const event = dispatchEvent(editor, "copy", () => {});
@@ -220,10 +247,12 @@ describe("copypaste", () => {
           },
         ],
         entityMap: {},
-      };
+      } as RawDraftContentState;
 
       registerCopySource({
+        // @ts-expect-error
         editor,
+        // @ts-expect-error
         _latestEditorState: EditorState.createWithContent(
           convertFromRaw(content),
         ),
@@ -239,6 +268,7 @@ describe("copypaste", () => {
       const focusNode = document.createElement("div");
       anchorNode.appendChild(focusNode);
 
+      // @ts-expect-error
       window.getSelection = getSelection({
         rangeCount: 1,
         anchorNode,
@@ -261,10 +291,12 @@ describe("copypaste", () => {
           },
         ],
         entityMap: {},
-      };
+      } as RawDraftContentState;
 
       registerCopySource({
+        // @ts-expect-error
         editor,
+        // @ts-expect-error
         _latestEditorState: EditorState.createWithContent(
           convertFromRaw(content),
         ),
@@ -284,6 +316,7 @@ describe("copypaste", () => {
       focusDecorator.appendChild(focusNode);
       focusDecorator.appendChild(anchorDecorator);
 
+      // @ts-expect-error
       window.getSelection = getSelection({
         rangeCount: 1,
         anchorNode,
@@ -306,10 +339,12 @@ describe("copypaste", () => {
           },
         ],
         entityMap: {},
-      };
+      } as RawDraftContentState;
 
       registerCopySource({
+        // @ts-expect-error
         editor,
+        // @ts-expect-error
         _latestEditorState: EditorState.createWithContent(
           convertFromRaw(content),
         ),
@@ -327,6 +362,7 @@ describe("copypaste", () => {
       const focusNode = document.createTextNode("this is text");
       anchorParent.appendChild(focusNode);
 
+      // @ts-expect-error
       window.getSelection = getSelection({
         rangeCount: 1,
         anchorNode,
@@ -350,10 +386,12 @@ describe("copypaste", () => {
         },
       ],
       entityMap: {},
-    };
+    } as RawDraftContentState;
 
     registerCopySource({
+      // @ts-expect-error
       editor,
+      // @ts-expect-error
       _latestEditorState: EditorState.createWithContent(
         convertFromRaw(content),
       ),
@@ -369,6 +407,7 @@ describe("copypaste", () => {
     const focusNode = document.createElement("div");
     // focusNode.appendChild(anchorNode);
 
+    // @ts-expect-error
     window.getSelection = getSelection({
       rangeCount: 1,
       anchorNode,
@@ -391,10 +430,12 @@ describe("copypaste", () => {
         },
       ],
       entityMap: {},
-    };
+    } as RawDraftContentState;
 
     registerCopySource({
+      // @ts-expect-error
       editor,
+      // @ts-expect-error
       _latestEditorState: EditorState.createWithContent(
         convertFromRaw(content),
       ),
@@ -409,6 +450,7 @@ describe("copypaste", () => {
     const focusNode = document.createElement("div");
     focusNode.appendChild(anchorNode);
 
+    // @ts-expect-error
     window.getSelection = getSelection({
       rangeCount: 1,
       anchorNode,
@@ -422,7 +464,7 @@ describe("copypaste", () => {
   describe("handleDraftEditorPastedText", () => {
     it("no HTML", () => {
       const editorState = EditorState.createEmpty();
-      expect(handleDraftEditorPastedText(null, editorState)).toBe(false);
+      expect(handleDraftEditorPastedText(undefined, editorState)).toBe(false);
     });
 
     it("HTML from other app", () => {
@@ -450,7 +492,10 @@ describe("copypaste", () => {
       const html = `<div data-draftjs-conductor-fragment='${JSON.stringify(
         content,
       )}'><p>Hello, world!</p></div>`;
-      editorState = handleDraftEditorPastedText(html, editorState);
+      editorState = handleDraftEditorPastedText(
+        html,
+        editorState,
+      ) as EditorState;
       expect(convertToRaw(editorState.getCurrentContent())).toEqual(content);
     });
 
@@ -463,13 +508,11 @@ describe("copypaste", () => {
 
   describe("getDraftEditorPastedContent", () => {
     it("no HTML", () => {
-      expect(getDraftEditorPastedContent(null)).toEqual(null);
+      expect(getDraftEditorPastedContent(undefined)).toEqual(null);
     });
 
     it("HTML from other app", () => {
-      const editorState = EditorState.createEmpty();
-      const html = `<p>Hello, world!</p>`;
-      expect(getDraftEditorPastedContent(html, editorState)).toEqual(null);
+      expect(getDraftEditorPastedContent("<p>Hello, world!</p>")).toEqual(null);
     });
 
     it("HTML from draftjs-conductor", () => {
@@ -486,11 +529,11 @@ describe("copypaste", () => {
           },
         ],
         entityMap: {},
-      };
+      } as RawDraftContentState;
       const html = `<div data-draftjs-conductor-fragment='${JSON.stringify(
         content,
       )}'><p>Hello, world!</p></div>`;
-      const pastedContent = getDraftEditorPastedContent(html);
+      const pastedContent = getDraftEditorPastedContent(html) as ContentState;
       expect(convertToRaw(pastedContent)).toEqual(content);
     });
 

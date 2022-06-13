@@ -1,7 +1,9 @@
-import React, { Component } from "react";
+import { Component } from "react";
+
 import "./App.css";
 
 import DemoEditor from "../components/DemoEditor";
+import { RawDraftContentState } from "draft-js";
 
 const copyPasteContent = {
   blocks: [
@@ -9,11 +11,16 @@ const copyPasteContent = {
       key: "8qfte",
       text: "Copy this content",
       type: "header-two",
+      depth: 0,
+      inlineStyleRanges: [],
+      entityRanges: [],
     },
     {
       key: "6m80m",
       text: " ",
       type: "atomic",
+      depth: 0,
+      inlineStyleRanges: [],
       entityRanges: [
         {
           offset: 0,
@@ -26,21 +33,32 @@ const copyPasteContent = {
       key: "c0ala",
       text: "",
       type: "unstyled",
+      depth: 0,
+      inlineStyleRanges: [],
+      entityRanges: [],
     },
     {
       key: "7knr3",
       text: "From here",
       type: "header-three",
+      depth: 0,
+      inlineStyleRanges: [],
+      entityRanges: [],
     },
     {
       key: "er6ke",
       text: "To the editor below!",
       type: "ordered-list-item",
+      depth: 0,
+      inlineStyleRanges: [],
+      entityRanges: [],
     },
     {
       key: "47a3o",
       text: " ",
       type: "atomic",
+      depth: 0,
+      inlineStyleRanges: [],
       entityRanges: [
         {
           offset: 0,
@@ -53,17 +71,18 @@ const copyPasteContent = {
       key: "826u0",
       text: "Numbered list",
       type: "ordered-list-item",
+      depth: 0,
+      inlineStyleRanges: [],
+      entityRanges: [],
     },
   ],
   entityMap: {
-    // prettier-ignore
-    '0': {
+    2: {
       type: "HORIZONTAL_RULE",
       mutability: "IMMUTABLE",
       data: {},
     },
-    // prettier-ignore
-    '1': {
+    1: {
       type: "SNIPPET",
       mutability: "IMMUTABLE",
       data: {
@@ -71,7 +90,7 @@ const copyPasteContent = {
       },
     },
   },
-};
+} as RawDraftContentState;
 
 const listNestingContent = {
   blocks: [
@@ -80,96 +99,128 @@ const listNestingContent = {
       text: "Infinite",
       type: "ordered-list-item",
       depth: 0,
+      entityRanges: [],
+      inlineStyleRanges: [],
     },
     {
       key: "adreo",
       text: "Nested",
       type: "ordered-list-item",
       depth: 1,
+      entityRanges: [],
+      inlineStyleRanges: [],
     },
     {
       key: "bm3ec",
       text: "List",
       type: "ordered-list-item",
       depth: 2,
+      entityRanges: [],
+      inlineStyleRanges: [],
     },
     {
       key: "aqg1s",
       text: "Nesting",
       type: "ordered-list-item",
       depth: 3,
+      entityRanges: [],
+      inlineStyleRanges: [],
     },
     {
       key: "4dns4",
       text: "Styles",
       type: "ordered-list-item",
       depth: 4,
+      entityRanges: [],
+      inlineStyleRanges: [],
     },
     {
       key: "5k6tv",
       text: "Work",
       type: "ordered-list-item",
       depth: 5,
+      entityRanges: [],
+      inlineStyleRanges: [],
     },
     {
       key: "9htu8",
       text: "For",
       type: "ordered-list-item",
       depth: 6,
+      entityRanges: [],
+      inlineStyleRanges: [],
     },
     {
       key: "at7om",
       text: "As",
       type: "ordered-list-item",
       depth: 7,
+      entityRanges: [],
+      inlineStyleRanges: [],
     },
     {
       key: "8fddl",
       text: "Many",
       type: "ordered-list-item",
       depth: 8,
+      entityRanges: [],
+      inlineStyleRanges: [],
     },
     {
       key: "2ja3i",
       text: "Levels",
       type: "ordered-list-item",
       depth: 9,
+      entityRanges: [],
+      inlineStyleRanges: [],
     },
     {
       key: "cv49i",
       text: "As",
       type: "ordered-list-item",
       depth: 10,
+      entityRanges: [],
+      inlineStyleRanges: [],
     },
     {
       key: "4aoq9",
       text: "Configured",
       type: "ordered-list-item",
       depth: 11,
+      entityRanges: [],
+      inlineStyleRanges: [],
     },
     {
       key: "d4hhk",
       text: "Here",
       type: "ordered-list-item",
       depth: 12,
+      entityRanges: [],
+      inlineStyleRanges: [],
     },
     {
       key: "bbeuk",
       text: "Up",
       type: "ordered-list-item",
       depth: 13,
+      entityRanges: [],
+      inlineStyleRanges: [],
     },
     {
       key: "6s9a8",
       text: "To",
       type: "ordered-list-item",
       depth: 14,
+      entityRanges: [],
+      inlineStyleRanges: [],
     },
     {
       key: "48sq1",
       text: "15!",
       type: "ordered-list-item",
       depth: 15,
+      entityRanges: [],
+      inlineStyleRanges: [],
     },
   ],
   entityMap: {},

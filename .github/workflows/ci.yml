@@ -30,7 +30,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - if: steps.node-cache.outputs.cache-hit != 'true'
-        run: npm install --no-optional --no-audit --no-fund --progress=false
+        run: npm ci
       # Test Git hooks in CI, to make sure script upgrades do not break them.
       - run: npm run prepare
       # Test commit message validation in CI.
@@ -44,11 +44,8 @@ jobs:
         env:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npm run report:package
-      - run: wc -c build/source-map-explorer.html
       - run: mv coverage/lcov-report build || true
-      - uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: cat ./coverage/lcov.info | npx coveralls || true
       - uses: actions/upload-artifact@v3
         with:
           name: build

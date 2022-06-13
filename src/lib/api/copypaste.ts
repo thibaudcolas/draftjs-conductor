@@ -1,18 +1,23 @@
+// @ts-expect-error
 import getContentStateFragment from "draft-js/lib/getContentStateFragment";
+// @ts-expect-error
 import getDraftEditorSelection from "draft-js/lib/getDraftEditorSelection";
+// @ts-expect-error
 import editOnCopy from "draft-js/lib/editOnCopy";
+// @ts-expect-error
 import editOnCut from "draft-js/lib/editOnCut";
 
 import {
+  Editor,
   EditorState,
   Modifier,
   convertToRaw,
   convertFromRaw,
   ContentState,
+  ContentBlock,
 } from "draft-js";
 
-import { ElementRef } from "react";
-import { Editor, EditorState as EditorStateType } from "draft-js";
+import React, { ElementRef } from "react";
 
 // Custom attribute to store Draft.js content in the HTML clipboard.
 const FRAGMENT_ATTR = "data-draftjs-conductor-fragment";
@@ -45,7 +50,7 @@ const isSelectionInDecorator = (selection: Selection) => {
 
 // Get clipboard content from the selection like Draft.js would.
 const getSelectedContent = (
-  editorState: EditorStateType,
+  editorState: EditorState,
   editorRoot: HTMLElement,
 ) => {
   const { selectionState } = getDraftEditorSelection(editorState, editorRoot);
@@ -58,7 +63,7 @@ const getSelectedContent = (
   // If the selection contains no content (according to Draft.js), use the default browser behavior.
   // This happens when selecting text that's within contenteditable=false blocks in Draft.js.
   // See https://github.com/thibaudcolas/draftjs-conductor/issues/12.
-  const isEmpty = fragment.every((block) => {
+  const isEmpty = fragment.every((block: ContentBlock) => {
     return block.getText().length === 0;
   });
 
@@ -70,10 +75,11 @@ const getSelectedContent = (
 // We serialise the editor content within HTML, not as a separate mime type, because Draft.js only allows access
 // to HTML in its paste event handler.
 const draftEditorCopyCutListener = (
+  // @ts-expect-error
   ref: ElementRef<Editor>,
-  e: SyntheticClipboardEvent,
+  e: React.ClipboardEvent,
 ) => {
-  const selection = window.getSelection();
+  const selection = window.getSelection() as Selection;
 
   // Completely skip event handling if clipboardData is not supported (IE11 is out).
   // Also skip if there is no selection ranges.
@@ -86,6 +92,7 @@ const draftEditorCopyCutListener = (
     return;
   }
 
+  // @ts-expect-error
   const fragment = getSelectedContent(ref._latestEditorState, ref.editor);
 
   // Override the default behavior if there is selected content.
@@ -113,16 +120,18 @@ const draftEditorCopyCutListener = (
 
 export const onDraftEditorCopy = (
   editor: Editor,
-  e: SyntheticClipboardEvent,
+  e: React.ClipboardEvent<HTMLElement>,
 ) => {
+  // @ts-expect-error
   draftEditorCopyCutListener(editor, e);
   editOnCopy(editor, e);
 };
 
 export const onDraftEditorCut = (
   editor: Editor,
-  e: SyntheticClipboardEvent,
+  e: React.ClipboardEvent<HTMLElement>,
 ) => {
+  // @ts-expect-error
   draftEditorCopyCutListener(editor, e);
   editOnCut(editor, e);
 };
@@ -130,7 +139,9 @@ export const onDraftEditorCut = (
 /**
  * Registers custom copy/cut event listeners on an editor.
  */
+// @ts-expect-error
 export const registerCopySource = (ref: ElementRef<Editor>) => {
+  // @ts-expect-error
   const editorElt = ref.editor;
   const onCopyCut = draftEditorCopyCutListener.bind(null, ref);
 
@@ -149,7 +160,7 @@ export const registerCopySource = (ref: ElementRef<Editor>) => {
  * Returns pasted content coming from Draft.js editors set up to serialise
  * their Draft.js content within the HTML.
  */
-export const getDraftEditorPastedContent = (html: string | null) => {
+export const getDraftEditorPastedContent = (html: string | undefined) => {
   // Plain-text pastes are better handled by Draft.js.
   if (html === "" || typeof html === "undefined" || html === null) {
     return null;
@@ -166,7 +177,7 @@ export const getDraftEditorPastedContent = (html: string | null) => {
     try {
       // If JSON parsing fails, leave paste handling to Draft.js.
       // There is no reason for this to happen, unless the clipboard was altered somehow.
-      // $FlowFixMe
+      // @ts-expect-error
       rawContent = JSON.parse(fragmentAttr);
     } catch (error) {
       return null;
@@ -184,8 +195,8 @@ export const getDraftEditorPastedContent = (html: string | null) => {
  * This SHOULD NOT be used for stripPastedStyles editor.
  */
 export const handleDraftEditorPastedText = (
-  html: string | null,
-  editorState: EditorStateType,
+  html: string | undefined,
+  editorState: EditorState,
 ) => {
   const pastedContent = getDraftEditorPastedContent(html);
 

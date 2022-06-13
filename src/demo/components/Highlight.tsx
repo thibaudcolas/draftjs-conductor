@@ -1,31 +1,30 @@
-import React from "react";
-
 const onCopy = (value: string) => {
   const hidden = document.createElement("textarea");
   hidden.value = value;
-
-  // $FlowFixMe
   document.body.appendChild(hidden);
   hidden.select();
   document.execCommand("copy");
-  // $FlowFixMe
   document.body.removeChild(hidden);
 };
 
-const Highlight = ({
-  value
-}: {
-  value: string
-}) => (
-  <pre style={{ position: "relative" }}>
+interface HighlightProps {
+  value: string;
+}
+
+const Highlight = ({ value }: HighlightProps) => (
+  <div style={{ position: "relative" }}>
     <button
       onClick={onCopy.bind(null, value)}
       style={{ position: "absolute", right: "1rem" }}
     >
       Copy
     </button>
-    <code>{value}</code>
-  </pre>
+    <textarea
+      style={{ width: "100%", resize: "vertical", minHeight: "100px" }}
+      readOnly
+      value={value}
+    ></textarea>
+  </div>
 );
 
 export default Highlight;

@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { convertFromRaw } from "draft-js";
+import { convertFromRaw, RawDraftContentState } from "draft-js";
 
 import Snippet from "./Snippet";
 
@@ -10,6 +10,7 @@ describe("Snippet", () => {
       entityMap: {
         0: {
           type: "SNIPPET",
+          mutability: "IMMUTABLE",
           data: {
             text: "This is a snippet",
           },
@@ -19,6 +20,9 @@ describe("Snippet", () => {
         {
           key: "a",
           text: " ",
+          type: "unstyled",
+          depth: 0,
+          inlineStyleRanges: [],
           entityRanges: [
             {
               offset: 0,
@@ -46,7 +50,7 @@ describe("Snippet", () => {
           text: " ",
         },
       ],
-    });
+    } as RawDraftContentState);
 
     expect(
       shallow(

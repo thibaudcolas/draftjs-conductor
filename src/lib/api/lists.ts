@@ -1,4 +1,4 @@
-import { BlockNode } from "draft-js/lib/BlockNode";
+import { ContentBlock } from "draft-js";
 
 // Default maximum block depth supported by Draft.js CSS.
 export const DRAFT_DEFAULT_MAX_DEPTH = 4;
@@ -79,7 +79,7 @@ export const getListNestingStyles = (
  * See https://github.com/facebook/draft-js/blob/232791a4e92d94a52c869f853f9869367bdabdac/src/component/contents/DraftEditorContents-core.react.js#L58-L62.
  * @param {ContentBlock} block
  */
-export const blockDepthStyleFn = (block: BlockNode) => {
+export const blockDepthStyleFn = (block: ContentBlock) => {
   const depth = block.getDepth();
   return depth > DRAFT_DEFAULT_MAX_DEPTH
     ? `${DRAFT_DEFAULT_DEPTH_CLASS}${String(depth)}`

@@ -1,4 +1,4 @@
-import { EditorState, convertFromRaw } from "draft-js";
+import { EditorState, convertFromRaw, RawDraftContentState } from "draft-js";
 
 import DraftUtils from "./DraftUtils";
 
@@ -14,7 +14,7 @@ describe("DraftUtils", () => {
             type: "header-two",
           },
         ],
-      });
+      } as RawDraftContentState);
       const editorState = EditorState.createWithContent(contentState);
 
       expect(
@@ -35,7 +35,7 @@ describe("DraftUtils", () => {
             type: "header-two",
           },
         ],
-      });
+      } as RawDraftContentState);
       let editorState = EditorState.createWithContent(contentState);
       const selection = editorState.getSelection().merge({
         anchorKey: "a",

@@ -104,7 +104,11 @@ class MyEditor extends Component {
     this.setState({ editorState: nextState });
   }
 
-  handlePastedText(text: string, html: ?string, editorState: EditorState) {
+  handlePastedText(
+    text: string,
+    html: string | null,
+    editorState: EditorState,
+  ) {
     let newState = handleDraftEditorPastedText(html, editorState);
 
     if (newState) {

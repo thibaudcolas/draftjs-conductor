@@ -5,10 +5,10 @@ import "./Snippet.css";
 
 const Snippet = ({
   block,
-  contentState
+  contentState,
 }: {
-  block: ContentBlock,
-  contentState: ContentState
+  block: ContentBlock;
+  contentState: ContentState;
 }) => {
   const entityKey = block.getEntityAt(0);
   const text = entityKey

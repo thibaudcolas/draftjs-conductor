@@ -22,7 +22,7 @@ exports[`SentryBoundary #error 1`] = `
         <div>
           <a
             href="https://github.com/thibaudcolas/draftjs-conductor/issues"
-            rel="noopener noreferrer"
+            rel="noreferrer"
             style={
               Object {
                 "textDecoration": "underline",
@@ -32,48 +32,6 @@ exports[`SentryBoundary #error 1`] = `
           >
             Open a GitHub issue
           </a>
-          <span>
-             
-          </span>
-          <button
-            onClick={[Function]}
-            type="button"
-          >
-            Reload the page
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`SentryBoundary #error Raven 1`] = `
-<div
-  className="DraftEditor-root"
->
-  <div
-    className="DraftEditor-editorContainer"
-  >
-    <div
-      className="public-DraftEditor-content"
-    >
-      <div
-        className="u-text-center"
-      >
-        <p>
-          Oops. The editor just crashed.
-        </p>
-        <p>
-          Our team has been notified. You can provide us with more information if you want to.
-        </p>
-        <div>
-          <button
-            onClick={[Function]}
-            type="button"
-          >
-            Submit a report
-          </button>
           <span>
              
           </span>

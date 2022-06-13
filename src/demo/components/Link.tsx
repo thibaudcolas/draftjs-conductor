@@ -1,17 +1,9 @@
-import React from "react";
-import { Node } from "react";
-import { ContentState } from "draft-js";
-import { ContentBlock } from "draft-js";
-
-type Props = {
-  contentState: ContentState,
-  entityKey: string,
-  children: Node
-};
+import { ContentState, ContentBlock } from "draft-js";
+import { ReactNode } from "react";
 
 export const linkStrategy = (
   contentBlock: ContentBlock,
-  callback: ((start: number, end: number) => void),
+  callback: (start: number, end: number) => void,
   contentState: ContentState,
 ) => {
   contentBlock.findEntityRanges((character) => {
@@ -23,11 +15,13 @@ export const linkStrategy = (
   }, callback);
 };
 
-const Link = ({
-  contentState,
-  entityKey,
-  children
-}: Props) => {
+interface LinkProps {
+  contentState: ContentState;
+  entityKey: string;
+  children: ReactNode;
+}
+
+const Link = ({ contentState, entityKey, children }: LinkProps) => {
   const entity = contentState.getEntity(entityKey);
   return (
     <span className="link" title={entity.getData().url}>

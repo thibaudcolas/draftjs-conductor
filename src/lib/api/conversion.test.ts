@@ -3,6 +3,7 @@ import {
   convertFromRaw,
   convertToRaw,
   CompositeDecorator,
+  RawDraftContentState,
 } from "draft-js";
 import {
   createEditorStateFromRaw,
@@ -17,7 +18,7 @@ describe("#createEditorStateFromRaw", () => {
         { text: "Hello, World!", type: "unstyled" },
         { text: "This is a title", type: "header-two" },
       ],
-    });
+    } as RawDraftContentState);
     const result = convertToRaw(state.getCurrentContent());
     expect(state).toBeInstanceOf(EditorState);
     expect(result.blocks.length).toEqual(2);
@@ -65,7 +66,7 @@ describe("#serialiseEditorStateToRaw", () => {
           data: {},
         },
       ],
-    };
+    } as RawDraftContentState;
     const state = createEditorStateFromRaw(stubContent);
     expect(serialiseEditorStateToRaw(state)).toEqual(stubContent);
   });
@@ -85,7 +86,7 @@ describe("#serialiseEditorStateToRaw", () => {
             text: "",
           },
         ],
-      }),
+      } as RawDraftContentState),
     );
     expect(serialiseEditorStateToRaw(editorState)).toBeNull();
   });

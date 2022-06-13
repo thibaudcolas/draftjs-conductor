@@ -16,7 +16,7 @@ const addLineBreak = (editorState: EditorState) => {
     fragment,
     "\n",
     block.getInlineStyleAt(fragment.getStartOffset()),
-    null,
+    undefined,
   );
   return EditorState.push(editorState, newContent, "insert-fragment");
 };

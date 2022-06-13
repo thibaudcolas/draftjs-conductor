@@ -1,41 +1,38 @@
-import React, { Component } from "react";
-import { Node } from "react";
+import { Component, ReactNode } from "react";
 
-type Props = {
-  children: Node
-};
+interface SentryBoundaryProps {
+  children: ReactNode;
+}
 
-type State = {
-  error: Error | null
-};
+interface SentryBoundaryState {
+  error: Error | null | undefined;
+}
 
-class SentryBoundary extends Component<Props, State> {
-  constructor(props: Props) {
+class SentryBoundary extends Component<
+  SentryBoundaryProps,
+  SentryBoundaryState
+> {
+  constructor(props: SentryBoundaryProps) {
     super(props);
-    this.state = { error: null };
+    this.state = {
+      error: null,
+    };
   }
 
-  componentDidCatch(error: Error, errorInfo: {
-    componentStack: string
-  }) {
-    const isRavenAvailable = !!window.Raven;
-    this.setState({ error });
-
-    if (isRavenAvailable) {
-      window.Raven.captureException(error, { extra: errorInfo });
-    }
+  componentDidCatch(error: Error) {
+    this.setState({
+      error,
+    });
   }
 
   render() {
     const { children } = this.props;
     const { error } = this.state;
-    const isRavenAvailable = !!window.Raven;
 
     return error ? (
       <div className="DraftEditor-root">
         <div className="DraftEditor-editorContainer">
           <div className="public-DraftEditor-content">
-            {/* <img src={oops} /> */}
             <div className="u-text-center">
               <p>Oops. The editor just crashed.</p>
               <p>
@@ -43,33 +40,18 @@ class SentryBoundary extends Component<Props, State> {
                 information if you want to.
               </p>
               <div>
-                {isRavenAvailable ? (
-                  <button
-                    type="button"
-                    onClick={() =>
-                      window.Raven.lastEventId() &&
-                      window.Raven.showReportDialog()
-                    }
-                  >
-                    Submit a report
-                  </button>
-                ) : (
-                  <a
-                    href="https://github.com/thibaudcolas/draftjs-conductor/issues"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      textDecoration: "underline",
-                    }}
-                  >
-                    Open a GitHub issue
-                  </a>
-                )}
-                <span>&nbsp;</span>
-                <button
-                  type="button"
-                  onClick={() => window.location.reload(false)}
+                <a
+                  href="https://github.com/thibaudcolas/draftjs-conductor/issues"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    textDecoration: "underline",
+                  }}
                 >
+                  Open a GitHub issue
+                </a>
+                <span>&nbsp;</span>
+                <button type="button" onClick={() => window.location.reload()}>
                   Reload the page
                 </button>
               </div>

@@ -1,10 +1,10 @@
+export {};
+
 describe("demo", () => {
   beforeEach(() => {
     jest.resetModules();
-    global.sessionStorage = {
-      getItem: jest.fn(),
-      setItem: jest.fn(),
-    };
+    jest.spyOn(window.sessionStorage, "getItem");
+    jest.spyOn(window.sessionStorage, "setItem");
   });
 
   it("mount", () => {
