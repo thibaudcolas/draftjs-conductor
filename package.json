@@ -75,8 +75,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "CI=true react-scripts build && rollup -c",
-    "test": "CI=true react-scripts test --env=jsdom --coverage",
-    "test:watch": "react-scripts test --env=jsdom",
+    "test": "CI=true react-scripts test --coverage",
+    "test:watch": "react-scripts test",
     "report:coverage": "open coverage/lcov-report/index.html",
     "report:package": "npm pack --loglevel notice 2>&1 >/dev/null | sed -e 's/^npm notice //' | tee build/package.txt && rm *.tgz",
     "lint": "prettier --check '**/?(.)*.{md,css,scss,js,ts,tsx,json,yaml,yml,html}'",
