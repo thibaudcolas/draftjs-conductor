@@ -2,5 +2,5 @@
 
 if [ -n "$JS_STAGED" ];
 then
-  npx eslint $JS_STAGED
+  npx eslint --cache --cache-location ./node_modules/.cache/ $JS_STAGED
 fi
