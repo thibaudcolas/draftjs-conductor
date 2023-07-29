@@ -13,7 +13,7 @@ version:       3.0.0
 filename:      draftjs-conductor-3.0.0.tgz             
 package size:  9.9 kB                                  
 unpacked size: 41.5 kB                                 
-shasum:        a9dfeafe7c80cf1adb6fa6b5d40d8f81fd62d987
-integrity:     sha512-Y7ZzZUThY7M8a[...]scWzwCuI9VIkQ==
+shasum:        069299b33c6c747f7df8f4c9c29d3dfdd54e472c
+integrity:     sha512-AbTd9twaO/BF+[...]pBZJN9zNJ3/Iw==
 total files:   6                                       
 
