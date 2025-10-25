@@ -46,7 +46,7 @@ jobs:
       - run: npm run report:package
       - run: mv coverage/lcov-report build || true
       - run: cat ./coverage/lcov.info | npx coveralls || true
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: build
           path: build
@@ -64,7 +64,7 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
       - uses: JamesIves/github-pages-deploy-action@v4.7.3
         with:
           branch: gh-pages
