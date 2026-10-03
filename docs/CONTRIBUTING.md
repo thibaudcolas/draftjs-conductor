@@ -57,3 +57,11 @@ This project uses [Vite Plus](https://viteplus.dev/) for builds, tests, formatti
 `npm run build` checks types, builds the demo with `vp build`, and produces CJS, ESM, and declaration bundles with `vp pack`. Both builds share `dist/`, so packaging preserves the demo files. No global Vite Plus installation is needed; npm scripts use the pinned local toolchain.
 
 Keep `vite-plus`, its `vite` alias, and the bundled `vitest` and coverage-provider versions aligned when upgrading. After dependency changes, run `npm run test:ci` to validate both supported Draft.js versions.
+
+### Git hooks
+
+`npm install` installs the [Vite Plus Git hooks](https://viteplus.dev/guide/commit-hooks) with `vp config --no-agent`. The committed scripts live in `.vite-hooks/`; Vite Plus generates the ignored dispatcher in `.vite-hooks/_/`.
+
+Before a commit, `vp staged` formats and checks staged files using the `staged` configuration in `vite.config.mts`. It preserves unstaged changes, including partially staged files. Flow definitions use Prettier. Code, snapshot, dependency, and Node version changes run the tests against both Draft.js versions. Tasks run sequentially so tests see the formatted files. The commit-message hook checks Conventional Commits with commitlint.
+
+Run `npx vp hooks status` to inspect hook installation, `npx vp hooks disable` to disable hooks in your clone, or `npx vp hooks enable` to re-enable them. To skip hooks for one commit, use `VP_GIT_HOOKS=0 git commit`. No global Vite Plus installation is required.
