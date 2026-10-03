@@ -86,7 +86,7 @@
   },
   "overrides": {
     "isomorphic-fetch": {
-      "node-fetch": "^2.0.0"
+      "node-fetch": "^3.0.0"
     }
   }
 }
