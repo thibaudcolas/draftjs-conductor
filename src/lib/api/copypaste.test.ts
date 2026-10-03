@@ -1,3 +1,4 @@
+import { describe, it, expect, vi } from "vitest";
 import {
   EditorState,
   convertFromRaw,
@@ -13,33 +14,23 @@ import {
   getDraftEditorPastedContent,
 } from "./copypaste";
 
-jest.mock("draft-js/lib/generateRandomKey", () => () => "a");
-jest.mock("draft-js/lib/getDraftEditorSelection", () => () => ({}));
-jest.mock(
-  "draft-js/lib/getContentStateFragment",
-  () => (content: ContentState) => content.getBlockMap(),
-);
-
-jest.mock("draft-js/lib/editOnCopy", () => jest.fn(() => {}));
-jest.mock("draft-js/lib/editOnCut", () => jest.fn(() => {}));
-
-jest.mock("draft-js-10/lib/generateRandomKey", () => () => "a");
-jest.mock("draft-js-10/lib/getDraftEditorSelection", () => () => ({}));
-jest.mock(
-  "draft-js-10/lib/getContentStateFragment",
-  () => (content: ContentState) => content.getBlockMap(),
-);
-jest.mock("draft-js-10/lib/editOnCopy", () => jest.fn(() => {}));
-jest.mock("draft-js-10/lib/editOnCut", () => jest.fn(() => {}));
+vi.mock("draft-js/lib/getDraftEditorSelection", () => ({
+  default: () => ({}),
+}));
+vi.mock("draft-js/lib/getContentStateFragment", () => ({
+  default: (content: ContentState) => content.getBlockMap(),
+}));
+vi.mock("draft-js/lib/editOnCopy", () => ({ default: vi.fn() }));
+vi.mock("draft-js/lib/editOnCut", () => ({ default: vi.fn() }));
 
 const dispatchEvent = (
   editor: HTMLElement,
   type: string,
-  setData?: { [key: string]: any },
+  setData?: (type: string, data: string) => void,
 ) => {
   const event = Object.assign(new Event(type), {
     clipboardData: { setData },
-    preventDefault: jest.fn(),
+    preventDefault: vi.fn(),
   });
 
   editor.dispatchEvent(event);
@@ -48,7 +39,7 @@ const dispatchEvent = (
 };
 
 const getSelection = (selection?: Selection) => {
-  return jest.fn(() =>
+  return vi.fn(() =>
     Object.assign(
       {
         rangeCount: 0,
@@ -72,9 +63,8 @@ describe("copypaste", () => {
       const editor = document.createElement("div");
 
       const copySource = registerCopySource({
-        // @ts-expect-error
         editor,
-        // @ts-expect-error
+        // @ts-expect-error - Partial editor fixture includes the private state field.
         _latestEditorState: EditorState.createEmpty(),
       });
 
@@ -93,9 +83,8 @@ describe("copypaste", () => {
       const editor = document.createElement("div");
 
       const copySource = registerCopySource({
-        // @ts-expect-error
         editor,
-        // @ts-expect-error
+        // @ts-expect-error - Partial editor fixture includes the private state field.
         _latestEditorState: EditorState.createEmpty(),
       });
 
@@ -115,7 +104,7 @@ describe("copypaste", () => {
     it("calls editOnCopy", () => {
       const editor = document.createElement("div");
       window.getSelection = getSelection();
-      // @ts-expect-error
+      // @ts-expect-error - Partial browser or editor fixture.
       onDraftEditorCopy(editor, dispatchEvent(editor, "copy"));
     });
   });
@@ -124,7 +113,7 @@ describe("copypaste", () => {
     it("does not break", () => {
       const editor = document.createElement("div");
       window.getSelection = getSelection();
-      // @ts-expect-error
+      // @ts-expect-error - Partial browser or editor fixture.
       onDraftEditorCut(editor, dispatchEvent(editor, "cut"));
     });
   });
@@ -137,9 +126,8 @@ describe("copypaste", () => {
       const editor = document.createElement("div");
 
       registerCopySource({
-        // @ts-expect-error
         editor,
-        // @ts-expect-error
+        // @ts-expect-error - Partial editor fixture includes the private state field.
         _latestEditorState: EditorState.createEmpty(),
       });
 
@@ -153,23 +141,23 @@ describe("copypaste", () => {
       const editor = document.createElement("div");
 
       registerCopySource({
-        // @ts-expect-error
         editor,
-        // @ts-expect-error
+        // @ts-expect-error - Partial editor fixture includes the private state field.
         _latestEditorState: EditorState.createEmpty(),
       });
 
-      // @ts-expect-error
+      // @ts-expect-error - Partial browser or editor fixture.
       window.getSelection = getSelection({ rangeCount: 1 });
 
       const event = new Event("copy");
-      event.preventDefault = jest.fn();
+      event.preventDefault = vi.fn();
       editor.dispatchEvent(event);
 
       expect(event.preventDefault).not.toHaveBeenCalled();
     });
 
-    it("works", (done) => {
+    it("works", () => {
+      expect.assertions(2);
       const editor = document.createElement("div");
 
       const content = {
@@ -184,23 +172,21 @@ describe("copypaste", () => {
       } as RawDraftContentState;
 
       registerCopySource({
-        // @ts-expect-error
         editor,
-        // @ts-expect-error
+        // @ts-expect-error - Partial editor fixture includes the private state field.
         _latestEditorState: EditorState.createWithContent(
           convertFromRaw(content),
         ),
       });
 
-      // @ts-expect-error
+      // @ts-expect-error - Partial browser or editor fixture.
       window.getSelection = getSelection({ rangeCount: 1 });
 
-      dispatchEvent(editor, "copy", (type: string, data: any) => {
+      dispatchEvent(editor, "copy", (type: string, data: string) => {
         if (type === "text/plain") {
           expect(data).toBe("toString selection");
         } else if (type === "text/html") {
           expect(data).toMatchSnapshot();
-          done();
         }
       });
     });
@@ -220,15 +206,14 @@ describe("copypaste", () => {
       } as RawDraftContentState;
 
       registerCopySource({
-        // @ts-expect-error
         editor,
-        // @ts-expect-error
+        // @ts-expect-error - Partial editor fixture includes the private state field.
         _latestEditorState: EditorState.createWithContent(
           convertFromRaw(content),
         ),
       });
 
-      // @ts-expect-error
+      // @ts-expect-error - Partial browser or editor fixture.
       window.getSelection = getSelection({ rangeCount: 1 });
 
       const event = dispatchEvent(editor, "copy", () => {});
@@ -250,9 +235,8 @@ describe("copypaste", () => {
       } as RawDraftContentState;
 
       registerCopySource({
-        // @ts-expect-error
         editor,
-        // @ts-expect-error
+        // @ts-expect-error - Partial editor fixture includes the private state field.
         _latestEditorState: EditorState.createWithContent(
           convertFromRaw(content),
         ),
@@ -268,7 +252,7 @@ describe("copypaste", () => {
       const focusNode = document.createElement("div");
       anchorNode.appendChild(focusNode);
 
-      // @ts-expect-error
+      // @ts-expect-error - Partial browser or editor fixture.
       window.getSelection = getSelection({
         rangeCount: 1,
         anchorNode,
@@ -294,9 +278,8 @@ describe("copypaste", () => {
       } as RawDraftContentState;
 
       registerCopySource({
-        // @ts-expect-error
         editor,
-        // @ts-expect-error
+        // @ts-expect-error - Partial editor fixture includes the private state field.
         _latestEditorState: EditorState.createWithContent(
           convertFromRaw(content),
         ),
@@ -316,7 +299,7 @@ describe("copypaste", () => {
       focusDecorator.appendChild(focusNode);
       focusDecorator.appendChild(anchorDecorator);
 
-      // @ts-expect-error
+      // @ts-expect-error - Partial browser or editor fixture.
       window.getSelection = getSelection({
         rangeCount: 1,
         anchorNode,
@@ -342,9 +325,8 @@ describe("copypaste", () => {
       } as RawDraftContentState;
 
       registerCopySource({
-        // @ts-expect-error
         editor,
-        // @ts-expect-error
+        // @ts-expect-error - Partial editor fixture includes the private state field.
         _latestEditorState: EditorState.createWithContent(
           convertFromRaw(content),
         ),
@@ -362,7 +344,7 @@ describe("copypaste", () => {
       const focusNode = document.createTextNode("this is text");
       anchorParent.appendChild(focusNode);
 
-      // @ts-expect-error
+      // @ts-expect-error - Partial browser or editor fixture.
       window.getSelection = getSelection({
         rangeCount: 1,
         anchorNode,
@@ -389,9 +371,8 @@ describe("copypaste", () => {
     } as RawDraftContentState;
 
     registerCopySource({
-      // @ts-expect-error
       editor,
-      // @ts-expect-error
+      // @ts-expect-error - Partial editor fixture includes the private state field.
       _latestEditorState: EditorState.createWithContent(
         convertFromRaw(content),
       ),
@@ -407,7 +388,7 @@ describe("copypaste", () => {
     const focusNode = document.createElement("div");
     // focusNode.appendChild(anchorNode);
 
-    // @ts-expect-error
+    // @ts-expect-error - Partial browser or editor fixture.
     window.getSelection = getSelection({
       rangeCount: 1,
       anchorNode,
@@ -433,9 +414,8 @@ describe("copypaste", () => {
     } as RawDraftContentState;
 
     registerCopySource({
-      // @ts-expect-error
       editor,
-      // @ts-expect-error
+      // @ts-expect-error - Partial editor fixture includes the private state field.
       _latestEditorState: EditorState.createWithContent(
         convertFromRaw(content),
       ),
@@ -450,7 +430,7 @@ describe("copypaste", () => {
     const focusNode = document.createElement("div");
     focusNode.appendChild(anchorNode);
 
-    // @ts-expect-error
+    // @ts-expect-error - Partial browser or editor fixture.
     window.getSelection = getSelection({
       rangeCount: 1,
       anchorNode,
@@ -488,7 +468,12 @@ describe("copypaste", () => {
         ],
         entityMap: {},
       };
-      let editorState = EditorState.createEmpty();
+      let editorState = EditorState.createWithContent(
+        convertFromRaw({
+          ...content,
+          blocks: [{ ...content.blocks[0], text: "" }],
+        }),
+      );
       const html = `<div data-draftjs-conductor-fragment='${JSON.stringify(
         content,
       )}'><p>Hello, world!</p></div>`;

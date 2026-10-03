@@ -35,21 +35,16 @@ jobs:
       - run: npm run prepare
       # Test commit message validation in CI.
       - run: git log -1 --pretty=%B >> latest.log && ./.git/hooks/commit-msg latest.log
-      - run: DRAFTJS_VERSION=0.11 npm run test:ci
-      - run: DRAFTJS_VERSION=0.10 npm run test
+      # test:ci runs the full suite against Draft.js 0.11.7 AND 0.10.5.
+      - run: npm run test:ci
       - run: npx commitlint --from HEAD~${{ github.event.pull_request.commits }} --to HEAD
         if: ${{ github.event_name == 'pull_request' }}
-      - run: npx danger ci --verbose
-        if: ${{ github.event_name == 'pull_request' }}
-        env:
-          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npm run report:package
-      - run: mv coverage/lcov-report build || true
-      - run: cat ./coverage/lcov.info | npx coveralls || true
+      - run: cp -R coverage dist/coverage
       - uses: actions/upload-artifact@v7
         with:
           name: build
-          path: build
+          path: dist
           retention-days: 1
       - run: npx semantic-release
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}

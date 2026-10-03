@@ -1,4 +1,7 @@
-import pkg from "./package.json";
+import { readFileSync } from "node:fs";
+const pkg = JSON.parse(
+  readFileSync(new URL("./package.json", import.meta.url), "utf8"),
+);
 import typescript from "@rollup/plugin-typescript";
 import dts from "rollup-plugin-dts";
 
@@ -15,7 +18,13 @@ const config = [
       { file: pkg.main, format: "cjs" },
       { file: pkg.module, format: "es" },
     ],
-    plugins: [typescript()],
+    plugins: [
+      typescript({
+        compilerOptions: { noEmit: false },
+        include: ["src/lib/**/*.ts"],
+        exclude: ["**/*.test.ts"],
+      }),
+    ],
   },
   {
     input: "./src/lib/index.ts",

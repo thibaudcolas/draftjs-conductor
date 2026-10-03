@@ -245,7 +245,7 @@ class DemoEditor extends Component<DemoEditorProps, DemoEditorState> {
     html: string | undefined,
     editorState: EditorState,
   ) {
-    let newState = handleDraftEditorPastedText(html, editorState);
+    const newState = handleDraftEditorPastedText(html, editorState);
 
     if (newState) {
       this.onChange(newState);
@@ -331,7 +331,6 @@ class DemoEditor extends Component<DemoEditorProps, DemoEditorState> {
             blockRendererFn={this.blockRenderer}
             blockStyleFn={blockDepthStyleFn}
             keyBindingFn={this.keyBindingFn}
-            // @ts-expect-error
             onCopy={onDraftEditorCopy}
             onCut={onDraftEditorCut}
             handlePastedText={this.handlePastedText}

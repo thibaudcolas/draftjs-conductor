@@ -1,327 +1,177 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DemoEditor #extended can take predefined content 1`] = `
+exports[`DemoEditor > #extended > can take predefined content 1`] = `
 <div
-  className="EditorToolbar"
+  class="EditorToolbar"
 >
-  <button
-    key="BOLD"
-    onMouseDown={[Function]}
-  >
+  <button>
     B
   </button>
-  <button
-    key="ITALIC"
-    onMouseDown={[Function]}
-  >
+  <button>
     I
   </button>
-  <button
-    key="unstyled"
-    onMouseDown={[Function]}
-  >
+  <button>
     P
   </button>
-  <button
-    key="unordered-list-item"
-    onMouseDown={[Function]}
-  >
+  <button>
     UL
   </button>
-  <button
-    key="ordered-list-item"
-    onMouseDown={[Function]}
-  >
+  <button>
     OL
   </button>
-  <button
-    key="header-one"
-    onMouseDown={[Function]}
-  >
+  <button>
     H1
   </button>
-  <button
-    key="header-two"
-    onMouseDown={[Function]}
-  >
+  <button>
     H2
   </button>
-  <button
-    key="header-three"
-    onMouseDown={[Function]}
-  >
+  <button>
     H3
   </button>
-  <button
-    key="code-block"
-    onMouseDown={[Function]}
-  >
+  <button>
     { }
   </button>
-  <button
-    key="LINK"
-    onMouseDown={[Function]}
-  >
+  <button>
     🔗
   </button>
-  <button
-    key="IMAGE"
-    onMouseDown={[Function]}
-  >
+  <button>
     📷
   </button>
-  <button
-    key="SNIPPET"
-    onMouseDown={[Function]}
-  >
+  <button>
     🌱
   </button>
-  <button
-    key="HORIZONTAL_RULE"
-    onMouseDown={[Function]}
-  >
+  <button>
     HR
   </button>
-  <button
-    onMouseDown={[Function]}
-  >
+  <button>
     BR
   </button>
-  <button
-    onMouseDown={[Function]}
-  >
+  <button>
     📖
   </button>
 </div>
 `;
 
-exports[`DemoEditor #extended works 1`] = `
+exports[`DemoEditor > #extended > works 1`] = `
 <div
-  className="EditorToolbar"
+  class="EditorToolbar"
 >
-  <button
-    key="BOLD"
-    onMouseDown={[Function]}
-  >
+  <button>
     B
   </button>
-  <button
-    key="ITALIC"
-    onMouseDown={[Function]}
-  >
+  <button>
     I
   </button>
-  <button
-    key="CODE"
-    onMouseDown={[Function]}
-  >
+  <button>
     \`
   </button>
-  <button
-    key="STRIKETHROUGH"
-    onMouseDown={[Function]}
-  >
+  <button>
     ~
   </button>
-  <button
-    key="UNDERLINE"
-    onMouseDown={[Function]}
-  >
+  <button>
     _
   </button>
-  <button
-    key="unstyled"
-    onMouseDown={[Function]}
-  >
+  <button>
     P
   </button>
-  <button
-    key="unordered-list-item"
-    onMouseDown={[Function]}
-  >
+  <button>
     UL
   </button>
-  <button
-    key="ordered-list-item"
-    onMouseDown={[Function]}
-  >
+  <button>
     OL
   </button>
-  <button
-    key="header-one"
-    onMouseDown={[Function]}
-  >
+  <button>
     H1
   </button>
-  <button
-    key="header-two"
-    onMouseDown={[Function]}
-  >
+  <button>
     H2
   </button>
-  <button
-    key="header-three"
-    onMouseDown={[Function]}
-  >
+  <button>
     H3
   </button>
-  <button
-    key="header-four"
-    onMouseDown={[Function]}
-  >
+  <button>
     H4
   </button>
-  <button
-    key="header-five"
-    onMouseDown={[Function]}
-  >
+  <button>
     H5
   </button>
-  <button
-    key="header-six"
-    onMouseDown={[Function]}
-  >
+  <button>
     H6
   </button>
-  <button
-    key="blockquote"
-    onMouseDown={[Function]}
-  >
+  <button>
     ❝
   </button>
-  <button
-    key="code-block"
-    onMouseDown={[Function]}
-  >
+  <button>
     { }
   </button>
-  <button
-    key="LINK"
-    onMouseDown={[Function]}
-  >
+  <button>
     🔗
   </button>
-  <button
-    key="IMAGE"
-    onMouseDown={[Function]}
-  >
+  <button>
     📷
   </button>
-  <button
-    key="SNIPPET"
-    onMouseDown={[Function]}
-  >
+  <button>
     🌱
   </button>
-  <button
-    key="HORIZONTAL_RULE"
-    onMouseDown={[Function]}
-  >
+  <button>
     HR
   </button>
-  <button
-    onMouseDown={[Function]}
-  >
+  <button>
     BR
   </button>
-  <button
-    onMouseDown={[Function]}
-  >
+  <button>
     📖
   </button>
 </div>
 `;
 
-exports[`DemoEditor renders 1`] = `
+exports[`DemoEditor > renders 1`] = `
 <div
-  className="EditorToolbar"
+  class="EditorToolbar"
 >
-  <button
-    key="BOLD"
-    onMouseDown={[Function]}
-  >
+  <button>
     B
   </button>
-  <button
-    key="ITALIC"
-    onMouseDown={[Function]}
-  >
+  <button>
     I
   </button>
-  <button
-    key="unstyled"
-    onMouseDown={[Function]}
-  >
+  <button>
     P
   </button>
-  <button
-    key="unordered-list-item"
-    onMouseDown={[Function]}
-  >
+  <button>
     UL
   </button>
-  <button
-    key="ordered-list-item"
-    onMouseDown={[Function]}
-  >
+  <button>
     OL
   </button>
-  <button
-    key="header-one"
-    onMouseDown={[Function]}
-  >
+  <button>
     H1
   </button>
-  <button
-    key="header-two"
-    onMouseDown={[Function]}
-  >
+  <button>
     H2
   </button>
-  <button
-    key="header-three"
-    onMouseDown={[Function]}
-  >
+  <button>
     H3
   </button>
-  <button
-    key="code-block"
-    onMouseDown={[Function]}
-  >
+  <button>
     { }
   </button>
-  <button
-    key="LINK"
-    onMouseDown={[Function]}
-  >
+  <button>
     🔗
   </button>
-  <button
-    key="IMAGE"
-    onMouseDown={[Function]}
-  >
+  <button>
     📷
   </button>
-  <button
-    key="SNIPPET"
-    onMouseDown={[Function]}
-  >
+  <button>
     🌱
   </button>
-  <button
-    key="HORIZONTAL_RULE"
-    onMouseDown={[Function]}
-  >
+  <button>
     HR
   </button>
-  <button
-    onMouseDown={[Function]}
-  >
+  <button>
     BR
   </button>
-  <button
-    onMouseDown={[Function]}
-  >
+  <button>
     📖
   </button>
 </div>

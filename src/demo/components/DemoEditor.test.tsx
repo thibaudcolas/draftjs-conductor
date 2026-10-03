@@ -1,5 +1,7 @@
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import React from "react";
-import { mount, ReactWrapper } from "enzyme";
+import { render } from "@testing-library/react";
+import type { MockInstance } from "vitest";
 import {
   EditorState,
   RichUtils,
@@ -9,38 +11,52 @@ import {
   RawDraftContentBlock,
 } from "draft-js";
 
-import DemoEditor, { DemoEditorProps, DemoEditorState } from "./DemoEditor";
+import DemoEditor, { DemoEditorProps } from "./DemoEditor";
 import DraftUtils from "../utils/DraftUtils";
+
+// Refs retain coverage of the editor's Draft.js callbacks while RTL mounts the DOM.
+const renderEditor = (
+  element: React.ReactElement<
+    DemoEditorProps & React.RefAttributes<DemoEditor>
+  >,
+) => {
+  const ref = React.createRef<DemoEditor>();
+  const result = render(React.cloneElement(element, { ref }));
+  return {
+    instance: () => ref.current!,
+    find: (selector: string) => result.container.querySelector(selector),
+  };
+};
 
 describe("DemoEditor", () => {
   beforeEach(() => {
-    jest.spyOn(RichUtils, "toggleInlineStyle");
-    jest.spyOn(RichUtils, "toggleBlockType");
-    jest.spyOn(RichUtils, "toggleLink");
-    jest.spyOn(AtomicBlockUtils, "insertAtomicBlock");
+    vi.spyOn(RichUtils, "toggleInlineStyle");
+    vi.spyOn(RichUtils, "toggleBlockType");
+    vi.spyOn(RichUtils, "toggleLink");
+    vi.spyOn(AtomicBlockUtils, "insertAtomicBlock");
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it("renders", () => {
     // Do not snapshot the Draft.js editor, as it contains unstable keys in the content.
     expect(
-      mount<DemoEditor>(<DemoEditor extended={false} />).find(".EditorToolbar"),
+      renderEditor(<DemoEditor extended={false} />).find(".EditorToolbar"),
     ).toMatchSnapshot();
   });
 
   describe("#extended", () => {
     it("works", () => {
       expect(
-        mount<DemoEditor>(<DemoEditor extended />).find(".EditorToolbar"),
+        renderEditor(<DemoEditor extended />).find(".EditorToolbar"),
       ).toMatchSnapshot();
     });
 
     it("can take predefined content", () => {
       expect(
-        mount<DemoEditor>(
+        renderEditor(
           <DemoEditor
             rawContentState={
               {
@@ -57,27 +73,27 @@ describe("DemoEditor", () => {
   describe("onChange", () => {
     it("works", () => {
       const state = EditorState.createEmpty();
-      const wrapper = mount<DemoEditor>(<DemoEditor extended={false} />);
+      const wrapper = renderEditor(<DemoEditor extended={false} />);
 
       wrapper.instance().onChange(state);
 
-      expect(wrapper.state("editorState")).toBe(state);
+      expect(wrapper.instance().state.editorState).toBe(state);
     });
   });
 
   it("toggleStyle", () => {
-    mount<DemoEditor>(<DemoEditor extended={false} />)
+    renderEditor(<DemoEditor extended={false} />)
       .instance()
-      // @ts-expect-error
+      // @ts-expect-error - Minimal event or component fixture for this callback.
       .toggleStyle("BOLD", new Event("mousedown"));
 
     expect(RichUtils.toggleInlineStyle).toHaveBeenCalled();
   });
 
   it("toggleBlock", () => {
-    mount<DemoEditor>(<DemoEditor extended={false} />)
+    renderEditor(<DemoEditor extended={false} />)
       .instance()
-      // @ts-expect-error
+      // @ts-expect-error - Minimal event or component fixture for this callback.
       .toggleBlock("header-two", new Event("mousedown"));
 
     expect(RichUtils.toggleBlockType).toHaveBeenCalled();
@@ -85,7 +101,7 @@ describe("DemoEditor", () => {
 
   describe("toggleEntity", () => {
     it("LINK", () => {
-      mount<DemoEditor>(<DemoEditor extended={false} />)
+      renderEditor(<DemoEditor extended={false} />)
         .instance()
         .toggleEntity("LINK");
 
@@ -93,7 +109,7 @@ describe("DemoEditor", () => {
     });
 
     it("IMAGE", () => {
-      mount<DemoEditor>(<DemoEditor extended={false} />)
+      renderEditor(<DemoEditor extended={false} />)
         .instance()
         .toggleEntity("IMAGE");
 
@@ -101,7 +117,7 @@ describe("DemoEditor", () => {
     });
 
     it("SNIPPET", () => {
-      mount<DemoEditor>(<DemoEditor extended={false} />)
+      renderEditor(<DemoEditor extended={false} />)
         .instance()
         .toggleEntity("SNIPPET");
 
@@ -109,7 +125,7 @@ describe("DemoEditor", () => {
     });
 
     it("HORIZONTAL_RULE", () => {
-      mount<DemoEditor>(<DemoEditor extended={false} />)
+      renderEditor(<DemoEditor extended={false} />)
         .instance()
         .toggleEntity("HORIZONTAL_RULE");
 
@@ -120,7 +136,7 @@ describe("DemoEditor", () => {
   describe("blockRenderer", () => {
     it("unstyled", () => {
       expect(
-        mount<DemoEditor>(<DemoEditor extended={false} />)
+        renderEditor(<DemoEditor extended={false} />)
           .instance()
           .blockRenderer({
             getType: () => "unstyled",
@@ -129,7 +145,7 @@ describe("DemoEditor", () => {
     });
 
     it("no entity", () => {
-      const editable = mount<DemoEditor>(
+      const editable = renderEditor(
         <DemoEditor
           rawContentState={
             {
@@ -180,14 +196,14 @@ describe("DemoEditor", () => {
           },
         ],
       } as RawDraftContentState;
-      const instance = mount<DemoEditor>(
+      const instance = renderEditor(
         <DemoEditor rawContentState={rawContentState} extended={true} />,
       ).instance();
 
       const Component = instance.blockRenderer(
         instance.state.editorState.getCurrentContent().getFirstBlock(),
       )!.component;
-      // @ts-expect-error
+      // @ts-expect-error - Minimal event or component fixture for this callback.
       expect(Component()).toEqual(<hr />);
     });
 
@@ -220,14 +236,14 @@ describe("DemoEditor", () => {
         ],
       } as RawDraftContentState;
 
-      const instance = mount<DemoEditor>(
+      const instance = renderEditor(
         <DemoEditor rawContentState={rawContentState} extended={true} />,
       ).instance();
 
       const Component = instance.blockRenderer(
         instance.state.editorState.getCurrentContent().getFirstBlock(),
       )!.component;
-      // @ts-expect-error
+      // @ts-expect-error - Minimal event or component fixture for this callback.
       expect(<Component />).toMatchInlineSnapshot(`<Image />`);
     });
 
@@ -260,21 +276,21 @@ describe("DemoEditor", () => {
         ],
       } as RawDraftContentState;
 
-      const instance = mount<DemoEditor>(
+      const instance = renderEditor(
         <DemoEditor rawContentState={rawContentState} extended={true} />,
       ).instance();
 
       const Component = instance.blockRenderer(
         instance.state.editorState.getCurrentContent().getFirstBlock(),
       )!.component;
-      // @ts-expect-error
+      // @ts-expect-error - Minimal event or component fixture for this callback.
       expect(<Component />).toMatchInlineSnapshot(`<Snippet />`);
     });
   });
 
   describe("handlePastedText", () => {
     it("handled by handleDraftEditorPastedText", () => {
-      const wrapper = mount<DemoEditor>(<DemoEditor extended={false} />);
+      const wrapper = renderEditor(<DemoEditor extended={false} />);
       const content = {
         blocks: [
           {
@@ -299,13 +315,13 @@ describe("DemoEditor", () => {
           .handlePastedText(
             "hello,\nworld!",
             html,
-            wrapper.state("editorState"),
+            wrapper.instance().state.editorState,
           ),
       ).toBe("handled");
     });
 
     it("default handling", () => {
-      const wrapper = mount<DemoEditor>(<DemoEditor extended={false} />);
+      const wrapper = renderEditor(<DemoEditor extended={false} />);
 
       expect(
         wrapper
@@ -313,7 +329,7 @@ describe("DemoEditor", () => {
           .handlePastedText(
             "this is plain text paste",
             "this is plain text paste",
-            wrapper.state("editorState"),
+            wrapper.instance().state.editorState,
           ),
       ).toBe("not-handled");
     });
@@ -321,33 +337,33 @@ describe("DemoEditor", () => {
 
   describe("keyBindingFn", () => {
     it("works", () => {
-      const wrapper = mount<DemoEditor>(<DemoEditor extended={false} />);
+      const wrapper = renderEditor(<DemoEditor extended={false} />);
 
-      wrapper.instance().onChange = jest.fn();
-      // @ts-expect-error
+      wrapper.instance().onChange = vi.fn();
+      // @ts-expect-error - Minimal event or component fixture for this callback.
       wrapper.instance().keyBindingFn({ keyCode: 9 });
       expect(wrapper.instance().onChange).toHaveBeenCalled();
     });
 
     it("does not change state directly with other keys", () => {
-      const wrapper = mount<DemoEditor>(<DemoEditor extended={false} />);
+      const wrapper = renderEditor(<DemoEditor extended={false} />);
 
-      wrapper.instance().onChange = jest.fn();
-      // @ts-expect-error
+      wrapper.instance().onChange = vi.fn();
+      // @ts-expect-error - Minimal event or component fixture for this callback.
       wrapper.instance().keyBindingFn({ keyCode: 22 });
       expect(wrapper.instance().onChange).not.toHaveBeenCalled();
     });
   });
 
   describe("addBR", () => {
-    let wrapper: ReactWrapper<DemoEditorProps, DemoEditorState, DemoEditor>;
-    let addLineBreak: jest.SpyInstance;
+    let wrapper: ReturnType<typeof renderEditor>;
+    let addLineBreak: MockInstance;
 
     beforeEach(() => {
-      wrapper = mount(<DemoEditor extended={false} />);
+      wrapper = renderEditor(<DemoEditor extended={false} />);
 
-      addLineBreak = jest.spyOn(DraftUtils, "addLineBreak");
-      jest.spyOn(wrapper.instance(), "onChange");
+      addLineBreak = vi.spyOn(DraftUtils, "addLineBreak");
+      vi.spyOn(wrapper.instance(), "onChange");
     });
 
     afterEach(() => {
@@ -355,7 +371,7 @@ describe("DemoEditor", () => {
     });
 
     it("works", () => {
-      // @ts-expect-error
+      // @ts-expect-error - Minimal event or component fixture for this callback.
       wrapper.instance().addBR(new MouseEvent<HTMLButtonElement>("click"));
 
       expect(addLineBreak).toHaveBeenCalled();
@@ -364,25 +380,25 @@ describe("DemoEditor", () => {
   });
 
   describe("toggleReadOnly", () => {
-    let wrapper: ReactWrapper<DemoEditorProps, DemoEditorState, DemoEditor>;
+    let wrapper: ReturnType<typeof renderEditor>;
 
     beforeEach(() => {
-      wrapper = mount(<DemoEditor extended={false} />);
+      wrapper = renderEditor(<DemoEditor extended={false} />);
     });
 
     it("works", () => {
       expect(wrapper.instance().state.readOnly).toBe(false);
-      expect(wrapper.find(".EditorToolbar button:last-child").text()).toBe(
-        "📖",
-      );
+      expect(
+        wrapper.find(".EditorToolbar button:last-child")?.textContent,
+      ).toBe("📖");
       wrapper
         .instance()
-        // @ts-expect-error
+        // @ts-expect-error - Minimal event or component fixture for this callback.
         .toggleReadOnly(new MouseEvent<HTMLButtonElement>("click"));
       expect(wrapper.instance().state.readOnly).toBe(true);
-      expect(wrapper.find(".EditorToolbar button:last-child").text()).toBe(
-        "📕",
-      );
+      expect(
+        wrapper.find(".EditorToolbar button:last-child")?.textContent,
+      ).toBe("📕");
     });
   });
 });

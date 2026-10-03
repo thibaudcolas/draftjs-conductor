@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import {
   getListNestingStyles,
   DRAFT_DEFAULT_MAX_DEPTH,
@@ -12,7 +13,7 @@ import {
   serialiseEditorStateToRaw,
 } from "./index";
 
-const pkg = require("../../package.json");
+import pkg from "../../package.json";
 
 /**
  * Makes sure the API shape is validated against.

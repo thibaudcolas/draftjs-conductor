@@ -1,7 +1,12 @@
-import { shallow } from "enzyme";
+import { describe, it, expect } from "vitest";
+import { render } from "@testing-library/react";
+
 import { convertFromRaw } from "draft-js";
 
 import Image from "./Image";
+
+const renderElement = (element: React.ReactElement) =>
+  render(element).container.firstChild;
 
 describe("Image", () => {
   it("renders", () => {
@@ -34,7 +39,9 @@ describe("Image", () => {
     });
 
     expect(
-      shallow(<Image contentState={content} block={content.getFirstBlock()} />),
+      renderElement(
+        <Image contentState={content} block={content.getFirstBlock()} />,
+      ),
     ).toMatchSnapshot();
   });
 
@@ -54,7 +61,9 @@ describe("Image", () => {
     });
 
     expect(
-      shallow(<Image contentState={content} block={content.getFirstBlock()} />),
+      renderElement(
+        <Image contentState={content} block={content.getFirstBlock()} />,
+      ),
     ).toMatchSnapshot();
   });
 });

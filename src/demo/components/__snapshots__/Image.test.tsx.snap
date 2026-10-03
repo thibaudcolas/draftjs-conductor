@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Image no entity 1`] = `
+exports[`Image > no entity 1`] = `
 <img
   alt=""
   src="404.svg"
@@ -8,7 +8,7 @@ exports[`Image no entity 1`] = `
 />
 `;
 
-exports[`Image renders 1`] = `
+exports[`Image > renders 1`] = `
 <img
   alt=""
   src="/example.png"

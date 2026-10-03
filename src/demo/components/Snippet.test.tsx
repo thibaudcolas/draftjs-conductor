@@ -1,8 +1,13 @@
+import { describe, it, expect } from "vitest";
 import React from "react";
-import { shallow } from "enzyme";
+import { render } from "@testing-library/react";
+
 import { convertFromRaw, RawDraftContentState } from "draft-js";
 
 import Snippet from "./Snippet";
+
+const renderElement = (element: React.ReactElement) =>
+  render(element).container.firstChild;
 
 describe("Snippet", () => {
   it("renders", () => {
@@ -35,7 +40,7 @@ describe("Snippet", () => {
     });
 
     expect(
-      shallow(
+      renderElement(
         <Snippet contentState={content} block={content.getFirstBlock()} />,
       ),
     ).toMatchSnapshot();
@@ -53,7 +58,7 @@ describe("Snippet", () => {
     } as RawDraftContentState);
 
     expect(
-      shallow(
+      renderElement(
         <Snippet contentState={content} block={content.getFirstBlock()} />,
       ),
     ).toMatchSnapshot();

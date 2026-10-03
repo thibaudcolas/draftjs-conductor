@@ -1,4 +1,3 @@
-/* eslint-disable no-template-curly-in-string */
 const pkg = require("./package.json");
 
 const CHANGELOG_HEADER = `# Changelog

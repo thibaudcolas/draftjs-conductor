@@ -3,33 +3,10 @@ import {
   convertFromRaw,
   convertToRaw,
   RawDraftContentState,
-  ContentBlock,
-  ContentState,
+  DraftDecoratorType,
 } from "draft-js";
 
 const EMPTY_CONTENT_STATE = null;
-
-interface DraftDecoratorType {
-  /**
-   * Given a `ContentBlock`, return an immutable List of decorator keys.
-   */
-  getDecorations(
-    block: ContentBlock,
-    contentState: ContentState,
-  ): Immutable.List<string>;
-
-  /**
-   * Given a decorator key, return the component to use when rendering
-   * this decorated range.
-   */
-  getComponentForKey(key: string): Function;
-
-  /**
-   * Given a decorator key, optionally return the props to use when rendering
-   * this decorated range.
-   */
-  getPropsForKey(key: string): any;
-}
 
 /**
  * Creates a new EditorState from a RawDraftContentState, or an empty editor state by

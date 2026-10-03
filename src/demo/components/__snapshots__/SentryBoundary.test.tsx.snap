@@ -1,51 +1,52 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SentryBoundary #error 1`] = `
-<div
-  className="DraftEditor-root"
->
+exports[`SentryBoundary > catches errors and renders recovery controls 1`] = `
+<DocumentFragment>
   <div
-    className="DraftEditor-editorContainer"
+    class="DraftEditor-root"
   >
     <div
-      className="public-DraftEditor-content"
+      class="DraftEditor-editorContainer"
     >
       <div
-        className="u-text-center"
+        class="public-DraftEditor-content"
       >
-        <p>
-          Oops. The editor just crashed.
-        </p>
-        <p>
-          Our team has been notified. You can provide us with more information if you want to.
-        </p>
-        <div>
-          <a
-            href="https://github.com/thibaudcolas/draftjs-conductor/issues"
-            rel="noreferrer"
-            style={
-              Object {
-                "textDecoration": "underline",
-              }
-            }
-            target="_blank"
-          >
-            Open a GitHub issue
-          </a>
-          <span>
-             
-          </span>
-          <button
-            onClick={[Function]}
-            type="button"
-          >
-            Reload the page
-          </button>
+        <div
+          class="u-text-center"
+        >
+          <p>
+            Oops. The editor just crashed.
+          </p>
+          <p>
+            Our team has been notified. You can provide us with more information if you want to.
+          </p>
+          <div>
+            <a
+              href="https://github.com/thibaudcolas/draftjs-conductor/issues"
+              rel="noreferrer"
+              style="text-decoration: underline;"
+              target="_blank"
+            >
+              Open a GitHub issue
+            </a>
+            <span>
+               
+            </span>
+            <button
+              type="button"
+            >
+              Reload the page
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
-exports[`SentryBoundary renders 1`] = `"Test"`;
+exports[`SentryBoundary > renders 1`] = `
+<DocumentFragment>
+  Test
+</DocumentFragment>
+`;
