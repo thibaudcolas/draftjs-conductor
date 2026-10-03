@@ -56,7 +56,7 @@
     "prettier": "3.3.3",
     "react": "16.14.0",
     "react-dom": "16.14.0",
-    "rollup": "4.19.0",
+    "rollup": "4.59.0",
     "rollup-plugin-dts": "6.1.1",
     "semantic-release": "24.2.9",
     "tslib": "^2.6.3",
