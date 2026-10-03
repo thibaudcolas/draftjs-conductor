@@ -63,7 +63,7 @@
     "typescript": "5.9.3",
     "typescript-eslint": "^8.0.0-alpha.51",
     "vite": "5.3.4",
-    "vitest": "2.0.4"
+    "vitest": "3.2.6"
   },
   "peerDependencies": {
     "draft-js": "^0.10.4 || ^0.11.0 || ^0.12.0"
