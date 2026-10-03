@@ -12,6 +12,18 @@ const draftPackage = version === "0.10" ? "draft-js-10" : "draft-js";
 const draftRoot = dirname(require.resolve(`${draftPackage}/package.json`));
 
 export default defineConfig({
+  staged: {
+    "*.{js,mjs,ts,mts,tsx}": [
+      "vp check --fix",
+      "vp lint --deny-warnings --no-error-on-unmatched-pattern",
+    ],
+    "*.{md,css,scss,json,json5,yaml,yml,html}": "vp fmt",
+    // Oxfmt and Oxlint ignore these Flow definitions.
+    "docs/flow-typed/**/*.js": "prettier --write --parser flow",
+    // Return a command so staged filenames are not passed as test filters.
+    "{*.{js,mjs,ts,mts,tsx,snap},package.json,package-lock.json,.node-version}":
+      () => "npm run test:versions -s",
+  },
   pack: {
     entry: { "draftjs-conductor": "src/lib/index.ts" },
     format: ["esm", "cjs"],

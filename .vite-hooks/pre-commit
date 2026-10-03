@@ -1,0 +1,2 @@
+vp staged --concurrent false
+git diff --cached --check
