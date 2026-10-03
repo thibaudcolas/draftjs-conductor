@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-if [ -n "$JS_STAGED" ];
-then
-  npx eslint --cache --cache-location ./node_modules/.cache/ $JS_STAGED
+if [ -n "$JS_STAGED" ]; then
+  npx --no-install vp lint --deny-warnings $JS_STAGED
 fi

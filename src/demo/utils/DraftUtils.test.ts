@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "vite-plus/test";
 import { EditorState, convertFromRaw, RawDraftContentState } from "draft-js";
 
 import DraftUtils from "./DraftUtils";

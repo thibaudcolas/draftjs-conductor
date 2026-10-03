@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi } from "vite-plus/test";
 import { render, fireEvent } from "@testing-library/react";
 
 import Highlight from "./Highlight";
@@ -12,11 +12,12 @@ describe("Highlight", () => {
   });
 
   it("onCopy", () => {
-    document.execCommand = vi.fn();
+    const execCommand = vi.fn();
+    document.execCommand = execCommand;
     const { getByRole } = render(<Highlight value="" />);
 
     fireEvent.click(getByRole("button", { name: "Copy" }));
 
-    expect(document.execCommand).toHaveBeenCalledWith("copy");
+    expect(execCommand).toHaveBeenCalledWith("copy");
   });
 });

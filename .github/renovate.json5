@@ -54,34 +54,25 @@
     },
     {
       packageNames: [
+        "vite-plus",
+        "@voidzero-dev/vite-plus-core",
         "vite",
         "@vitejs/plugin-react-swc",
         "vitest",
         "@vitest/coverage-v8",
       ],
-      groupName: "vite",
-      automerge: true,
+      groupName: "vite-plus",
+      // Review the bundled Vitest and coverage-provider pins with each Vite Plus upgrade.
+      automerge: false,
     },
     {
-      packageNames: [
-        "typescript",
-        "typescript-eslint",
-        "eslint",
-        "@eslint/js",
-        "@types/eslint__js",
-        "globals",
-      ],
+      packageNames: ["typescript"],
       groupName: "typescript",
       automerge: true,
     },
     {
       packagePatterns: ["^@commitlint"],
       groupName: "commitlint",
-      automerge: true,
-    },
-    {
-      packagePatterns: ["^rollup", "^@rollup"],
-      groupName: "rollup",
       automerge: true,
     },
     {
