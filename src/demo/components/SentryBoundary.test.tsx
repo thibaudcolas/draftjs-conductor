@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { describe, it, expect, vi, afterEach } from "vite-plus/test";
 import { render, fireEvent } from "@testing-library/react";
 import SentryBoundary from "./SentryBoundary";
 

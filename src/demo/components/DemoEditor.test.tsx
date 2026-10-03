@@ -1,7 +1,14 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import {
+  describe,
+  it,
+  expect,
+  beforeEach,
+  afterEach,
+  vi,
+} from "vite-plus/test";
 import React from "react";
 import { render } from "@testing-library/react";
-import type { MockInstance } from "vitest";
+import type { MockInstance } from "vite-plus/test";
 import {
   EditorState,
   RichUtils,
@@ -29,11 +36,15 @@ const renderEditor = (
 };
 
 describe("DemoEditor", () => {
+  let toggleInlineStyle: MockInstance;
+  let toggleBlockType: MockInstance;
+  let toggleLink: MockInstance;
+  let insertAtomicBlock: MockInstance;
   beforeEach(() => {
-    vi.spyOn(RichUtils, "toggleInlineStyle");
-    vi.spyOn(RichUtils, "toggleBlockType");
-    vi.spyOn(RichUtils, "toggleLink");
-    vi.spyOn(AtomicBlockUtils, "insertAtomicBlock");
+    toggleInlineStyle = vi.spyOn(RichUtils, "toggleInlineStyle");
+    toggleBlockType = vi.spyOn(RichUtils, "toggleBlockType");
+    toggleLink = vi.spyOn(RichUtils, "toggleLink");
+    insertAtomicBlock = vi.spyOn(AtomicBlockUtils, "insertAtomicBlock");
   });
 
   afterEach(() => {
@@ -87,7 +98,7 @@ describe("DemoEditor", () => {
       // @ts-expect-error - Minimal event or component fixture for this callback.
       .toggleStyle("BOLD", new Event("mousedown"));
 
-    expect(RichUtils.toggleInlineStyle).toHaveBeenCalled();
+    expect(toggleInlineStyle).toHaveBeenCalled();
   });
 
   it("toggleBlock", () => {
@@ -96,7 +107,7 @@ describe("DemoEditor", () => {
       // @ts-expect-error - Minimal event or component fixture for this callback.
       .toggleBlock("header-two", new Event("mousedown"));
 
-    expect(RichUtils.toggleBlockType).toHaveBeenCalled();
+    expect(toggleBlockType).toHaveBeenCalled();
   });
 
   describe("toggleEntity", () => {
@@ -105,7 +116,7 @@ describe("DemoEditor", () => {
         .instance()
         .toggleEntity("LINK");
 
-      expect(RichUtils.toggleLink).toHaveBeenCalled();
+      expect(toggleLink).toHaveBeenCalled();
     });
 
     it("IMAGE", () => {
@@ -113,7 +124,7 @@ describe("DemoEditor", () => {
         .instance()
         .toggleEntity("IMAGE");
 
-      expect(AtomicBlockUtils.insertAtomicBlock).toHaveBeenCalled();
+      expect(insertAtomicBlock).toHaveBeenCalled();
     });
 
     it("SNIPPET", () => {
@@ -121,7 +132,7 @@ describe("DemoEditor", () => {
         .instance()
         .toggleEntity("SNIPPET");
 
-      expect(AtomicBlockUtils.insertAtomicBlock).toHaveBeenCalled();
+      expect(insertAtomicBlock).toHaveBeenCalled();
     });
 
     it("HORIZONTAL_RULE", () => {
@@ -129,7 +140,7 @@ describe("DemoEditor", () => {
         .instance()
         .toggleEntity("HORIZONTAL_RULE");
 
-      expect(AtomicBlockUtils.insertAtomicBlock).toHaveBeenCalled();
+      expect(insertAtomicBlock).toHaveBeenCalled();
     });
   });
 

@@ -9,6 +9,7 @@ import {
   getDefaultKeyBinding,
   DraftBlockType,
   DraftEntityType,
+  DraftHandleValue,
   RawDraftContentState,
 } from "draft-js";
 
@@ -137,36 +138,27 @@ class DemoEditor extends Component<DemoEditorProps, DemoEditorState> {
       editorState: createEditorStateFromRaw(rawContentState, decorator),
       readOnly: false,
     };
-    this.onChange = this.onChange.bind(this);
-    this.keyBindingFn = this.keyBindingFn.bind(this);
-    this.addBR = this.addBR.bind(this);
-    this.toggleReadOnly = this.toggleReadOnly.bind(this);
-    this.toggleStyle = this.toggleStyle.bind(this);
-    this.toggleBlock = this.toggleBlock.bind(this);
-    this.toggleEntity = this.toggleEntity.bind(this);
-    this.blockRenderer = this.blockRenderer.bind(this);
-    this.handlePastedText = this.handlePastedText.bind(this);
   }
 
-  onChange(nextState: EditorState) {
+  onChange = (nextState: EditorState) => {
     this.setState({
       editorState: nextState,
     });
-  }
+  };
 
-  toggleStyle(type: string, e: React.MouseEvent) {
+  toggleStyle = (type: string, e: React.MouseEvent) => {
     const { editorState } = this.state;
     this.onChange(RichUtils.toggleInlineStyle(editorState, type));
     e.preventDefault();
-  }
+  };
 
-  toggleBlock(type: DraftBlockType, e: React.MouseEvent) {
+  toggleBlock = (type: DraftBlockType, e: React.MouseEvent) => {
     const { editorState } = this.state;
     this.onChange(RichUtils.toggleBlockType(editorState, type));
     e.preventDefault();
-  }
+  };
 
-  toggleEntity(type: DraftEntityType | "HORIZONTAL_RULE" | "SNIPPET") {
+  toggleEntity = (type: DraftEntityType) => {
     const { editorState } = this.state;
     let content = editorState.getCurrentContent();
 
@@ -200,9 +192,9 @@ class DemoEditor extends Component<DemoEditorProps, DemoEditorState> {
       const selection = editorState.getSelection();
       this.onChange(RichUtils.toggleLink(editorState, selection, entityKey));
     }
-  }
+  };
 
-  blockRenderer(block: ContentBlock) {
+  blockRenderer = (block: ContentBlock) => {
     const { editorState } = this.state;
     const content = editorState.getCurrentContent();
 
@@ -238,13 +230,13 @@ class DemoEditor extends Component<DemoEditorProps, DemoEditorState> {
       component: Image,
       editable: false,
     };
-  }
+  };
 
-  handlePastedText(
+  handlePastedText = (
     _: string,
     html: string | undefined,
     editorState: EditorState,
-  ) {
+  ): DraftHandleValue => {
     const newState = handleDraftEditorPastedText(html, editorState);
 
     if (newState) {
@@ -253,9 +245,9 @@ class DemoEditor extends Component<DemoEditorProps, DemoEditorState> {
     }
 
     return "not-handled";
-  }
+  };
 
-  keyBindingFn(event: React.KeyboardEvent) {
+  keyBindingFn = (event: React.KeyboardEvent) => {
     const TAB = 9;
 
     switch (event.keyCode) {
@@ -270,20 +262,20 @@ class DemoEditor extends Component<DemoEditorProps, DemoEditorState> {
         return getDefaultKeyBinding(event);
       }
     }
-  }
+  };
 
-  addBR(e: React.MouseEvent) {
+  addBR = (e: React.MouseEvent) => {
     const { editorState } = this.state;
     this.onChange(DraftUtils.addLineBreak(editorState));
     e.preventDefault();
-  }
+  };
 
-  toggleReadOnly(e: React.MouseEvent) {
+  toggleReadOnly = (e: React.MouseEvent) => {
     this.setState(({ readOnly }: DemoEditorState) => ({
       readOnly: !readOnly,
     }));
     e.preventDefault();
-  }
+  };
 
   render() {
     const { extended } = this.props;

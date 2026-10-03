@@ -13,7 +13,7 @@ Please note that this project is released with a [Contributor Code of Conduct](C
 > Clone the project on your computer. You will also need [Node](https://nodejs.org) and [nvm](https://github.com/creationix/nvm).
 
 ```sh
-nvm install
+nvm install "$(cat .node-version)"
 # Then, install all project dependencies.
 npm install
 ```
@@ -24,12 +24,12 @@ npm install
 
 ```sh
 # Make sure you use the right node version.
-nvm use
+nvm use "$(cat .node-version)"
 # Start the server and the development tools.
 npm run start
 # Runs linting.
 npm run lint
-# Re-formats all of the files in the project (with Prettier).
+# Re-format the project (Oxfmt, with Prettier for Flow definitions).
 npm run format
 # Run tests in a watcher.
 npm run test:watch
@@ -48,8 +48,12 @@ npm run preview
 npm run
 ```
 
-The Vite demo is served at `/draftjs-conductor/`. Production files and library bundles are written to `dist/`. Tests use Vitest and React Testing Library. `DRAFTJS_VERSION` selects Draft.js 0.10.5 or 0.11.7, including internal module imports. Coverage reports are kept separately in `coverage/0.10/` and `coverage/0.11/`. `npm run test:ci` runs linting, builds, and both test suites.
+The Vite Plus demo is served at `/draftjs-conductor/`. Production files and library bundles are written to `dist/`. Tests use Vitest via Vite Plus and React Testing Library. `DRAFTJS_VERSION` selects Draft.js 0.10.5 or 0.11.7, including internal module imports. Coverage reports are kept separately in `coverage/0.10/` and `coverage/0.11/`. `npm run test:ci` runs linting, builds, and both test suites.
 
 ### Code style
 
-This project uses [Prettier](https://prettier.io/), [ESLint](https://eslint.org/), and [TypeScript](https://www.typescriptlang.org/). All code should always be checked with those tools.
+This project uses [Vite Plus](https://viteplus.dev/) for builds, tests, formatting, linting, and type checks. Configuration lives in `vite.config.mts`. `npm run lint` runs `vp check`, enforces zero lint warnings, and checks the Flow definitions with [Prettier](https://prettier.io/), which is also retained for the CSS snapshot test and release formatting.
+
+`npm run build` checks types, builds the demo with `vp build`, and produces CJS, ESM, and declaration bundles with `vp pack`. Both builds share `dist/`, so packaging preserves the demo files. No global Vite Plus installation is needed; npm scripts use the pinned local toolchain.
+
+Keep `vite-plus`, its `vite` alias, and the bundled `vitest` and coverage-provider versions aligned when upgrading. After dependency changes, run `npm run test:ci` to validate both supported Draft.js versions.

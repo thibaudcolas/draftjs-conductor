@@ -1,5 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
-export {};
+import { describe, it, expect, beforeEach, vi } from "vite-plus/test";
 
 describe("demo", () => {
   beforeEach(() => {

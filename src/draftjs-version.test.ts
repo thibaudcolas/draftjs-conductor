@@ -1,5 +1,5 @@
 import { createRequire } from "node:module";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "vite-plus/test";
 import { EditorState } from "draft-js";
 // @ts-expect-error - Draft.js does not publish types for its internal modules.
 import getContentStateFragment from "draft-js/lib/getContentStateFragment";

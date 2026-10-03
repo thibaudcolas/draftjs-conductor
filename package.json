@@ -34,51 +34,43 @@
   "devDependencies": {
     "@commitlint/cli": "21.2.3",
     "@commitlint/config-conventional": "21.2.3",
-    "@eslint/js": "^9.7.0",
-    "@rollup/plugin-typescript": "11.1.6",
     "@semantic-release/changelog": "7.0.0",
     "@semantic-release/exec": "7.1.0",
     "@semantic-release/git": "11.0.1",
     "@testing-library/react": "12.1.5",
     "@types/draft-js": "0.11.18",
-    "@types/eslint__js": "^8.42.3",
     "@types/react": "16.14.26",
     "@types/react-dom": "16.9.16",
-    "@vitejs/plugin-react-swc": "3.7.0",
-    "@vitest/coverage-v8": "2.0.4",
+    "@vitejs/plugin-react-swc": "4.3.3",
+    "@vitest/coverage-v8": "5.0.1",
     "draft-js": "0.11.7",
     "draft-js-10": "npm:draft-js@0.10.5",
-    "eslint": "^9.7.0",
-    "globals": "^15.8.0",
     "immutable": "~3.7.6",
     "jsdom": "24.1.1",
     "normalize.css": "8.0.1",
     "prettier": "3.3.3",
     "react": "16.14.0",
     "react-dom": "16.14.0",
-    "rollup": "4.64.0",
-    "rollup-plugin-dts": "6.5.1",
     "semantic-release": "25.0.9",
-    "tslib": "^2.6.3",
     "typescript": "5.9.3",
-    "typescript-eslint": "^8.0.0-alpha.51",
-    "vite": "5.3.4",
-    "vitest": "2.0.4"
+    "vite": "npm:@voidzero-dev/vite-plus-core@1.0.0",
+    "vite-plus": "1.0.0",
+    "vitest": "5.0.1"
   },
   "peerDependencies": {
     "draft-js": "^0.10.4 || ^0.11.0 || ^0.12.0"
   },
   "scripts": {
-    "dev": "vite",
-    "start": "vite",
-    "build": "tsc && vite build && rollup -c rollup.config.mjs",
-    "preview": "vite preview",
-    "test": "vitest run --coverage.enabled",
-    "test:watch": "vitest watch",
+    "dev": "vp dev",
+    "start": "vp dev",
+    "build": "tsc && vp build && vp pack",
+    "preview": "vp preview",
+    "test": "vp test run --coverage.enabled",
+    "test:watch": "vp test watch",
     "report:coverage": "open coverage/0.11/index.html",
     "report:package": "npm pack --dry-run --loglevel notice 2>&1 >/dev/null | sed -e 's/^npm notice //' | tee dist/package.txt",
-    "lint": "eslint . --report-unused-disable-directives --max-warnings 0 && prettier --check '**/?(.)*.{md,css,scss,js,mjs,ts,mts,tsx,json,yaml,yml,html}'",
-    "format": "prettier --write '**/?(.)*.{md,css,scss,js,mjs,ts,mts,tsx,json,yaml,yml,html}'",
+    "lint": "vp check && vp lint --deny-warnings && prettier --check 'docs/flow-typed/**/*.js'",
+    "format": "vp fmt && prettier --write 'docs/flow-typed/**/*.js'",
     "test:ci": "npm run lint -s && npm run build -s && npm run test:versions",
     "prepare": "./.githooks/deploy.sh",
     "prepublishOnly": "npm run build -s",
@@ -87,6 +79,8 @@
   "overrides": {
     "isomorphic-fetch": {
       "node-fetch": "^2.0.0"
-    }
+    },
+    "vite": "npm:@voidzero-dev/vite-plus-core@1.0.0",
+    "vitest": "5.0.1"
   }
 }

@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi } from "vite-plus/test";
 import {
   EditorState,
   convertFromRaw,
@@ -150,10 +150,11 @@ describe("copypaste", () => {
       window.getSelection = getSelection({ rangeCount: 1 });
 
       const event = new Event("copy");
-      event.preventDefault = vi.fn();
+      const preventDefault = vi.fn();
+      event.preventDefault = preventDefault;
       editor.dispatchEvent(event);
 
-      expect(event.preventDefault).not.toHaveBeenCalled();
+      expect(preventDefault).not.toHaveBeenCalled();
     });
 
     it("works", () => {
