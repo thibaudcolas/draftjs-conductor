@@ -34,7 +34,7 @@ jobs:
       # Test Git hooks in CI, to make sure script upgrades do not break them.
       - run: npm run prepare
       # Test commit message validation in CI.
-      - run: git log -1 --pretty=%B >> latest.log && ./.git/hooks/commit-msg latest.log
+      - run: git log -1 --pretty=%B >> latest.log && git hook run commit-msg -- latest.log
       # test:ci runs the full suite against Draft.js 0.11.7 AND 0.10.5.
       - run: npm run test:ci
       - run: npx commitlint --from HEAD~${{ github.event.pull_request.commits }} --to HEAD
