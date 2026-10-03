@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -13,37 +13,34 @@
       content="📝✨ Little Draft.js helpers to make rich text editors “just work”"
     />
 
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="shortcut icon" href="%BASE_URL%favicon.ico" />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
-      href="%PUBLIC_URL%/apple-touch-icon.png"
+      href="%BASE_URL%apple-touch-icon.png"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="32x32"
-      href="%PUBLIC_URL%/favicon-32x32.png"
+      href="%BASE_URL%favicon-32x32.png"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="16x16"
-      href="%PUBLIC_URL%/favicon-16x16.png"
+      href="%BASE_URL%favicon-16x16.png"
     />
-    <link rel="manifest" href="%PUBLIC_URL%/site.webmanifest" />
+    <link rel="manifest" href="%BASE_URL%site.webmanifest" />
     <link
       rel="mask-icon"
-      href="%PUBLIC_URL%/safari-pinned-tab.svg"
-      color="%REACT_APP_THEME_COLOR%"
+      href="%BASE_URL%safari-pinned-tab.svg"
+      color="%VITE_THEME_COLOR%"
     />
     <meta name="theme-color" content="#ffffff" />
     <meta name="apple-mobile-web-app-title" content="Draft.js conductor" />
-    <meta name="msapplication-TileColor" content="%REACT_APP_THEME_COLOR%" />
-    <meta
-      name="msapplication-config"
-      content="%PUBLIC_URL%/browserconfig.xml"
-    />
+    <meta name="msapplication-TileColor" content="%VITE_THEME_COLOR%" />
+    <meta name="msapplication-config" content="%BASE_URL%browserconfig.xml" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta
@@ -78,7 +75,7 @@
         height="80"
         viewBox="0 0 250 250"
         style="
-          fill: %REACT_APP_THEME_COLOR%;
+          fill: %VITE_THEME_COLOR%;
           color: #fff;
           position: absolute;
           top: 0;
@@ -102,7 +99,7 @@
 
     <div class="page-wrapper">
       <header class="page-header">
-        <a href="%PUBLIC_URL%" class="u-block"
+        <a href="%BASE_URL%" class="u-block"
           ><h1 class="page-title">Draft.js conductor</h1></a
         >
         <p class="page-description">
@@ -160,6 +157,6 @@
       </footer>
     </div>
 
-    %REACT_APP_RAVEN%
+    <script type="module" src="/src/index.tsx"></script>
   </body>
 </html>

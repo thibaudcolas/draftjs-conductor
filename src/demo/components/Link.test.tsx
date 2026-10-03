@@ -1,4 +1,6 @@
-import { shallow } from "enzyme";
+import { describe, it, expect, vi } from "vitest";
+import { render } from "@testing-library/react";
+
 import {
   EditorState,
   ContentState,
@@ -7,6 +9,9 @@ import {
 } from "draft-js";
 
 import Link, { linkStrategy } from "./Link";
+
+const renderElement = (element: React.ReactElement) =>
+  render(element).container.firstChild;
 
 describe("Link", () => {
   it("renders", () => {
@@ -41,14 +46,14 @@ describe("Link", () => {
     const entityKey = contentState.getFirstBlock().getEntityAt(3);
 
     expect(
-      shallow(
+      renderElement(
         <Link contentState={contentState} entityKey={entityKey}>
           Test
         </Link>,
       ),
     ).toMatchInlineSnapshot(`
       <span
-        className="link"
+        class="link"
         title="www.example.com"
       >
         Test
@@ -66,7 +71,7 @@ describe("linkStrategy", () => {
       ),
     );
     const currentContent = editorState.getCurrentContent();
-    const callback = jest.fn();
+    const callback = vi.fn();
     linkStrategy(currentContent.getFirstBlock(), callback, currentContent);
     expect(callback).toHaveBeenCalled();
   });

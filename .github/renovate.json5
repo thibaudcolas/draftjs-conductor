@@ -15,7 +15,7 @@
     "@types/react-dom",
     "react",
     "react-dom",
-    "react-test-renderer",
+    "@testing-library/react",
     "jamesives/github-pages-deploy-action",
   ],
   // https://renovatebot.com/docs/configuration-options/#labels
@@ -53,22 +53,24 @@
       automerge: true,
     },
     {
-      packageNames: ["coveralls"],
-      groupName: "coveralls",
+      packageNames: [
+        "vite",
+        "@vitejs/plugin-react-swc",
+        "vitest",
+        "@vitest/coverage-v8",
+      ],
+      groupName: "vite",
       automerge: true,
     },
     {
-      packageNames: ["danger"],
-      groupName: "danger",
-      automerge: true,
-    },
-    {
-      packageNames: ["@types/jest", "react-scripts"],
-      groupName: "react-scripts",
-      automerge: true,
-    },
-    {
-      packageNames: ["typescript"],
+      packageNames: [
+        "typescript",
+        "typescript-eslint",
+        "eslint",
+        "@eslint/js",
+        "@types/eslint__js",
+        "globals",
+      ],
       groupName: "typescript",
       automerge: true,
     },
@@ -78,19 +80,8 @@
       automerge: true,
     },
     {
-      packagePatterns: ["^enzyme"],
-      groupName: "enzyme",
-      automerge: true,
-      automergeType: "branch",
-    },
-    {
       packagePatterns: ["^rollup", "^@rollup"],
       groupName: "rollup",
-      automerge: true,
-    },
-    {
-      packageNames: ["snapshot-diff"],
-      groupName: "snapshot-diff",
       automerge: true,
     },
     {

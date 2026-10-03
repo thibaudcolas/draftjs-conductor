@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import prettier from "prettier";
 import { ContentBlock } from "draft-js";
 
@@ -10,8 +11,8 @@ import {
 } from "./lists";
 
 describe("generateListNestingStyles", () => {
-  it("works", () => {
-    const styles = prettier.format(
+  it("works", async () => {
+    const styles = await prettier.format(
       generateListNestingStyles("TEST", 0, 2, [
         "decimal",
         "lower-alpha",
@@ -23,13 +24,13 @@ describe("generateListNestingStyles", () => {
     );
     expect(styles).toMatchInlineSnapshot(`
       ".TEST1.public-DraftStyleDefault-orderedListItem::before {
-        content: counter(ol1, lower-alpha) \\". \\";
+        content: counter(ol1, lower-alpha) ". ";
       }
       .TEST2.public-DraftStyleDefault-orderedListItem::before {
-        content: counter(ol2, lower-roman) \\". \\";
+        content: counter(ol2, lower-roman) ". ";
       }
       .TEST4.public-DraftStyleDefault-orderedListItem::before {
-        content: counter(ol4, lower-alpha) \\". \\";
+        content: counter(ol4, lower-alpha) ". ";
       }
 
       .TEST0.public-DraftStyleDefault-listLTR {
@@ -39,7 +40,7 @@ describe("generateListNestingStyles", () => {
         margin-right: 1.5em;
       }
       .TEST0.public-DraftStyleDefault-orderedListItem::before {
-        content: counter(ol0, decimal) \\". \\";
+        content: counter(ol0, decimal) ". ";
         counter-increment: ol0;
       }
       .TEST0.public-DraftStyleDefault-reset {
@@ -52,7 +53,7 @@ describe("generateListNestingStyles", () => {
         margin-right: 3em;
       }
       .TEST1.public-DraftStyleDefault-orderedListItem::before {
-        content: counter(ol1, lower-alpha) \\". \\";
+        content: counter(ol1, lower-alpha) ". ";
         counter-increment: ol1;
       }
       .TEST1.public-DraftStyleDefault-reset {
@@ -65,7 +66,7 @@ describe("generateListNestingStyles", () => {
         margin-right: 4.5em;
       }
       .TEST2.public-DraftStyleDefault-orderedListItem::before {
-        content: counter(ol2, lower-roman) \\". \\";
+        content: counter(ol2, lower-roman) ". ";
         counter-increment: ol2;
       }
       .TEST2.public-DraftStyleDefault-reset {
@@ -80,9 +81,9 @@ describe("getListNestingStyles", () => {
   it("works", () => {
     expect(getListNestingStyles(0)).toMatchInlineSnapshot(`
       "
-      .public-DraftStyleDefault-depth1.public-DraftStyleDefault-orderedListItem::before { content: counter(ol1, lower-alpha) \\". \\"}
-      .public-DraftStyleDefault-depth2.public-DraftStyleDefault-orderedListItem::before { content: counter(ol2, lower-roman) \\". \\"}
-      .public-DraftStyleDefault-depth4.public-DraftStyleDefault-orderedListItem::before { content: counter(ol4, lower-alpha) \\". \\"}
+      .public-DraftStyleDefault-depth1.public-DraftStyleDefault-orderedListItem::before { content: counter(ol1, lower-alpha) ". "}
+      .public-DraftStyleDefault-depth2.public-DraftStyleDefault-orderedListItem::before { content: counter(ol2, lower-roman) ". "}
+      .public-DraftStyleDefault-depth4.public-DraftStyleDefault-orderedListItem::before { content: counter(ol4, lower-alpha) ". "}
       "
     `);
   });
@@ -90,16 +91,16 @@ describe("getListNestingStyles", () => {
   it("max > DRAFT_DEFAULT_MAX_DEPTH", () => {
     expect(getListNestingStyles(DRAFT_DEFAULT_MAX_DEPTH + 1))
       .toMatchInlineSnapshot(`
-      "
-      .public-DraftStyleDefault-depth1.public-DraftStyleDefault-orderedListItem::before { content: counter(ol1, lower-alpha) \\". \\"}
-      .public-DraftStyleDefault-depth2.public-DraftStyleDefault-orderedListItem::before { content: counter(ol2, lower-roman) \\". \\"}
-      .public-DraftStyleDefault-depth4.public-DraftStyleDefault-orderedListItem::before { content: counter(ol4, lower-alpha) \\". \\"}
+        "
+        .public-DraftStyleDefault-depth1.public-DraftStyleDefault-orderedListItem::before { content: counter(ol1, lower-alpha) ". "}
+        .public-DraftStyleDefault-depth2.public-DraftStyleDefault-orderedListItem::before { content: counter(ol2, lower-roman) ". "}
+        .public-DraftStyleDefault-depth4.public-DraftStyleDefault-orderedListItem::before { content: counter(ol4, lower-alpha) ". "}
 
-      .public-DraftStyleDefault-depth5.public-DraftStyleDefault-listLTR { margin-left: 9em; }
-      .public-DraftStyleDefault-depth5.public-DraftStyleDefault-listRTL { margin-right: 9em; }
-      .public-DraftStyleDefault-depth5.public-DraftStyleDefault-orderedListItem::before { content: counter(ol5, lower-roman) '. '; counter-increment: ol5; }
-      .public-DraftStyleDefault-depth5.public-DraftStyleDefault-reset { counter-reset: ol5; }"
-    `);
+        .public-DraftStyleDefault-depth5.public-DraftStyleDefault-listLTR { margin-left: 9em; }
+        .public-DraftStyleDefault-depth5.public-DraftStyleDefault-listRTL { margin-right: 9em; }
+        .public-DraftStyleDefault-depth5.public-DraftStyleDefault-orderedListItem::before { content: counter(ol5, lower-roman) '. '; counter-increment: ol5; }
+        .public-DraftStyleDefault-depth5.public-DraftStyleDefault-reset { counter-reset: ol5; }"
+      `);
   });
 });
 

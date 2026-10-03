@@ -35,11 +35,20 @@ npm run format
 npm run test:watch
 # Open the coverage report with:
 npm run report:coverage
-# Open the build report with:
-npm run report:build
+# Test both supported Draft.js versions (also run by CI and Git hooks).
+npm run test:versions
+# Run one version explicitly.
+DRAFTJS_VERSION=0.10 npm test
+DRAFTJS_VERSION=0.11 npm test
+# Build the demo and library.
+npm run build
+# Preview the production demo.
+npm run preview
 # View other available commands with:
 npm run
 ```
+
+The Vite demo is served at `/draftjs-conductor/`. Production files and library bundles are written to `dist/`. Tests use Vitest and React Testing Library. `DRAFTJS_VERSION` selects Draft.js 0.10.5 or 0.11.7, including internal module imports. Coverage reports are kept separately in `coverage/0.10/` and `coverage/0.11/`. `npm run test:ci` runs linting, builds, and both test suites.
 
 ### Code style
 

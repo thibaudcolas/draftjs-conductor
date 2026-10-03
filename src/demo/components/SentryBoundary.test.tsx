@@ -1,43 +1,53 @@
-import { shallow } from "enzyme";
+import { describe, it, expect, vi, afterEach } from "vitest";
+import { render, fireEvent } from "@testing-library/react";
 import SentryBoundary from "./SentryBoundary";
+
+const BrokenChild = (): never => {
+  throw new Error("test");
+};
+
+afterEach(() => {
+  vi.restoreAllMocks();
+  vi.unstubAllGlobals();
+});
 
 describe("SentryBoundary", () => {
   it("renders", () => {
     expect(
-      shallow<SentryBoundary>(<SentryBoundary>Test</SentryBoundary>),
+      render(<SentryBoundary>Test</SentryBoundary>).asFragment(),
     ).toMatchSnapshot();
   });
 
-  it("componentDidCatch", () => {
-    const wrapper = shallow<SentryBoundary>(
-      <SentryBoundary>Test</SentryBoundary>,
+  it("catches errors and renders recovery controls", () => {
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    const { getByText, asFragment } = render(
+      <SentryBoundary>
+        <BrokenChild />
+      </SentryBoundary>,
     );
-
-    wrapper.instance().componentDidCatch(new Error("test"));
-
-    expect(wrapper.state("error")).not.toBe(null);
+    expect(getByText("Oops. The editor just crashed.")).toBeTruthy();
+    expect(asFragment()).toMatchSnapshot();
   });
 
-  it("#error", () => {
-    expect(
-      shallow<SentryBoundary>(<SentryBoundary>Test</SentryBoundary>).setState({
-        error: new Error("test"),
+  it("reloads the page after an error", () => {
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    const { getByRole } = render(
+      <SentryBoundary>
+        <BrokenChild />
+      </SentryBoundary>,
+    );
+    const reload = vi.fn();
+    vi.stubGlobal(
+      "window",
+      new Proxy(window, {
+        get(target, property) {
+          return property === "location"
+            ? { reload }
+            : Reflect.get(target, property);
+        },
       }),
-    ).toMatchSnapshot();
-  });
-
-  it("#error reload", () => {
-    Object.defineProperty(window, "location", {
-      configurable: true,
-      value: { reload: jest.fn() },
-    });
-
-    shallow<SentryBoundary>(<SentryBoundary>Test</SentryBoundary>)
-      .setState({
-        error: new Error("test"),
-      })
-      .find("button")
-      .simulate("click");
-    expect(window.location.reload).toHaveBeenCalled();
+    );
+    fireEvent.click(getByRole("button", { name: "Reload the page" }));
+    expect(reload).toHaveBeenCalledOnce();
   });
 });

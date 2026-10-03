@@ -1,8 +1,11 @@
-import { shallow } from "enzyme";
+import { describe, it, expect } from "vitest";
+import { render } from "@testing-library/react";
 import App from "./App";
 
 describe("App", () => {
-  it("renders", () => {
-    expect(shallow(<App />)).toMatchSnapshot();
+  it("renders both editors", () => {
+    const { container, getAllByRole } = render(<App />);
+    expect(container.querySelector(".App")).not.toBeNull();
+    expect(getAllByRole("textbox").length).toBeGreaterThanOrEqual(2);
   });
 });

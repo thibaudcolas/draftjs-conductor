@@ -1,29 +1,29 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Snippet no entity 1`] = `
+exports[`Snippet > no entity 1`] = `
 <div
-  className="Snippet"
-  contentEditable={false}
+  class="Snippet"
+  contenteditable="false"
 >
   This is a snippet block:
   <div
-    className="Snippet__text"
-    contentEditable={false}
+    class="Snippet__text"
+    contenteditable="false"
   >
     Placeholder
   </div>
 </div>
 `;
 
-exports[`Snippet renders 1`] = `
+exports[`Snippet > renders 1`] = `
 <div
-  className="Snippet"
-  contentEditable={false}
+  class="Snippet"
+  contenteditable="false"
 >
   This is a snippet block:
   <div
-    className="Snippet__text"
-    contentEditable={false}
+    class="Snippet__text"
+    contenteditable="false"
   >
     This is a snippet
   </div>

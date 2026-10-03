@@ -1,10 +1,10 @@
-// @ts-expect-error
+// @ts-expect-error - Draft.js does not publish types for its internal modules.
 import getContentStateFragment from "draft-js/lib/getContentStateFragment";
-// @ts-expect-error
+// @ts-expect-error - Draft.js does not publish types for its internal modules.
 import getDraftEditorSelection from "draft-js/lib/getDraftEditorSelection";
-// @ts-expect-error
+// @ts-expect-error - Draft.js does not publish types for its internal modules.
 import editOnCopy from "draft-js/lib/editOnCopy";
-// @ts-expect-error
+// @ts-expect-error - Draft.js does not publish types for its internal modules.
 import editOnCut from "draft-js/lib/editOnCut";
 
 import {
@@ -17,7 +17,7 @@ import {
   ContentBlock,
 } from "draft-js";
 
-import React, { ElementRef } from "react";
+import React from "react";
 
 // Custom attribute to store Draft.js content in the HTML clipboard.
 const FRAGMENT_ATTR = "data-draftjs-conductor-fragment";
@@ -74,11 +74,7 @@ const getSelectedContent = (
 // See also https://github.com/basecamp/trix/blob/62145978f352b8d971cf009882ba06ca91a16292/src/trix/controllers/input_controller.coffee#L415-L422
 // We serialise the editor content within HTML, not as a separate mime type, because Draft.js only allows access
 // to HTML in its paste event handler.
-const draftEditorCopyCutListener = (
-  // @ts-expect-error
-  ref: ElementRef<Editor>,
-  e: React.ClipboardEvent,
-) => {
+const draftEditorCopyCutListener = (ref: Editor, e: React.ClipboardEvent) => {
   const selection = window.getSelection() as Selection;
 
   // Completely skip event handling if clipboardData is not supported (IE11 is out).
@@ -92,7 +88,7 @@ const draftEditorCopyCutListener = (
     return;
   }
 
-  // @ts-expect-error
+  // @ts-expect-error - Draft.js keeps the current state on a private instance field.
   const fragment = getSelectedContent(ref._latestEditorState, ref.editor);
 
   // Override the default behavior if there is selected content.
@@ -122,7 +118,6 @@ export const onDraftEditorCopy = (
   editor: Editor,
   e: React.ClipboardEvent<HTMLElement>,
 ) => {
-  // @ts-expect-error
   draftEditorCopyCutListener(editor, e);
   editOnCopy(editor, e);
 };
@@ -131,7 +126,6 @@ export const onDraftEditorCut = (
   editor: Editor,
   e: React.ClipboardEvent<HTMLElement>,
 ) => {
-  // @ts-expect-error
   draftEditorCopyCutListener(editor, e);
   editOnCut(editor, e);
 };
@@ -139,11 +133,11 @@ export const onDraftEditorCut = (
 /**
  * Registers custom copy/cut event listeners on an editor.
  */
-// @ts-expect-error
-export const registerCopySource = (ref: ElementRef<Editor>) => {
-  // @ts-expect-error
-  const editorElt = ref.editor;
-  const onCopyCut = draftEditorCopyCutListener.bind(null, ref);
+export const registerCopySource = (ref: Editor) => {
+  // Register only once the editor has mounted.
+  const editorElt = ref.editor!;
+  const onCopyCut = (event: Event) =>
+    draftEditorCopyCutListener(ref, event as unknown as React.ClipboardEvent);
 
   editorElt.addEventListener("copy", onCopyCut);
   editorElt.addEventListener("cut", onCopyCut);
@@ -177,9 +171,8 @@ export const getDraftEditorPastedContent = (html: string | undefined) => {
     try {
       // If JSON parsing fails, leave paste handling to Draft.js.
       // There is no reason for this to happen, unless the clipboard was altered somehow.
-      // @ts-expect-error
-      rawContent = JSON.parse(fragmentAttr);
-    } catch (error) {
+      rawContent = JSON.parse(fragmentAttr!);
+    } catch {
       return null;
     }
 
