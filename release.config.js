@@ -53,7 +53,7 @@ module.exports = {
     },
     {
       path: "@semantic-release/exec",
-      cmd: "prettier --write CHANGELOG.md && rm -rf .git/hooks",
+      cmd: "prettier --write CHANGELOG.md && vp hooks disable",
     },
     "@semantic-release/npm",
     {
