@@ -52,7 +52,7 @@
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "semantic-release": "25.0.9",
-    "typescript": "5.9.3",
+    "typescript": "7.0.2",
     "vite": "npm:@voidzero-dev/vite-plus-core@1.0.0",
     "vite-plus": "1.0.0",
     "vitest": "5.0.1"
