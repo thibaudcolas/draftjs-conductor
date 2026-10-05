@@ -46,7 +46,7 @@
     "draft-js": "0.11.7",
     "draft-js-10": "npm:draft-js@0.10.5",
     "immutable": "~3.7.6",
-    "jsdom": "24.1.1",
+    "jsdom": "24.1.3",
     "normalize.css": "8.0.1",
     "prettier": "3.9.9",
     "react": "16.14.0",
