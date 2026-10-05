@@ -78,7 +78,7 @@
   },
   "overrides": {
     "isomorphic-fetch": {
-      "node-fetch": "^2.0.0"
+      "node-fetch": "^3.0.0"
     },
     "vite": "npm:@voidzero-dev/vite-plus-core@1.0.0",
     "vitest": "5.0.1"
