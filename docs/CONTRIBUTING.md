@@ -65,3 +65,23 @@ Keep `vite-plus`, its `vite` alias, and the bundled `vitest` and coverage-provid
 Before a commit, `vp staged` formats and checks staged files using the `staged` configuration in `vite.config.mts`. It preserves unstaged changes, including partially staged files. Flow definitions use Prettier. Code, snapshot, dependency, and Node version changes run the tests against both Draft.js versions. Tasks run sequentially so tests see the formatted files. The commit-message hook checks Conventional Commits with commitlint.
 
 Run `npx vp hooks status` to inspect hook installation, `npx vp hooks disable` to disable hooks in your clone, or `npx vp hooks enable` to re-enable them. To skip hooks for one commit, use `VP_GIT_HOOKS=0 git commit`. No global Vite Plus installation is required.
+
+## Releases
+
+The `Publish` workflow in `.github/workflows/publish.yml` runs semantic-release after the `CI` workflow completes successfully for a push to `main` in this repository. It checks out the exact commit that passed CI. Pull request runs cannot publish. CI includes the Pages deployment, so a failed deployment also prevents publishing. It uses a fresh dependency install and build, full Git history, and npm Trusted Publishing (OIDC). No `NPM_TOKEN` or `NODE_AUTH_TOKEN` is needed. The Node version in `.node-version` and the npm CLI bundled with `@semantic-release/npm` meet the Trusted Publishing requirements (Node 22.14.0+ and npm 11.5.1+).
+
+The publishing workflow must exist on the default branch to receive `workflow_run` events. Before merging changes to the publishing workflow, configure a GitHub Actions trusted publisher in the [draftjs-conductor package settings](https://www.npmjs.com/package/draftjs-conductor/access):
+
+- Organization or user: `thibaudcolas`
+- Repository: `draftjs-conductor`
+- Workflow filename: `publish.yml` (without `.github/workflows/`)
+- Environment name: leave blank; the release job does not use a GitHub environment.
+- Allowed actions: enable direct publishing with `npm publish`.
+
+The release job grants `id-token: write` for npm authentication and write access to repository contents, issues, and pull requests for GitHub releases and comments. Do not add `registry-url` to `actions/setup-node`; semantic-release manages npm authentication. Public npm releases automatically include provenance.
+
+`release.config.js` preserves the changelog, release commit, npm tarball, GitHub release asset, and issue/PR comments. `VP_GIT_HOOKS=0` skips local hooks for the automated release commit. Repository rules must permit that commit using `GITHUB_TOKEN`; if branch protection blocks it, configure GitHub App authentication as described in the semantic-release guide.
+
+After the first successful OIDC release, remove the unused `NPM_TOKEN` GitHub secret and revoke its npm token if nothing else uses it. npm also recommends selecting “Require two-factor authentication and disallow tokens” in the package publishing settings. A local semantic-release dry run cannot verify GitHub OIDC authentication; confirm the first release succeeds and includes provenance on npm.
+
+See the [semantic-release GitHub Actions guide](https://semantic-release.org/recipes/ci-configurations/github-actions/) and [npm Trusted Publishing documentation](https://docs.npmjs.com/trusted-publishers/) for setup and troubleshooting.
