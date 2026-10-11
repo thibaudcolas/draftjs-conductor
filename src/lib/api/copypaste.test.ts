@@ -472,7 +472,7 @@ describe("copypaste", () => {
       let editorState = EditorState.createWithContent(
         convertFromRaw({
           ...content,
-          blocks: [{ ...content.blocks[0], text: "" }],
+          blocks: content.blocks.map((block) => ({ ...block, text: "" })),
         }),
       );
       const html = `<div data-draftjs-conductor-fragment='${JSON.stringify(
