@@ -30,11 +30,7 @@
   automergeStrategy: "squash",
   rebaseWhen: "behind-base-branch",
   automerge: false,
-  node: {
-    enabled: true,
-    major: { enabled: true },
-    supportPolicy: ["current"],
-  },
+  // Node follows the latest stable release by default and requires manual review.
   // Security updates still need the same compatibility review as other majors.
   vulnerabilityAlerts: { automerge: false },
   packageRules: [
