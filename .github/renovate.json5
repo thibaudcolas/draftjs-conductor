@@ -1,10 +1,9 @@
 {
-  extends: ["config:base"],
-  // https://renovatebot.com/docs/configuration-options/#commitbodytable
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: ["config:recommended"],
   commitBodyTable: true,
-  // https://docs.renovatebot.com/configuration-options/#dependencydashboard
   dependencyDashboard: false,
-  // https://renovatebot.com/docs/configuration-options/#ignoredeps
+  // These versions define the supported legacy editor environment.
   ignoreDeps: [
     "immutable",
     "@types/draft-js",
@@ -16,44 +15,47 @@
     "react",
     "react-dom",
     "@testing-library/react",
-    "jamesives/github-pages-deploy-action",
   ],
-  // https://renovatebot.com/docs/configuration-options/#labels
   labels: ["enhancement"],
-  // https://renovatebot.com/docs/configuration-options/#prcreation
-  prCreation: "not-pending",
-  // https://renovatebot.com/docs/configuration-options/#semanticcommits
-  semanticCommits: true,
-  // Use shorter commit messages to account for long dependency names.
-  // https://docs.renovatebot.com/configuration-options/#commitmessagetopic
+  prCreation: "immediate",
+  semanticCommits: "enabled",
   commitMessageTopic: "{{depName}}",
-  // https://renovatebot.com/docs/configuration-options/#prbodycolumns
   prBodyColumns: ["Package", "Update", "Type", "Change"],
-  // https://renovatebot.com/docs/configuration-options/#schedule
   schedule: ["every weekend"],
-  // Limit the number of consecutive PRs
   prHourlyLimit: 2,
-  // Silently merge updates without PRs
-  automergeType: "branch",
+  // Branch rules require PRs. Renovate must wait for CI itself because GitHub
+  // auto-merge is disabled and the ruleset has no required status checks.
+  automergeType: "pr",
+  platformAutomerge: false,
+  automergeStrategy: "squash",
+  rebaseWhen: "behind-base-branch",
+  automerge: false,
   node: {
     enabled: true,
-    major: {
-      enabled: true,
-    },
-    // https://renovatebot.com/docs/node/#configuring-support-policy
+    major: { enabled: true },
     supportPolicy: ["current"],
   },
-  vulnerabilityAlerts: {
-    automerge: true,
-  },
+  // Security updates still need the same compatibility review as other majors.
+  vulnerabilityAlerts: { automerge: false },
   packageRules: [
     {
-      packageNames: ["prettier"],
-      groupName: "prettier",
+      matchPackageNames: [
+        "prettier",
+        "typescript",
+        "jsdom",
+        "@commitlint/*",
+        "vite-plus",
+        "@voidzero-dev/vite-plus-core",
+        "vite",
+        "@vitejs/plugin-react-swc",
+        "vitest",
+        "@vitest/coverage-v8",
+      ],
+      matchUpdateTypes: ["minor", "patch", "pin", "digest"],
       automerge: true,
     },
     {
-      packageNames: [
+      matchPackageNames: [
         "vite-plus",
         "@voidzero-dev/vite-plus-core",
         "vite",
@@ -62,32 +64,32 @@
         "@vitest/coverage-v8",
       ],
       groupName: "vite-plus",
-      // Review the bundled Vitest and coverage-provider pins with each Vite Plus upgrade.
+      // CI verifies the bundled Vitest, coverage provider and Vite core match.
+    },
+    {
+      matchPackageNames: ["@commitlint/*"],
+      groupName: "commitlint",
+    },
+    {
+      matchPackageNames: ["semantic-release", "@semantic-release/*"],
+      groupName: "semantic-release",
+      // Publishing is only exercised after merging to main.
       automerge: false,
     },
     {
-      packageNames: ["typescript"],
-      groupName: "typescript",
-      automerge: true,
-    },
-    {
-      packagePatterns: ["^@commitlint"],
-      groupName: "commitlint",
-      automerge: true,
-    },
-    {
-      packagePatterns: ["^semantic-release", "^@semantic-release"],
-      groupName: "semantic-release",
-      automerge: true,
-    },
-    {
-      packageNames: ["JamesIves/github-pages-deploy-action"],
-      groupName: "JamesIves/github-pages-deploy-action",
-      automerge: true,
-    },
-    {
-      packagePatterns: ["^actions/"],
+      matchManagers: ["github-actions"],
       groupName: "actions",
+      // Deployment and publishing actions are not exercised by PR checks.
+      automerge: false,
+    },
+    {
+      matchPackageNames: ["node-fetch"],
+      // isomorphic-fetch calls require("node-fetch") as a function; v3 is ESM.
+      allowedVersions: "<3",
+    },
+    {
+      matchPackageNames: ["node-fetch"],
+      matchUpdateTypes: ["minor", "patch"],
       automerge: true,
     },
   ],
