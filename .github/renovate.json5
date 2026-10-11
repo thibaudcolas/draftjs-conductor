@@ -33,9 +33,8 @@
   schedule: ["every weekend"],
   // Limit the number of consecutive PRs
   prHourlyLimit: 2,
-  // Use PRs to respect branch rules; Renovate waits for passing CI itself.
-  automergeType: "pr",
-  platformAutomerge: false,
+  // Silently merge updates without PRs after branch CI passes.
+  automergeType: "branch",
   node: {
     enabled: true,
     major: {
