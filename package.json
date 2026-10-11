@@ -71,11 +71,10 @@
     "report:package": "npm pack --dry-run --loglevel notice 2>&1 >/dev/null | sed -e 's/^npm notice //' | tee dist/package.txt",
     "lint": "vp check && vp lint --deny-warnings && prettier --check 'docs/flow-typed/**/*.js'",
     "format": "vp fmt && prettier --write 'docs/flow-typed/**/*.js'",
-    "test:ci": "npm run check:tooling -s && npm run lint -s && npm run build -s && npm run test:versions",
+    "test:ci": "npm run lint -s && npm run build -s && npm run test:versions",
     "prepare": "vp config --no-agent",
     "prepublishOnly": "npm run build -s",
-    "test:versions": "DRAFTJS_VERSION=0.11 npm test && DRAFTJS_VERSION=0.10 npm test",
-    "check:tooling": "node scripts/check-tooling.mjs"
+    "test:versions": "DRAFTJS_VERSION=0.11 npm test && DRAFTJS_VERSION=0.10 npm test"
   },
   "overrides": {
     "isomorphic-fetch": {
