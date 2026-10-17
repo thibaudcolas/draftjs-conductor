@@ -1,19 +1,19 @@
-
+npm notice
 📦  draftjs-conductor@3.0.0
-=== Tarball Contents === 
-1.1kB  LICENSE                      
-10.8kB README.md                    
-12.2kB dist/draftjs-conductor.cjs.js
-3.5kB  dist/draftjs-conductor.d.ts  
-11.1kB dist/draftjs-conductor.esm.js
-2.8kB  package.json                 
-=== Tarball Details === 
-name:          draftjs-conductor                       
-version:       3.0.0                                   
-filename:      draftjs-conductor-3.0.0.tgz             
-package size:  9.9 kB                                  
-unpacked size: 41.5 kB                                 
-shasum:        50a6abb9889de71b92d1c66114e3b9ea20628942
-integrity:     sha512-kHF3usXChkuvi[...]wdZAn35A5Cfsw==
-total files:   6                                       
-
+Tarball Contents
+1.1kB LICENSE
+10.8kB README.md
+10.1kB dist/draftjs-conductor.cjs.js
+2.9kB dist/draftjs-conductor.d.ts
+8.1kB dist/draftjs-conductor.esm.js
+2.7kB package.json
+Tarball Details
+name: draftjs-conductor
+version: 3.0.0
+filename: draftjs-conductor-3.0.0.tgz
+package size: 9.2 kB
+unpacked size: 35.7 kB
+shasum: fa21c4f30521e89ed08c3e71c1ba75d1223ecbb5
+integrity: sha512-v6LbtUKdRKJBK[...]lYdg5k9il7QJQ==
+total files: 6
+npm notice
