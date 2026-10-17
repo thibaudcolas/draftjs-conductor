@@ -19,13 +19,13 @@ class SentryBoundary extends Component<
     };
   }
 
-  componentDidCatch(error: Error) {
+  override componentDidCatch(error: Error) {
     this.setState({
       error,
     });
   }
 
-  render() {
+  override render() {
     const { children } = this.props;
     const { error } = this.state;
 

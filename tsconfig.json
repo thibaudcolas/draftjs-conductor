@@ -15,7 +15,13 @@
     "jsx": "react-jsx",
     "noFallthroughCasesInSwitch": true,
     "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noUncheckedSideEffectImports": true,
+    "checkJs": true,
+    "noImplicitOverride": true
   },
   "include": ["src", "vite.config.mts"]
 }

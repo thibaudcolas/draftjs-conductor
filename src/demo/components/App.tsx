@@ -227,7 +227,7 @@ const listNestingContent = {
 };
 
 class App extends Component {
-  render() {
+  override render() {
     return (
       <div className="App">
         <h2>Idempotent copy-paste between editors</h2>

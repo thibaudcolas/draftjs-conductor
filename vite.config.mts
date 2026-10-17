@@ -204,23 +204,24 @@ export default defineConfig({
       "build/",
     ],
   },
-  plugins: lazyPlugins(() => [
-    react(),
-    {
-      name: "production-error-reporting",
-      transformIndexHtml: {
-        order: "post",
-        handler(html, ctx) {
-          return ctx.bundle
-            ? html.replace(
-                "</head>",
-                `<script src="https://cdn.ravenjs.com/3.21.0/raven.min.js" crossorigin="anonymous"></script><script>Raven.config('https://503a58b2e7e74093aee94bee33c9f974@sentry.io/293460').install()</script></head>`,
-              )
-            : html;
+  plugins:
+    lazyPlugins(() => [
+      react(),
+      {
+        name: "production-error-reporting",
+        transformIndexHtml: {
+          order: "post",
+          handler(html, ctx) {
+            return ctx.bundle
+              ? html.replace(
+                  "</head>",
+                  `<script src="https://cdn.ravenjs.com/3.21.0/raven.min.js" crossorigin="anonymous"></script><script>Raven.config('https://503a58b2e7e74093aee94bee33c9f974@sentry.io/293460').install()</script></head>`,
+                )
+              : html;
+          },
         },
       },
-    },
-  ]),
+    ]) ?? [],
   base: "/draftjs-conductor/",
   test: {
     environment: "jsdom",

@@ -277,7 +277,7 @@ class DemoEditor extends Component<DemoEditorProps, DemoEditorState> {
     e.preventDefault();
   };
 
-  render() {
+  override render() {
     const { extended } = this.props;
     const { editorState, readOnly } = this.state;
     const styles = extended ? STYLES_EXTENDED : STYLES;

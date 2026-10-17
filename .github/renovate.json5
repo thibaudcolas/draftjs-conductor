@@ -33,7 +33,7 @@
   schedule: ["every weekend"],
   // Limit the number of consecutive PRs
   prHourlyLimit: 2,
-  // Silently merge updates without PRs
+  // Silently merge updates without PRs after branch CI passes.
   automergeType: "branch",
   node: {
     enabled: true,
@@ -62,7 +62,7 @@
         "@vitest/coverage-v8",
       ],
       groupName: "vite-plus",
-      // Review the bundled Vitest and coverage-provider pins with each Vite Plus upgrade.
+      // Review major upgrades; non-major updates can automerge via the rule below.
       automerge: false,
     },
     {
@@ -88,6 +88,11 @@
     {
       packagePatterns: ["^actions/"],
       groupName: "actions",
+      automerge: true,
+    },
+    {
+      // Existing package rules still control major updates.
+      matchUpdateTypes: ["minor", "patch", "pin", "digest"],
       automerge: true,
     },
   ],

@@ -23,7 +23,7 @@ describe("#createEditorStateFromRaw", () => {
     const result = convertToRaw(state.getCurrentContent());
     expect(state).toBeInstanceOf(EditorState);
     expect(result.blocks.length).toEqual(2);
-    expect(result.blocks[0].text).toEqual("Hello, World!");
+    expect(result.blocks[0]?.text).toEqual("Hello, World!");
   });
 
   it("creates empty state from empty content", () => {
@@ -31,7 +31,7 @@ describe("#createEditorStateFromRaw", () => {
     const result = convertToRaw(state.getCurrentContent());
     expect(state).toBeInstanceOf(EditorState);
     expect(result.blocks.length).toEqual(1);
-    expect(result.blocks[0].text).toEqual("");
+    expect(result.blocks[0]?.text).toEqual("");
   });
 
   it("takes a decorator", () => {
