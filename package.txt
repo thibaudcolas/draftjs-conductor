@@ -1,3 +1,5 @@
+run draftjs-conductor@3.0.0 prepare
+run vp config --no-agent
 npm notice
 📦  draftjs-conductor@3.0.0
 Tarball Contents
@@ -13,7 +15,7 @@ version: 3.0.0
 filename: draftjs-conductor-3.0.0.tgz
 package size: 9.2 kB
 unpacked size: 35.7 kB
-shasum: 762a1d4d0a2ef51bd6f55f057a609e22eb9f10e6
-integrity: sha512-3Da89iEVlAa40[...]bddWVG66OCHcA==
+shasum: 97361626a864272ac544b32bb54d6ef2fdb1bda0
+integrity: sha512-WlSYETjj4vrXg[...]ik+GEE6oLgC7g==
 total files: 6
 npm notice
