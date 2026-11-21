@@ -51,7 +51,7 @@
     "prettier": "3.10.1",
     "react": "16.14.0",
     "react-dom": "16.14.0",
-    "semantic-release": "25.0.9",
+    "semantic-release": "26.0.1",
     "typescript": "7.0.2",
     "vite": "npm:@voidzero-dev/vite-plus-core@1.1.0",
     "vite-plus": "1.1.0",
